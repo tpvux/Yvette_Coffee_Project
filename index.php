@@ -8,5 +8,18 @@
 </head>
 <body>
     <h1>Hello World</h1>
+    
+    <?php
+        // include "./db_connect1.php";
+
+        // $sql = "INSERT INTO `tai_khoan` (TenDangNhap, MaNV, MatKhau, TrangThai)
+        // VALUES ('2023000001', '2023000001', '". md5(md5(123456))."', 1)";
+        // $result = mysqli_query($conn, $sql);
+        // if ($result) {
+        //     echo "</br>New record created successfully";
+        //   } else {
+        //     echo "Error: " . $sql . "<br>" . $conn->error;
+        //   }
+    ?>
 </body>
 </html>
