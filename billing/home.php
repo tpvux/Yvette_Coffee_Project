@@ -207,7 +207,7 @@
         <div class="container-fluid">
             <div class="form-group">
                 <label for="">Amount Payable</label>
-                <input type="number" class="form-control text-right" id="apayable" readonly="" value="">
+                <input type="text" class="form-control text-right" id="apayable" readonly="" value="">
             </div>
             <div class="form-group">
                 <label for="">Amount Tendered</label>
@@ -321,13 +321,13 @@
         end_load()
         return false;
     }
-    $('#apayable').val(amount.toLocaleString("en-US",{style:'decimal',minimumFractionDigits:0,maximumFractionDigits:0}))
+    $('#apayable').val(parseInt(amount).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:0,maximumFractionDigits:0}))
     $('#pay_modal').modal('show')
     setTimeout(function(){
         $('#tendered').val('').trigger('change')
         $('#tendered').focus()
         end_load()
-    },500)
+    },400)
     
    })
    $('#tendered').keyup('input',function(e){
