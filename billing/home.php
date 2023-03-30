@@ -1,4 +1,5 @@
-<?php include '../db_connect.php' ?>
+<?php include '../db_connect1.php' ?>
+
 <style>
    span.float-right.summary_icon {
     font-size: 3rem;
@@ -70,15 +71,6 @@
         opacity: .8;
     }
 </style>
-<?php 
-// if(isset($_GET['id'])):
-// $order = $conn->query("SELECT * FROM orders where id = {$_GET['id']}");
-// foreach($order->fetch_array() as $k => $v){
-//     $$k= $v;
-// }
-// $items = $conn->query("SELECT o.*,p.name FROM order_items o inner join products p on p.id = o.product_id where o.order_id = $id ");
-// endif;
-?>
 <div class="container-fluid o-field">
 	<div class="row mt-3 ml-3 mr-3">
         <div class="col-lg-4">
@@ -95,7 +87,7 @@
                 <div class="bg-white" id='o-list'>
                             <div class="d-flex w-100 bg-dark mb-1">
                                 <label for="" class="text-white"><b>Order No.</b></label>
-                                <input type="number" class="form-control-sm" name="order_number" value="<?php echo isset($order_number) ? $order_number : '' ?>" required>
+                                <input type="number" class="form-control-sm" name="order_number" value="<?php echo isset($order_number) ? $order_number : '' ?>" required readonly="">
                             </div>
                    <table class="table table-bordered bg-light">
                         <colgroup>
@@ -113,32 +105,6 @@
                            </tr>
                        </thead>
                        <tbody>
-                           <?php 
-                            if(isset($items)):
-                           while($row=$items->fetch_assoc()):
-                           ?>
-                           <tr>
-                               <td>
-                                    <div class="d-flex">
-                                        <span class="btn btn-sm btn-secondary btn-minus"><b><i class="fa fa-minus"></i></b></span>
-                                        <input type="number" name="qty[]" id="" value="1">
-                                        <span class="btn btn-sm btn-secondary btn-plus"><b><i class="fa fa-plus"></i></b></span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <input type="hidden" name="item_id[]" id="" value="<?php echo $row['id'] ?>">
-                                    <input type="hidden" name="product_id[]" id="" value="<?php echo $row['product_id'] ?>"><?php echo ucwords($row['name']) ?>
-                                    <small class="psmall"> (<?php echo number_format($row['price'],2) ?>)</small>
-                                </td>
-                                <td class="text-right">
-                                    <input type="hidden" name="price[]" id="" value="<?php echo $row['price'] ?>">
-                                    <input type="hidden" name="amount[]" id="" value="<?php echo $row['amount'] ?>">
-                                    <span class="amount"><?php echo number_format($row['amount'],2) ?></span>
-                                </td>
-                                <td>
-                                    <span class="btn btn-sm btn-danger btn-rem"><b><i class="fa fa-times text-white"></i></b></span>
-                                </td>
-                           </tr>
                            <script>
                                $(document).ready(function(){
                                  qty_func()
@@ -146,8 +112,6 @@
                                     cat_func();
                                })
                            </script>
-                       <?php endwhile; ?>
-                       <?php endif; ?>
                        </tbody>
                    </table>
                 </div>
@@ -159,7 +123,7 @@
                                    <td class="text-right">
                                        <input type="hidden" name="total_amount" value="0">
                                        <input type="hidden" name="total_tendered" value="0">
-                                       <span class=""><h4><b id="total_amount">0.00</b></h4></span>
+                                       <span class=""><h4><b id="total_amount">0</b></h4></span>
                                    </td>
                                </tr>
                            </tbody>
@@ -187,13 +151,13 @@
                                 </div>
                             </div>
                             <?php 
-                            $qry = $conn->query("SELECT * FROM categories order by name asc");
+                            $qry = $conn->query("SELECT * FROM `danh_muc` order by TenDanhMuc asc");
                             while($row=$qry->fetch_assoc()):
                             ?>
-                            <div class="card bg-primary mx-3 mb-2 cat-item" style="height:auto !important;" data-id = '<?php echo $row['id'] ?>'>
+                            <div class="card bg-primary mx-3 mb-2 cat-item" style="height:auto !important;" data-id = '<?php echo $row['MaDanhMuc'] ?>'>
                                 <div class="card-body">
                                     <span><b class="text-white">
-                                        <?php echo ucwords($row['name']) ?>
+                                        <?php echo ucwords($row['TenDanhMuc']) ?>
                                     </b></span>
                                 </div>
                             </div>
@@ -204,14 +168,14 @@
                         <hr>
                         <div class="row">
                             <?php
-                            $prod = $conn->query("SELECT * FROM products order by `name` asc");
+                            $prod = $conn->query("SELECT * FROM `do_uong` order by `TenDoUong` asc");
                             while($row=$prod->fetch_assoc()):
                             ?>
                             <div class="col-md-4 mb-2">
-                                <div class="card bg-primary prod-item" data-json = '<?php echo json_encode($row) ?>' data-category-id="<?php echo $row['category_id'] ?>">
+                                <div class="card bg-primary prod-item" data-json = '<?php echo json_encode($row) ?>' data-category-id="<?php echo $row['MaDanhMuc'] ?>">
                                     <div class="card-body">
                                         <span><b class="text-white">
-                                            <?php echo $row['name'] ?>
+                                            <?php echo $row['TenDoUong'] ?>
                                         </b></span>
                                     </div>
                                 </div>
@@ -251,7 +215,7 @@
             </div>
             <div class="form-group">
                 <label for="">Change</label>
-                <input type="text" class="form-control text-right" id="change" value="0.00" readonly="">
+                <input type="text" class="form-control text-right" id="change" value="0" readonly="">
             </div>
         </div>
       </div>
@@ -268,8 +232,8 @@
    $('#prod-list .prod-item').click(function(){
         var data = $(this).attr('data-json')
             data = JSON.parse(data)
-        if($('#o-list tr[data-id="'+data.id+'"]').length > 0){
-            var tr = $('#o-list tr[data-id="'+data.id+'"]')
+        if($('#o-list tr[data-id="'+data.MaDoUong+'"]').length > 0){
+            var tr = $('#o-list tr[data-id="'+data.MaDoUong+'"]')
             var qty = tr.find('[name="qty[]"]').val();
                 qty = parseInt(qty) + 1;
                 qty = tr.find('[name="qty[]"]').val(qty).trigger('change')
@@ -277,10 +241,10 @@
             return false;
         }
         var tr = $('<tr class="o-item"></tr>')
-        tr.attr('data-id',data.id)
+        tr.attr('data-id',data.MaDoUong)
         tr.append('<td><div class="d-flex"><span class="btn btn-sm btn-secondary btn-minus"><b><i class="fa fa-minus"></i></b></span><input type="number" name="qty[]" id="" value="1" disabled><span class="btn btn-sm btn-secondary btn-plus"><b><i class="fa fa-plus"></i></b></span></div></td>') 
-        tr.append('<td><input type="hidden" name="item_id[]" id="" value=""><input type="hidden" name="product_id[]" id="" value="'+data.id+'">'+data.name+' <small class="psmall">('+(parseFloat(data.price).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:2,maximumFractionDigits:2}))+')</small></td>') 
-        tr.append('<td class="text-right"><input type="hidden" name="price[]" id="" value="'+data.price+'"><input type="hidden" name="amount[]" id="" value="'+data.price+'"><span class="amount">'+(parseFloat(data.price).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:2,maximumFractionDigits:2}))+'</span></td>') 
+        tr.append('<td><input type="hidden" name="item_id[]" id="" value=""><input type="hidden" name="product_id[]" id="" value="'+data.MaDoUong+'">'+data.TenDoUong+'</td>') 
+        tr.append('<td class="text-right"><input type="hidden" name="price[]" id="" value="'+data.DonGia+'"><input type="hidden" name="amount[]" id="" value="'+data.DonGia+'"><span class="amount">'+(parseInt(data.DonGia).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:0,maximumFractionDigits:0}))+'</span></td>') 
         tr.append('<td><span class="btn btn-sm btn-danger btn-rem"><b><i class="fa fa-times text-white"></i></b></span></td>')
         $('#o-list tbody').append(tr)
         qty_func()
@@ -312,19 +276,19 @@
                 var tr = $(this).closest('tr');
                 var qty = $(this).val();
                 var price = tr.find('[name="price[]"]').val()
-                var amount = parseFloat(qty) * parseFloat(price);
+                var amount = parseInt(qty) * parseInt(price);
                     tr.find('[name="amount[]"]').val(amount)
-                    tr.find('.amount').text(parseFloat(amount).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:2,maximumFractionDigits:2}))
+                    tr.find('.amount').text(parseInt(amount).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:0,maximumFractionDigits:0}))
                 
             })
          })
          var total = 0;
          $('[name="amount[]"]').each(function(){
-            total = parseFloat(total) + parseFloat($(this).val()) 
+            total = parseInt(total) + parseInt($(this).val()) 
          })
             console.log(total)
         $('[name="total_amount"]').val(total)
-        $('#total_amount').text(parseFloat(total).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:2,maximumFractionDigits:2}))
+        $('#total_amount').text(parseInt(total).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:0,maximumFractionDigits:0}))
     }
    function cat_func(){
     $('.cat-item').click(function(){
@@ -353,11 +317,11 @@
     start_load()
     var amount = $('[name="total_amount"]').val()
     if($('#o-list tbody tr').length <= 0){
-        alert_toast("Please add atleast 1 product first.",'danger')
+        alert_toast("Vui lòng chọn ít nhất 1 món",'danger')
         end_load()
         return false;
     }
-    $('#apayable').val(parseFloat(amount).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:2,maximumFractionDigits:2}))
+    $('#apayable').val(amount.toLocaleString("en-US",{style:'decimal',minimumFractionDigits:0,maximumFractionDigits:0}))
     $('#pay_modal').modal('show')
     setTimeout(function(){
         $('#tendered').val('').trigger('change')
@@ -377,11 +341,11 @@
         if(tend == '')
             $(this).val('')
         else
-            $(this).val((parseFloat(tend).toLocaleString("en-US")))
+            $(this).val((parseInt(tend).toLocaleString("en-US")))
         tend = tend > 0 ? tend : 0;
         var amount=$('[name="total_amount"]').val()
-        var change = parseFloat(tend) - parseFloat(amount)
-        $('#change').val(parseFloat(change).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:2,maximumFractionDigits:2}))
+        var change = parseInt(tend) - parseInt(amount)
+        $('#change').val(parseInt(change).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:0,maximumFractionDigits:0}))
    })
    
     $('#tendered').on('input',function(){
