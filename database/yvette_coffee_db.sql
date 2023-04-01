@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 29, 2023 at 07:12 AM
+-- Generation Time: Apr 01, 2023 at 03:54 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -113,6 +113,35 @@ CREATE TABLE `ca_lam_viec` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `danh_muc`
+--
+
+CREATE TABLE `danh_muc` (
+  `MaDanhMuc` int(5) NOT NULL,
+  `TenDanhMuc` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `danh_muc`
+--
+
+INSERT INTO `danh_muc` (`MaDanhMuc`, `TenDanhMuc`) VALUES
+(1, 'Đá Xay'),
+(2, 'Sữa chua\r\n'),
+(3, 'Kem Viên\r\n'),
+(4, 'Nước ép trái cây\r\n'),
+(5, 'Topping\r\n'),
+(6, 'Cà Phê Ý\r\n'),
+(7, 'Cà Phê Việt Nam\r\n'),
+(8, 'Trà trái cây\r\n'),
+(9, 'Trà nóng\r\n'),
+(10, 'Sinh tố trái cây\r\n'),
+(11, 'Giải nhiệt\r\n'),
+(12, 'Nước giải khát\r\n');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `do_uong`
 --
 
@@ -120,88 +149,88 @@ CREATE TABLE `do_uong` (
   `MaDoUong` int(3) NOT NULL,
   `TenDoUong` varchar(100) NOT NULL,
   `DonGia` int(8) NOT NULL,
-  `DanhMuc` varchar(50) NOT NULL
+  `MaDanhMuc` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
 --
 -- Dumping data for table `do_uong`
 --
 
-INSERT INTO `do_uong` (`MaDoUong`, `TenDoUong`, `DonGia`, `DanhMuc`) VALUES
-(1, 'Matcha', 45000, 'Đá Xay'),
-(2, 'Chocolate', 45000, 'Đá Xay'),
-(3, 'Cà phê dừa', 45000, 'Đá Xay'),
-(4, 'Oreo', 45000, 'Đá Xay'),
-(5, 'Chocolate trắng hạnh nhân', 50000, 'Đá Xay'),
-(6, 'Sữa chua thanh đào', 35000, 'Sữa chua'),
-(7, 'Sữa chua dâu tây', 39000, 'Sữa chua'),
-(8, 'Sữa chua việt quất', 35000, 'Sữa chua'),
-(9, 'Sữa chua đá', 30000, 'Sữa chua'),
-(10, 'Cầu vòng', 30000, 'Kem Viên'),
-(11, 'Trái cây', 30000, 'Kem Viên'),
-(12, 'Mít', 30000, 'Kem Viên'),
-(13, 'Vani', 30000, 'Kem Viên'),
-(14, 'Socola', 30000, 'Kem Viên'),
-(15, 'Dừa', 30000, 'Kem Viên'),
-(16, 'Dâu', 30000, 'Kem Viên'),
-(17, 'Khoai môn', 30000, 'Kem Viên'),
-(18, 'Nước ép thơm cà rốt mật ong', 40000, 'Nước ép trái cây'),
-(19, 'Nước ép cam cà rốt mật ong', 40000, 'Nước ép trái cây'),
-(20, 'Nước ép táo xanh cần tây mật ong', 45000, 'Nước ép trái cây'),
-(21, 'Nước ép cam', 35000, 'Nước ép trái cây'),
-(22, 'Nước ép thơm', 35000, 'Nước ép trái cây'),
-(23, 'Nước ép ổi', 35000, 'Nước ép trái cây'),
-(24, 'Nước ép dưa hấu', 35000, 'Nước ép trái cây'),
-(25, 'Dừa trái', 35000, 'Nước ép trái cây'),
-(26, 'Trân châu trắng', 10000, 'Topping'),
-(27, 'Thạch cà phê', 10000, 'Topping'),
-(28, 'Đào miếng', 10000, 'Topping'),
-(29, 'Trái vải', 10000, 'Topping'),
-(30, 'Hạt sen', 15000, 'Topping'),
-(31, 'Espresso Hot', 30000, 'Cà phê Ý'),
-(32, 'Espresso Iced', 35000, 'Cà phê Ý'),
-(33, 'Americano Hot', 35000, 'Cà phê Ý'),
-(34, 'Americano Iced', 35000, 'Cà phê Ý'),
-(35, 'Latte Hot', 39000, 'Cà phê Ý'),
-(36, 'Latte Iced', 39000, 'Cà phê Ý'),
-(37, 'Cappuccino Hot', 39000, 'Cà phê Ý'),
-(38, 'Cappuccino Iced', 39000, 'Cà phê Ý'),
-(39, 'Cà phê đen đá', 22000, 'Cà phê Việt Nam'),
-(40, 'Cà phê đen nóng', 22000, 'Cà phê Việt Nam'),
-(41, 'Cà phê đen Phin đá', 25000, 'Cà phê Việt Nam'),
-(42, 'Cà phê đen Phin nóng', 25000, 'Cà phê Việt Nam'),
-(43, 'Cà phê sữa đá', 25000, 'Cà phê Việt Nam'),
-(44, 'Cà phê sữa nóng', 25000, 'Cà phê Việt Nam'),
-(45, 'Cà phê sữa Phin đá', 29000, 'Cà phê Việt Nam'),
-(46, 'Cà phê sữa Phin nóng', 29000, 'Cà phê Việt Nam'),
-(47, 'Bạc xỉu đá', 29000, 'Cà phê Việt Nam'),
-(48, 'Bạc xỉu nóng', 35000, 'Cà phê Việt Nam'),
-(49, 'Ca cao sữa đá', 30000, 'Cà phê Việt Nam'),
-(50, 'Ca cao sữa nóng', 30000, 'Cà phê Việt Nam'),
-(51, 'Trà vải hoa hồng', 35000, 'Trà trái cây'),
-(52, 'Trà vải hoa đậu biếc', 35000, 'Trà trái cây'),
-(53, 'Trà đào cam sả', 35000, 'Trà trái cây'),
-(54, 'Trà lài hạt sen macchiato', 40000, 'Trà trái cây'),
-(55, 'Trà lài đác thơm', 40000, 'Trà trái cây'),
-(56, 'Trà sữa YVETTE', 35000, 'Trà trái cây'),
-(57, 'Trà ấm nóng', 30000, 'Trà nóng'),
-(58, 'Trà gừng mật ong', 30000, 'Trà nóng'),
-(59, 'Trà hoa cúc mật ong', 30000, 'Trà nóng'),
-(60, 'Trà lipton chanh', 25000, 'Trà nóng'),
-(61, 'Sinh tố bơ', 45000, 'Sinh tố trái cây'),
-(62, 'Sinh tố mãng cầu', 40000, 'Sinh tố trái cây'),
-(63, 'Sinh tố dâu', 45000, 'Sinh tố trái cây'),
-(64, 'Sinh tố chuối hạnh nhân', 40000, 'Sinh tố trái cây'),
-(65, 'Trà hoa cúc lạnh mật ong', 39000, 'Giải nhiệt'),
-(66, 'Trà lipton chanh đá', 35000, 'Giải nhiệt'),
-(67, 'Soda chanh', 35000, 'Giải nhiệt'),
-(68, 'Nước suối Aquafina', 20000, 'Nước giải khát'),
-(69, 'Coca-cola', 25000, 'Nước giải khát'),
-(70, 'Pepsi', 25000, 'Nước giải khát'),
-(71, '7up', 25000, 'Nước giải khát'),
-(72, 'Warrior', 25000, 'Nước giải khát'),
-(73, 'Sting', 25000, 'Nước giải khát'),
-(74, 'Bò húc', 30000, 'Nước giải khát');
+INSERT INTO `do_uong` (`MaDoUong`, `TenDoUong`, `DonGia`, `MaDanhMuc`) VALUES
+(1, 'Matcha', 45000, 1),
+(2, 'Chocolate', 45000, 1),
+(3, 'Cà phê dừa', 45000, 1),
+(4, 'Oreo', 45000, 1),
+(5, 'Chocolate trắng hạnh nhân', 50000, 1),
+(6, 'Sữa chua thanh đào', 35000, 2),
+(7, 'Sữa chua dâu tây', 39000, 2),
+(8, 'Sữa chua việt quất', 35000, 2),
+(9, 'Sữa chua đá', 30000, 2),
+(10, 'Cầu vòng', 30000, 3),
+(11, 'Trái cây', 30000, 3),
+(12, 'Mít', 30000, 3),
+(13, 'Vani', 30000, 3),
+(14, 'Socola', 30000, 3),
+(15, 'Dừa', 30000, 3),
+(16, 'Dâu', 30000, 3),
+(17, 'Khoai môn', 30000, 3),
+(18, 'Nước ép thơm cà rốt mật ong', 40000, 4),
+(19, 'Nước ép cam cà rốt mật ong', 40000, 4),
+(20, 'Nước ép táo xanh cần tây mật ong', 45000, 4),
+(21, 'Nước ép cam', 35000, 4),
+(22, 'Nước ép thơm', 35000, 4),
+(23, 'Nước ép ổi', 35000, 4),
+(24, 'Nước ép dưa hấu', 35000, 4),
+(25, 'Dừa trái', 35000, 4),
+(26, 'Trân châu trắng', 10000, 5),
+(27, 'Thạch cà phê', 10000, 5),
+(28, 'Đào miếng', 10000, 5),
+(29, 'Trái vải', 10000, 5),
+(30, 'Hạt sen', 15000, 5),
+(31, 'Espresso Hot', 30000, 6),
+(32, 'Espresso Iced', 35000, 6),
+(33, 'Americano Hot', 35000, 6),
+(34, 'Americano Iced', 35000, 6),
+(35, 'Latte Hot', 39000, 6),
+(36, 'Latte Iced', 39000, 6),
+(37, 'Cappuccino Hot', 39000, 6),
+(38, 'Cappuccino Iced', 39000, 6),
+(39, 'Cà phê đen đá', 22000, 7),
+(40, 'Cà phê đen nóng', 22000, 7),
+(41, 'Cà phê đen Phin đá', 25000, 7),
+(42, 'Cà phê đen Phin nóng', 25000, 7),
+(43, 'Cà phê sữa đá', 25000, 7),
+(44, 'Cà phê sữa nóng', 25000, 7),
+(45, 'Cà phê sữa Phin đá', 29000, 7),
+(46, 'Cà phê sữa Phin nóng', 29000, 7),
+(47, 'Bạc xỉu đá', 29000, 7),
+(48, 'Bạc xỉu nóng', 35000, 7),
+(49, 'Ca cao sữa đá', 30000, 7),
+(50, 'Ca cao sữa nóng', 30000, 7),
+(51, 'Trà vải hoa hồng', 35000, 8),
+(52, 'Trà vải hoa đậu biếc', 35000, 8),
+(53, 'Trà đào cam sả', 35000, 8),
+(54, 'Trà lài hạt sen macchiato', 40000, 8),
+(55, 'Trà lài đác thơm', 40000, 8),
+(56, 'Trà sữa YVETTE', 35000, 8),
+(57, 'Trà ấm nóng', 30000, 9),
+(58, 'Trà gừng mật ong', 30000, 9),
+(59, 'Trà hoa cúc mật ong', 30000, 9),
+(60, 'Trà lipton chanh', 25000, 9),
+(61, 'Sinh tố bơ', 45000, 10),
+(62, 'Sinh tố mãng cầu', 40000, 10),
+(63, 'Sinh tố dâu', 45000, 10),
+(64, 'Sinh tố chuối hạnh nhân', 40000, 10),
+(65, 'Trà hoa cúc lạnh mật ong', 39000, 11),
+(66, 'Trà lipton chanh đá', 35000, 11),
+(67, 'Soda chanh', 35000, 11),
+(68, 'Nước suối Aquafina', 20000, 12),
+(69, 'Coca-cola', 25000, 12),
+(70, 'Pepsi', 25000, 12),
+(71, '7up', 25000, 12),
+(72, 'Warrior', 25000, 12),
+(73, 'Sting', 25000, 12),
+(74, 'Bò húc', 30000, 12);
 
 -- --------------------------------------------------------
 
@@ -367,10 +396,17 @@ ALTER TABLE `ca_lam_viec`
   ADD PRIMARY KEY (`MaNV`,`Ca`,`NgayLam`);
 
 --
+-- Indexes for table `danh_muc`
+--
+ALTER TABLE `danh_muc`
+  ADD PRIMARY KEY (`MaDanhMuc`);
+
+--
 -- Indexes for table `do_uong`
 --
 ALTER TABLE `do_uong`
-  ADD PRIMARY KEY (`MaDoUong`);
+  ADD PRIMARY KEY (`MaDoUong`),
+  ADD KEY `MaDanhMuc` (`MaDanhMuc`);
 
 --
 -- Indexes for table `hoa_don_thanh_toan`
@@ -424,6 +460,12 @@ ALTER TABLE `ban`
   MODIFY `MaBan` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
+-- AUTO_INCREMENT for table `danh_muc`
+--
+ALTER TABLE `danh_muc`
+  MODIFY `MaDanhMuc` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
 -- AUTO_INCREMENT for table `do_uong`
 --
 ALTER TABLE `do_uong`
@@ -450,6 +492,12 @@ ALTER TABLE `nhan_vien`
 --
 ALTER TABLE `ca_lam_viec`
   ADD CONSTRAINT `ca_lam_viec_ibfk_1` FOREIGN KEY (`MaNV`) REFERENCES `nhan_vien` (`MaNV`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Constraints for table `do_uong`
+--
+ALTER TABLE `do_uong`
+  ADD CONSTRAINT `do_uong_ibfk_1` FOREIGN KEY (`MaDanhMuc`) REFERENCES `danh_muc` (`MaDanhMuc`);
 
 --
 -- Constraints for table `hoa_don_thanh_toan`

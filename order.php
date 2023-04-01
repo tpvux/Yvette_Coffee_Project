@@ -10,7 +10,7 @@
  	
 
 <?php
- include('./header.php');
+ include('../cafe_billing/header.php');
  ?>
 
 </head>
@@ -173,7 +173,7 @@
     <div class="toast-body text-white">
     </div>
   </div>
-  <?php include '../db_connect.php' ?>
+  <?php include './db_connect.php' ?>
   <main id="view-panel" >
       <div class="container-fluid o-field">
 	<div class="row mt-3 ml-3 mr-3">
@@ -240,51 +240,45 @@
         <div class="col-lg-8  p-field">
             <div class="card border-primary">
                 <div class="card-header bg-dark text-white  border-primary">
-                    <b style="font-size: 20px; padding:40%">SẢN PHẨM</b>
+                    <b style="font-size: 20px; padding:40%">DANH SÁCH BÀN</b>
                 </div>
                 <div class="card-body bg-dark d-flex" id='prod-list'>
                     <div class="col-md-3">
                         <div class="w-100 pr-0 bg-white" id="cat-list">
-                            <b>Danh mục</b>
+                            <b>Khu vực</b>
                             <hr>
-                            <div class="card bg-primary mx-3 mb-2 cat-item" style="height:auto !important;" data-id = 'all'>
-                                <div class="card-body">
-                                    <span><b class="text-white">
-                                        Tất cả
-                                    </b></span>
-                                </div>
-                            </div>
                             <?php 
-                            $qry = $conn->query("SELECT * FROM `danh_muc` order by TenDanhMuc asc");
-                            while($row=$qry->fetch_assoc()):
+                            $qry = $conn->query("SELECT DISTINCT KhuVuc FROM `ban` order by KhuVuc asc");
+                            while($row=$qry->fetch_assoc()){
                             ?>
-                            <div class="card bg-primary mx-3 mb-2 cat-item" style="height:auto !important;" data-id = '<?php echo $row['MaDanhMuc'] ?>'>
+                            <div class="card bg-primary mx-3 mb-2 cat-item" style="height:auto !important;" data-id = '<?php echo $row['KhuVuc'] ?>'>
                                 <div class="card-body">
                                     <span><b class="text-white">
-                                        <?php echo ucwords($row['TenDanhMuc']) ?>
+                                        <?php echo "Khu ".ucwords($row['KhuVuc']) ?>
                                     </b></span>
                                 </div>
                             </div>
-                            <?php endwhile; ?>
+                            <?php } ?>
                         </div>
                     </div>
                     <div class="col-md-9">
                         <hr>
                         <div class="row">
                             <?php
-                            $prod = $conn->query("SELECT * FROM `do_uong` order by `TenDoUong` asc");
-                            while($row=$prod->fetch_assoc()):
+                            $prod = $conn->query("SELECT * FROM `ban` order by `MaBan` asc");
+                            while($row=$prod->fetch_assoc())
+                            {
                             ?>
                             <div class="col-md-4 mb-2">
-                                <div class="card bg-primary prod-item" data-json = '<?php echo json_encode($row) ?>' data-category-id="<?php echo $row['MaDanhMuc'] ?>">
+                                <div class="card bg-primary prod-item" data-json = '<?php echo json_encode($row) ?>' data-section="<?php echo $row['KhuVuc'] ?>">
                                     <div class="card-body">
                                         <span><b class="text-white">
-                                            <?php echo $row['TenDoUong'] ?>
+                                            <?php echo "Bàn ".$row['MaBan'] ?>
                                         </b></span>
                                     </div>
                                 </div>
                             </div>
-                        <?php endwhile; ?>
+                        <?php } ?>
                         </div>
                     </div>   
                 </div>
@@ -543,17 +537,13 @@ window._conf = function($msg='',$func='',$params = []){
     $('.cat-item').click(function(){
             var id = $(this).attr('data-id')
             console.log(id)
-            if(id == 'all'){
-                $('.prod-item').parent().toggle(true)
-            }else{
-                $('.prod-item').each(function(){
-                    if($(this).attr('data-category-id') == id){
-                        $(this).parent().toggle(true)
-                    }else{
-                        $(this).parent().toggle(false)
-                    }
-                })
-            }
+            $('.prod-item').each(function(){
+                if($(this).attr('data-section') == id){
+                    $(this).parent().toggle(true)
+                }else{
+                    $(this).parent().toggle(false)
+                }
+            })
     })
    }
       $('#save_order').click(function(){
