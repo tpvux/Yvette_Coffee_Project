@@ -139,7 +139,6 @@
         opacity: .8;
     }
 </style>
-</style>
 
 <body>
 <nav class="navbar navbar-light fixed-top bg-primary" style="padding:0">
@@ -173,7 +172,29 @@
     <div class="toast-body text-white">
     </div>
   </div>
-  <?php include '../db_connect.php' ?>
+  <?php include '../db_connect.php';
+
+    if(isset($_GET['maban'])){
+      $ma_ban = $_GET['maban'];
+      $order = $conn->query("SELECT * FROM `order` o, `hoa_don_thanh_toan` h 
+      WHERE o.MaOrder = h.MaOrder
+      AND h.TienThua = 0
+      AND o.MaBan = $ma_ban
+      GROUP BY o.MaOrder;");
+    
+      if (($row1 = $order->fetch_assoc()) > 0)
+      {
+        $MaOrder = $row1['MaOrder'];
+        $items = $conn->query("SELECT * FROM `order` o, `do_uong` d Where d.MaDoUong = o.MaDoUong and o.MaBan = $ma_ban");
+        $check = 1;
+      }
+      else
+      {
+        $sql = $conn->query("SELECT MAX(MaOrder) as 'MaOrder' FROM `order`");
+        $row1 = $sql->fetch_assoc();
+        $MaOrder = $row1['MaOrder'] + 1;
+      }
+    ?>
   <main id="view-panel" >
       <div class="container-fluid o-field">
 	<div class="row mt-3 ml-3 mr-3">
@@ -187,11 +208,19 @@
                 </div>
                <div class="card-body">
             <form action="" id="manage-order">
-                <input type="hidden" name="id" value="<?php echo isset($_GET['id']) ? $_GET['id'] : ''?>">
+                <input type="hidden" name="id" value="<?php echo $ma_ban ?>">
                 <div class="bg-white" id='o-list'>
                             <div class="d-flex w-100 bg-dark mb-1">
                                 <label for="" class="text-white" style="padding-top:5px"><b>Mã Order</b></label>
-                                <input type="number" class="form-control-sm" name="order_number" value="<?php echo isset($order_number) ? $order_number : '' ?>" style="margin:3px; margin-top: 0px" required readonly="">
+                                <input type="number" class="form-control-sm" name="order_number" value="<?php echo $MaOrder ?>" style="margin:3px; margin-top: 0px"  readonly="">
+                                <?php 
+                                if (isset($check) == 1)
+                                {
+                                  ?>
+                                    <button style="background-color:white; margin-bottom: 5px ;margin-left: 110px" class="btn btn-sm btn-outline-danger delete_order" type="button" data-id="<?php echo $id  ?>">Xóa Order</button>
+                                  <?php
+                                }
+                                ?> 
                             </div>
                    <table class="table table-bordered bg-light">
                         <colgroup>
@@ -204,11 +233,40 @@
                            <tr>
                                <th>Số lượng</th>
                                <th>Tên món</th>
-                               <th>Đơn giá</th>
+                               <th>Số tiền</th>
                                <th></th>
                            </tr>
                        </thead>
                        <tbody>
+                       <?php 
+                          if(isset($items)){
+                           while($row=$items->fetch_assoc()){
+                           ?>
+                           <tr>
+                               <td>
+                                    <div class="d-flex">
+                                        <span class="btn btn-sm btn-secondary btn-minus"><b><i class="fa fa-minus"></i></b></span>
+                                        <input type="number" name="qty[]" id="" value="<?php echo $row['SoLuong'] ?>">
+                                        <span class="btn btn-sm btn-secondary btn-plus"><b><i class="fa fa-plus"></i></b></span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="hidden" name="item_id[]" id="" value="<?php echo $row['MaOrder'] ?>">
+                                    <input type="hidden" name="product_id[]" id="" value="<?php echo $row['MaDoUong'] ?>"><?php echo ucwords($row['TenDoUong']) ?>
+                                </td>
+                                <td class="text-right">
+                                    <input type="hidden" name="price[]" id="" value="<?php echo $row['DonGia'] ?>">
+                                    <input type="hidden" name="amount[]" id="" value="<?php echo $row['SoTien'] ?>">
+                                    <span class="amount"><?php echo number_format($row['SoTien'],0) ?></span>
+                                </td>
+                                <td>
+                                    <span class="btn btn-sm btn-danger btn-rem"><b><i class="fa fa-times text-white"></i></b></span>
+                                </td>
+                           </tr>
+                           <?php
+                           }
+                          }
+                          ?>
                            <script>
                                $(document).ready(function(){
                                  qty_func()
@@ -240,21 +298,28 @@
         <div class="col-lg-8  p-field">
             <div class="card border-primary">
                 <div class="card-header bg-dark text-white  border-primary">
-                    <b style="font-size: 20px; padding:40%">DANH SÁCH BÀN</b>
+                    <b style="font-size: 20px; padding:40%">SẢN PHẨM</b>
                 </div>
                 <div class="card-body bg-dark d-flex" id='prod-list'>
                     <div class="col-md-3">
                         <div class="w-100 pr-0 bg-white" id="cat-list">
-                            <b>Khu vực</b>
+                            <b>Danh mục</b>
                             <hr>
-                            <?php 
-                            $qry = $conn->query("SELECT DISTINCT KhuVuc FROM `ban` order by KhuVuc asc");
-                            while($row=$qry->fetch_assoc()){
-                            ?>
-                            <div class="card bg-primary mx-3 mb-2 cat-item" style="height:auto !important;" data-id = '<?php echo $row['KhuVuc'] ?>'>
+                            <div class="card bg-primary mx-3 mb-2 cat-item" style="height:auto !important;" data-id = 'all'>
                                 <div class="card-body">
                                     <span><b class="text-white">
-                                        <?php echo "Khu ".ucwords($row['KhuVuc']) ?>
+                                        Tất cả
+                                    </b></span>
+                                </div>
+                            </div>
+                            <?php 
+                            $qry = $conn->query("SELECT * FROM `danh_muc` order by TenDanhMuc asc");
+                            while($row=$qry->fetch_assoc()){
+                            ?>
+                            <div class="card bg-primary mx-3 mb-2 cat-item" style="height:auto !important;" data-id = '<?php echo $row['MaDanhMuc'] ?>'>
+                                <div class="card-body">
+                                    <span><b class="text-white">
+                                        <?php echo ucwords($row['TenDanhMuc']) ?>
                                     </b></span>
                                 </div>
                             </div>
@@ -265,15 +330,14 @@
                         <hr>
                         <div class="row">
                             <?php
-                            $prod = $conn->query("SELECT * FROM `ban` order by `MaBan` asc");
-                            while($row=$prod->fetch_assoc())
-                            {
+                            $prod = $conn->query("SELECT * FROM `do_uong` order by `TenDoUong` asc");
+                            while($row=$prod->fetch_assoc()){
                             ?>
                             <div class="col-md-4 mb-2">
-                                <div class="card bg-primary prod-item" data-json = '<?php echo json_encode($row) ?>' data-section="<?php echo $row['KhuVuc'] ?>">
+                                <div class="card bg-primary prod-item" data-json = '<?php echo json_encode($row) ?>' data-category-id="<?php echo $row['MaDanhMuc'] ?>">
                                     <div class="card-body">
                                         <span><b class="text-white">
-                                            <?php echo "Bàn ".$row['MaBan'] ?>
+                                            <?php echo $row['TenDoUong'] ?>
                                         </b></span>
                                     </div>
                                 </div>
@@ -371,6 +435,19 @@
       </div>
     </div>
   </div>
+    <?php 
+    }
+    else
+    {
+      ?>
+      <script>
+        alert("Vui lòng chọn bàn");
+        location.assign("../billing/index.php");
+      </script>
+      <?php
+    }
+
+    ?>
 </body>
 <script>
 	 window.start_load = function(){
@@ -471,6 +548,7 @@ window._conf = function($msg='',$func='',$params = []){
 
 // của home.php
   var total;
+  var manv = 2023000003;
     cat_func();
    $('#prod-list .prod-item').click(function(){
         var data = $(this).attr('data-json')
@@ -485,9 +563,9 @@ window._conf = function($msg='',$func='',$params = []){
         }
         var tr = $('<tr class="o-item"></tr>')
         tr.attr('data-id',data.MaDoUong)
-        tr.append('<td><div class="d-flex"><span class="btn btn-sm btn-secondary btn-minus"><b><i class="fa fa-minus"></i></b></span><input type="number" name="qty[]" id="" value="1" disabled><span class="btn btn-sm btn-secondary btn-plus"><b><i class="fa fa-plus"></i></b></span></div></td>') 
+        tr.append('<td><div class="d-flex"><span class="btn btn-sm btn-secondary btn-minus"><b><i class="fa fa-minus"></i></b></span><input type="number" name="qty[]" id="" value="1" readonly=""><span class="btn btn-sm btn-secondary btn-plus"><b><i class="fa fa-plus"></i></b></span></div></td>') 
         tr.append('<td><input type="hidden" name="item_id[]" id="" value=""><input type="hidden" name="product_id[]" id="" value="'+data.MaDoUong+'">'+data.TenDoUong+'</td>') 
-        tr.append('<td class="text-right"><input type="hidden" name="price[]" id="" value="'+data.DonGia+'"><input type="hidden" name="amount[]" id="" value="'+data.DonGia+'"><span class="amount">'+(parseInt(data.DonGia).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:0,maximumFractionDigits:0}))+'</span></td>') 
+        tr.append('<td class="text-right"><input type="hidden" name="price[]" id="" value="'+data.DonGia+'"><input type="hidden" name="amount[]" id="" value="'+data.TongTien+'"><span class="amount">'+(parseInt(data.DonGia).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:0,maximumFractionDigits:0}))+'</span></td>') 
         tr.append('<td><span class="btn btn-sm btn-danger btn-rem"><b><i class="fa fa-times text-white"></i></b></span></td>')
         $('#o-list tbody').append(tr)
         qty_func()
@@ -537,20 +615,21 @@ window._conf = function($msg='',$func='',$params = []){
     $('.cat-item').click(function(){
             var id = $(this).attr('data-id')
             console.log(id)
-            $('.prod-item').each(function(){
-                if($(this).attr('data-section') == id){
-                    $(this).parent().toggle(true)
-                }else{
-                    $(this).parent().toggle(false)
-                }
-            })
+            if(id == 'all'){
+                $('.prod-item').parent().toggle(true)
+            }else{
+                $('.prod-item').each(function(){
+                    if($(this).attr('data-category-id') == id){
+                        $(this).parent().toggle(true)
+                    }else{
+                        $(this).parent().toggle(false)
+                    }
+                })
+            }
     })
    }
       $('#save_order').click(function(){
-        if (confirm("Bạn có chắc chắn không?")==true)
-      {
-        $('#manage-order').submit()
-      }
+        _conf("Are you sure to delete this order ?",[$('#manage-order').submit()],)
       })
 //    $("#pay").click(function(){
 //     start_load()
@@ -592,36 +671,27 @@ window._conf = function($msg='',$func='',$params = []){
         val = val.replace(/[^0-9 \,]/, '');
         $(this).val(val)
     })
-    // $('#manage-order').submit(function(e){
-    //     e.preventDefault();
-    //     start_load()
-    //     $.ajax({
-    //         url:'../ajax.php?action=save_order',
-    //         method:'POST',
-    //         data:$(this).serialize(),
-    //         success:function(resp){
-    //             if(resp > 0){
-    //                 if($('[name="total_tendered"]').val() > 0){
-    //                     alert_toast("Data successfully saved.",'success')
-    //                     setTimeout(function(){
-    //                         var nw = window.open('../receipt.php?id='+resp,"_blank","width=900,height=600")
-    //                         setTimeout(function(){
-    //                             nw.print()
-    //                             setTimeout(function(){
-    //                                 nw.close()
-    //                                 location.reload()
-    //                             },500)
-    //                         },500)
-    //                     },500)
-    //                 }else{
-    //                     alert_toast("Data successfully saved.",'success')
-    //                     setTimeout(function(){
-    //                         location.reload()
-    //                     },500)
-    //                 }
-    //             }
-    //         }
-    //     })
-    // })
+    $('#manage-order').submit(function(e){
+        e.preventDefault();
+        start_load()
+        $.ajax({
+            url:'../ajax.php?action=save_order',
+            method:'POST',
+            data:$(this).serialize(),
+            success:function(resp){
+                if(resp > 0){
+                  alert_toast("Data successfully saved.",'success')
+                  setTimeout(function(){
+                      location.reload()
+                  },500)
+                }
+            }
+        })
+    })
+    
+    $('.delete_order').click(function(){
+		_conf("Are you sure to delete this order ?","delete_order",[$(this).attr('data-id')])
+	})
+
 </script>
 </html>

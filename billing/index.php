@@ -149,14 +149,14 @@
       
       </div>
       <div class="col-md-4 float-left text-white">
-        <large><b><?php ?></b></large>
+        <large><b><?php //session_name ?></b></large>
       </div>
       <div class="float-right">
         <div class=" dropdown mr-4">
             <a href="#" class="text-white dropdown-toggle"  id="account_settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['login_name'] ?> </a>
               <div class="dropdown-menu" aria-labelledby="account_settings" style="left: -2.5em;">
                 <a class="dropdown-item" href="javascript:void(0)" id="manage_my_account"><i class="fa fa-cog"></i> Manage Account</a>
-                <a class="dropdown-item" href="ajax.php?action=logout" id="logout"><i class="fa fa-power-off"></i>Logout</a>
+                <a class="dropdown-item" href="ajax.php?action=logout" id="logout"><i class="fa fa-power-off"></i> Logout</a>
               </div>
         </div>
       </div>
@@ -166,7 +166,7 @@
 
 <script>
   $('#manage_my_account').click(function(){
-    uni_modal("Manage Account","manage_user.php?id=<?php echo $_SESSION['login_id'] ?>&mtype=own")
+    uni_modal("Manage Account","manage_user.php?id=<?php // echo $_SESSION['login_id'] ?>&mtype=own")
   })
 </script>
   <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -177,114 +177,80 @@
   <main id="view-panel" >
       <div class="container-fluid o-field">
 	<div class="row mt-3 ml-3 mr-3">
-        <div class="col-lg-4">
-           <div class="card bg-dark border-primary">
-                <div class="card-header text-white  border-primary">
-                    <b style="font-size:15px">DANH SÁCH MÓN ĐÃ CHỌN</b>
-                <span class="float:right"><a class="btn btn-primary btn-sm col-sm-3 float-right" href="../index.php" id="">
-                    <i class="fa fa-home"></i> Trang chủ
-                </a></span>
-                </div>
-               <div class="card-body">
-            <form action="" id="manage-order">
-                <input type="hidden" name="id" value="<?php echo isset($_GET['id']) ? $_GET['id'] : ''?>">
-                <div class="bg-white" id='o-list'>
-                            <div class="d-flex w-100 bg-dark mb-1">
-                                <label for="" class="text-white" style="padding-top:5px"><b>Mã Order</b></label>
-                                <input type="number" class="form-control-sm" name="order_number" value="<?php echo isset($order_number) ? $order_number : '' ?>" style="margin:3px; margin-top: 0px" required readonly="">
-                            </div>
-                   <table class="table table-bordered bg-light">
-                        <colgroup>
-                            <col width="20%">
-                            <col width="40%">
-                            <col width="40%">
-                            <col width="5%">
-                        </colgroup>
-                       <thead>
-                           <tr>
-                               <th>Số lượng</th>
-                               <th>Tên món</th>
-                               <th>Đơn giá</th>
-                               <th></th>
-                           </tr>
-                       </thead>
-                       <tbody>
-                           <script>
-                               $(document).ready(function(){
-                                 qty_func()
-                                    calc()
-                                    cat_func();
-                               })
-                           </script>
-                       </tbody>
-                   </table>
-                </div>
-                   <div class="d-block bg-white" id="calc">
-                       <table class="" width="100%">
-                           <tbody>
-                                <tr>
-                                   <td><b><h4>Tổng tiền</h4></b></td>
-                                   <td class="text-right">
-                                       <input type="hidden" name="total_amount" value="0">
-                                       <input type="hidden" name="total_tendered" value="0">
-                                       <span class=""><h4><b id="total_amount">0</b></h4></span>
-                                   </td>
-                               </tr>
-                           </tbody>
-                       </table>
-                   </div>
-           </form>
-               </div>
-           </div>
-        </div>
-        <div class="col-lg-8  p-field">
+        <div class="col-lg-8  p-field" style="flex:none ; max-width:100%">
             <div class="card border-primary">
                 <div class="card-header bg-dark text-white  border-primary">
-                    <b style="font-size: 20px; padding:40%">SẢN PHẨM</b>
+                    <b style="font-size: 20px; padding:40%">DANH SÁCH BÀN</b>
                 </div>
                 <div class="card-body bg-dark d-flex" id='prod-list'>
                     <div class="col-md-3">
                         <div class="w-100 pr-0 bg-white" id="cat-list">
-                            <b>Danh mục</b>
+                            <b>Khu vực</b>
                             <hr>
-                            <div class="card bg-primary mx-3 mb-2 cat-item" style="height:auto !important;" data-id = 'all'>
-                                <div class="card-body">
-                                    <span><b class="text-white">
-                                        Tất cả
-                                    </b></span>
-                                </div>
-                            </div>
                             <?php 
-                            $qry = $conn->query("SELECT * FROM `danh_muc` order by TenDanhMuc asc");
-                            while($row=$qry->fetch_assoc()):
+                            $qry = $conn->query("SELECT DISTINCT KhuVuc FROM `ban` order by KhuVuc asc");
+                            while($row=$qry->fetch_assoc()){
                             ?>
-                            <div class="card bg-primary mx-3 mb-2 cat-item" style="height:auto !important;" data-id = '<?php echo $row['MaDanhMuc'] ?>'>
+                            <div class="card bg-primary mx-3 mb-2 cat-item" style="height:auto !important;" data-id = '<?php echo $row['KhuVuc'] ?>'>
                                 <div class="card-body">
                                     <span><b class="text-white">
-                                        <?php echo ucwords($row['TenDanhMuc']) ?>
+                                        <?php echo "Khu ".ucwords($row['KhuVuc']) ?>
                                     </b></span>
                                 </div>
                             </div>
-                            <?php endwhile; ?>
+                            <?php } ?>
                         </div>
                     </div>
                     <div class="col-md-9">
                         <hr>
                         <div class="row">
                             <?php
-                            $prod = $conn->query("SELECT * FROM `do_uong` order by `TenDoUong` asc");
-                            while($row=$prod->fetch_assoc()):
+                            $prod = $conn->query("SELECT * FROM `ban` order by `MaBan` asc");
+                            while($row=$prod->fetch_assoc())
+                            {
+                              $maban = $row['MaBan'];
+                              $sql = $conn->query("SELECT *, SUM(o.SoLuong) as 'TongSL' FROM `order` o, `hoa_don_thanh_toan` h 
+                              WHERE o.MaOrder = h.MaOrder
+                              AND h.TienThua = 0
+                              AND o.MaBan = $maban
+                              GROUP BY o.MaOrder");
+                              if(($row1 = $sql->fetch_assoc())>0){
+                                $MaOrder = $row1['MaOrder'];
+                                $TongTien = $row1['TongTien'];
+                                $TongSL = $row1['TongSL'];
+                                ?>
+                                <div class="col-md-3 mb-3" >
+                                <div class="card bg-primary prod-item" style="background-color: black!important"
+                                onclick="location.href='./order.php?maban=<?php echo $row['MaBan'] ?>'" 
+                                data-json = '<?php echo json_encode($row) ?>' data-section="<?php echo $row['KhuVuc'] ?>">
+                                    <div class="card-body">
+                                        <span><center><b class="text-white">
+                                            <?php echo "Bàn ".$row['MaBan']."</br>";
+                                            echo "Mã Order: ".$MaOrder."</br>";
+                                            echo "Tổng SL: ".$TongSL."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tổng tiền: ".$TongTien ?>
+                                        </b></center></span>
+                                    </div>
+                                </div>
+                            </div>
+                                <?php
+                              }
+                              else
+                              {
                             ?>
-                            <div class="col-md-4 mb-2">
-                                <div class="card bg-primary prod-item" data-json = '<?php echo json_encode($row) ?>' data-category-id="<?php echo $row['MaDanhMuc'] ?>">
+                            <div class="col-md-3 mb-3" >
+                                <div class="card bg-primary prod-item"
+                                onclick="location.href='./order.php?maban=<?php echo $row['MaBan'] ?>'" 
+                                data-json = '<?php echo json_encode($row) ?>' data-section="<?php echo $row['KhuVuc'] ?>">
                                     <div class="card-body">
                                         <span><b class="text-white">
-                                            <?php echo $row['TenDoUong'] ?>
+                                            <?php echo "Bàn ".$row['MaBan'] ?>
                                         </b></span>
                                     </div>
                                 </div>
                             </div>
-                        <?php endwhile; ?>
+                        <?php 
+                          }
+                          } ?>
                         </div>
                     </div>   
                 </div>
@@ -298,85 +264,14 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="pay_modal" role='dialog'>
-    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-        <h5 class="modal-title"><b>Pay</b></h5>
-         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-            <div class="form-group">
-                <label for="">Amount Payable</label>
-                <input type="text" class="form-control text-right" id="apayable" readonly="" value="">
-            </div>
-            <div class="form-group">
-                <label for="">Amount Tendered</label>
-                <input type="text" class="form-control text-right" id="tendered" value="" autocomplete="off">
-            </div>
-            <div class="form-group">
-                <label for="">Change</label>
-                <input type="text" class="form-control text-right" id="change" value="0" readonly="">
-            </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary btn-sm"  form="manage-order">Pay</button>
-        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-      </div>
-      </div>
-    </div>
-  </div>
   </main>
 
+  <!-- Loader -->
   <div id="preloader"></div>
   <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
 
-<div class="modal fade" id="confirm_modal" role='dialog'>
-    <div class="modal-dialog modal-md" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-        <h5 class="modal-title">Confirmation</h5>
-      </div>
-      <div class="modal-body">
-        <div id="delete_content"></div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id='confirm' onclick="">Continue</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal fade" id="uni_modal" role='dialog'>
-    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-        <h5 class="modal-title"></h5>
-         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id='submit' onclick="$('#uni_modal form').submit()">Save</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-      </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal fade" id="viewer_modal" role='dialog'>
-    <div class="modal-dialog modal-md" role="document">
-      <div class="modal-content">
-              <button type="button" class="btn-close" data-dismiss="modal"><span class="fa fa-times"></span></button>
-              <img src="" alt="">
-      </div>
-    </div>
-  </div>
+  
+ 
 </body>
 <script>
 	 window.start_load = function(){
@@ -478,28 +373,7 @@ window._conf = function($msg='',$func='',$params = []){
 // của home.php
   var total;
     cat_func();
-   $('#prod-list .prod-item').click(function(){
-        var data = $(this).attr('data-json')
-            data = JSON.parse(data)
-        if($('#o-list tr[data-id="'+data.MaDoUong+'"]').length > 0){
-            var tr = $('#o-list tr[data-id="'+data.MaDoUong+'"]')
-            var qty = tr.find('[name="qty[]"]').val();
-                qty = parseInt(qty) + 1;
-                qty = tr.find('[name="qty[]"]').val(qty).trigger('change')
-                calc()
-            return false;
-        }
-        var tr = $('<tr class="o-item"></tr>')
-        tr.attr('data-id',data.MaDoUong)
-        tr.append('<td><div class="d-flex"><span class="btn btn-sm btn-secondary btn-minus"><b><i class="fa fa-minus"></i></b></span><input type="number" name="qty[]" id="" value="1" disabled><span class="btn btn-sm btn-secondary btn-plus"><b><i class="fa fa-plus"></i></b></span></div></td>') 
-        tr.append('<td><input type="hidden" name="item_id[]" id="" value=""><input type="hidden" name="product_id[]" id="" value="'+data.MaDoUong+'">'+data.TenDoUong+'</td>') 
-        tr.append('<td class="text-right"><input type="hidden" name="price[]" id="" value="'+data.DonGia+'"><input type="hidden" name="amount[]" id="" value="'+data.DonGia+'"><span class="amount">'+(parseInt(data.DonGia).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:0,maximumFractionDigits:0}))+'</span></td>') 
-        tr.append('<td><span class="btn btn-sm btn-danger btn-rem"><b><i class="fa fa-times text-white"></i></b></span></td>')
-        $('#o-list tbody').append(tr)
-        qty_func()
-        calc()
-        cat_func()
-   })
+   
     function qty_func(){
          $('#o-list .btn-minus').click(function(){
             var qty = $(this).siblings('input').val()
@@ -543,17 +417,13 @@ window._conf = function($msg='',$func='',$params = []){
     $('.cat-item').click(function(){
             var id = $(this).attr('data-id')
             console.log(id)
-            if(id == 'all'){
-                $('.prod-item').parent().toggle(true)
-            }else{
-                $('.prod-item').each(function(){
-                    if($(this).attr('data-category-id') == id){
-                        $(this).parent().toggle(true)
-                    }else{
-                        $(this).parent().toggle(false)
-                    }
-                })
-            }
+            $('.prod-item').each(function(){
+                if($(this).attr('data-section') == id){
+                    $(this).parent().toggle(true)
+                }else{
+                    $(this).parent().toggle(false)
+                }
+            })
     })
    }
       $('#save_order').click(function(){
