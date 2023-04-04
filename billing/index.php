@@ -211,7 +211,7 @@
                               $maban = $row['MaBan'];
                               $sql = $conn->query("SELECT *, SUM(o.SoLuong) as 'TongSL' FROM `order` o, `hoa_don_thanh_toan` h 
                               WHERE o.MaOrder = h.MaOrder
-                              AND h.TienThua = 0
+                              AND h.TienNhan = 0
                               AND o.MaBan = $maban
                               GROUP BY o.MaOrder");
                               if(($row1 = $sql->fetch_assoc())>0){
@@ -257,7 +257,7 @@
             <div class="card-footer bg-dark  border-primary">
                 <div class="row justify-content-center">
                     <!-- <div class="btn btn btn-sm col-sm-3 btn-primary mr-2" type="button" id="pay">Pay</div> -->
-                    <div class="btn btn btn-sm col-sm-3 btn-primary" type="button" id="save_order">Xác nhận Order</div>
+                    <!-- <div class="btn btn btn-sm col-sm-3 btn-primary" type="button" id="save_order">Xác nhận Order</div> -->
                 </div>
             </div>
             </div>      			
