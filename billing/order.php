@@ -640,11 +640,27 @@ window._conf = function($msg='',$func='',$params = []){
     $('#tendered').val('').trigger('change')
     $('[name="total_tendered"]').val('')
     $('#manage-order').submit()
-   })
-  }
+  })
+}
       $('#save_order').click(function(){
-        _conf("Xác nhận Order?",'save_order',[$('#ma_order').attr('value')])
-      })
+        start_load()
+        var amount = $('[name="total_amount"]').val()
+        if($('#o-list tbody tr').length <= 0){
+            alert_toast("Vui lòng chọn ít nhất 1 món",'danger')
+            end_load()
+            return false;
+        }
+        else
+        {
+          _conf("Xác nhận Order?",'save_order',[$('#ma_order').attr('value')])
+        }
+
+        setTimeout(function(){
+            $('#tendered').val('').trigger('change')
+            $('#tendered').focus()
+            end_load()
+        },400)
+   })
    $("#pay").click(function(){
     start_load()
     var amount = $('[name="total_amount"]').val()
