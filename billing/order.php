@@ -572,7 +572,7 @@ window._conf = function($msg='',$func='',$params = []){
         tr.attr('data-id',data.MaDoUong)
         tr.append('<td><div class="d-flex"><span class="btn btn-sm btn-secondary btn-minus"><b><i class="fa fa-minus"></i></b></span><input type="number" name="qty[]" id="" value="1" readonly=""><span class="btn btn-sm btn-secondary btn-plus"><b><i class="fa fa-plus"></i></b></span></div></td>') 
         tr.append('<td><input type="hidden" name="item_id[]" id="" value=""><input type="hidden" name="product_id[]" id="" value="'+data.MaDoUong+'">'+data.TenDoUong+'</td>') 
-        tr.append('<td class="text-right"><input type="hidden" name="price[]" id="" value="'+data.DonGia+'"><input type="hidden" name="amount[]" id="" value="'+data.TongTien+'"><span class="amount">'+(parseInt(data.DonGia).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:0,maximumFractionDigits:0}))+'</span></td>') 
+        tr.append('<td class="text-right"><input type="hidden" name="price[]" id="" value="'+data.DonGia+'"><input type="hidden" name="amount[]" id="" value="'+data.DonGia+'"><span class="amount">'+(parseInt(data.DonGia).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:0,maximumFractionDigits:0}))+'</span></td>') 
         tr.append('<td><span class="btn btn-sm btn-danger btn-rem"><b><i class="fa fa-times text-white"></i></b></span></td>')
         $('#o-list tbody').append(tr)
         qty_func()
