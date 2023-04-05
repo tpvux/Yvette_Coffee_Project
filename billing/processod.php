@@ -39,7 +39,7 @@
                         {
                             ?>
                                 <script>
-                                    alert("Xử lí thành công");
+                                    alert("Cập nhật order thành công");
                                     location.assign("../billing/index.php");
                                     </script>
                             <?php
@@ -48,7 +48,7 @@
                         {
                         ?>
                             <script>
-                                alert("Xử lí thất bại");
+                                alert("Cập nhật order thất bại");
                                 location.assign("../billing/index.php");
                                 </script>            
                         <?php
@@ -67,7 +67,7 @@
                             {
                                 ?>
                                     <script>
-                                        alert("Xử lí thành công");
+                                        alert("Cập nhật order thành công");
                                         location.assign("../billing/index.php");
                                         </script>
                                 <?php
@@ -76,7 +76,7 @@
                             {
                             ?>
                                 <script>
-                                    alert("Xử lí thất bại");
+                                    alert("Cập nhật order thất bại");
                                     location.assign("../billing/index.php");
                                     </script>            
                             <?php
@@ -92,7 +92,7 @@
                             {
                                 ?>
                                     <script>
-                                        alert("Xử lí thành công");
+                                        alert("Cập nhật order thành công");
                                         location.assign("../billing/index.php");
                                         </script>
                                 <?php
@@ -101,7 +101,7 @@
                             {
                             ?>
                                 <script>
-                                    alert("Xử lí thất bại");
+                                    alert("Cập nhật order thất bại");
                                     location.assign("../billing/index.php");
                                     </script>            
                             <?php
@@ -127,7 +127,7 @@
             {
                 ?>
                     <script>
-                        alert("Xử lí thành công");
+                        alert("Tạo order thành công");
                         location.assign("../billing/index.php");
                         </script>
                 <?php
@@ -136,7 +136,7 @@
             {
             ?>
                     <script>
-                        alert("Xử lí thất bại");
+                        alert("Tạo order thất bại");
                         location.assign("../billing/index.php");
                         </script>        
             <?php

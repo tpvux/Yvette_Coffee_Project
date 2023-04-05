@@ -202,26 +202,28 @@
            <div class="card bg-dark border-primary">
                 <div class="card-header text-white  border-primary">
                     <b style="font-size:15px">DANH SÁCH MÓN ĐÃ CHỌN</b>
+                    
                 <span class="float:right"><a class="btn btn-primary btn-sm col-sm-3 float-right" href="../index.php" id="">
                     <i class="fa fa-home"></i> Trang chủ
                 </a></span>
                 </div>
-        <div class="card-body">
-            <form action="./process.php" method="POST" id="manage-order">
+                <div class="card-body">
+          <?php
+            if (isset($check) == 1)
+            {
+              ?>
+                  <button style="background-color:white; margin-top:-25px; padding:0px; position:relative; display:flex; margin-left:80% ;top:30px" class="btn btn-outline-danger delete_order" type="submit" data-id="<?php echo $MaOrder?>">
+                  <form action="./deleteod.php"  id="delete_form" method="POST"><input type="hidden" name="ma_order_del" value="<?php echo $MaOrder?>"></form>Xóa Order</button>
+              <?php
+            }
+            ?>
+            <form action="./processod.php" method="POST" id="manage-order">
                 <input type="hidden" name="id" value="<?php echo $ma_ban ?>">
                 <input type="hidden" name="manv" value="<?php echo $manv?>">
                 <div class="bg-white" id='o-list'>
                             <div class="d-flex w-100 bg-dark mb-1">
                                 <label for="" class="text-white" style="padding-top:5px"><b>Mã Order</b></label>
                                 <input type="number" class="form-control-sm" name="ma_order" id="ma_order" value="<?php echo $MaOrder ?>" style="margin:3px; margin-top: 0px"  readonly="">
-                                <?php 
-                                if (isset($check) == 1)
-                                {
-                                  ?>
-                                    <button style="background-color:white; margin-bottom: 5px ;margin-left: 110px" class="btn btn-sm btn-outline-danger delete_order" type="button" data-id="<?php echo $MaOrder?>">Xóa Order</button>
-                                  <?php
-                                }
-                                ?> 
                             </div>
                    <table class="table table-bordered bg-light">
                         <colgroup>
@@ -357,7 +359,14 @@
                       <?php
                     }
                     ?> 
-                    <button class="btn btn btn-sm col-sm-3 btn-primary" type="submit" id="save_order">Xác nhận Order</button>
+                    <button class="btn btn btn-sm col-sm-3 btn-primary" type="submit" id="save_order">
+                      <?php 
+                      if (isset($check)==1)
+                      {echo "Cập nhật order";}
+                      else
+                      {echo "Tạo order mới";} 
+                    ?>
+                    </button>
                 </div>
             </div>
             </div>      			
@@ -635,13 +644,6 @@ window._conf = function($msg='',$func='',$params = []){
             }
     })
    }
-  //  function save_order(){
-  //  $('#save_order').click(function(){
-  //   $('#tendered').val('').trigger('change')
-  //   $('[name="total_tendered"]').val('')
-  //   $('#manage-order').submit()
-  //   })
-  //   }   
       $('#save_order').click(function(){
         start_load()
         var amount = $('[name="total_amount"]').val()
@@ -655,7 +657,6 @@ window._conf = function($msg='',$func='',$params = []){
           if(confirm("Xác nhận order?")==true)
             {
               $('#manage-order').submit()
-              // location.assign("./sav eod.php?")
             }
         }
 
@@ -756,25 +757,27 @@ window._conf = function($msg='',$func='',$params = []){
     //     })
     
 	$('.delete_order').click(function(){
-		_conf("Are you sure to delete this order ?","delete_order",[$(this).attr('data-id')])
-	})
-	function delete_order($id){
-		start_load()
-		$.ajax({
-			url:'../billing/ajax.php?action=delete_order',
-			method:'POST',
-			data:{id:$id},
-			success:function(resp){
-				if(resp==1){
-					alert_toast("Data successfully deleted",'success')
-					setTimeout(function(){
-						location.reload()
-					},1500)
+        start_load()
+        var amount = $('[name="total_amount"]').val()
+        if($('#o-list tbody tr').length <= 0){
+            alert_toast("Vui lòng chọn ít nhất 1 món",'danger')
+            end_load()
+            return false;
+        }
+        else
+        {
+          if(confirm("Bạn có chắn chắn muốn xóa order?")==true)
+            {
+              $('#delete_form').submit()
+            }
+        }
 
-				}
-			}
-    })
-  }
+        setTimeout(function(){
+            $('#tendered').val('').trigger('change')
+            $('#tendered').focus()
+            end_load()
+        },400)
+   })
       
 </script>
 </html>
