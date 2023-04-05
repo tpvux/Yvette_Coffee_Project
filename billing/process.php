@@ -1,101 +1,157 @@
 <?php
     include '../db_connect.php';
-    $ma_ban = $_POST["id"];
-    $manv = $_POST["manv"];
-    $MaOrder = $_POST["ma_order"];
-    $tt = $_POST["total_amount"];
-
-    $list1 = $_POST["product_id"];
-    $list2 = $_POST["qty"];
-    $list3 = $_POST["amount"];
-    
-    $count = count($list1);
-
-    $sql = $conn->query("SELECT * FROM `order` o, `hoa_don_thanh_toan` h WHERE o.MaOrder = h.MaOrder AND h.TienNhan = 0 AND o.MaOrder = $MaOrder"); // order đã tồn tại nhưng chưa thanh toán
-    for ($i = 0; $i < $count; $i++)
+    if (isset($_POST))
     {
-        $id = $list1[$i];
-        $sl = $list2[$i];
-        $st = $list3[$i];
-            if (($row = $sql->fetch_assoc()) > 0)
+        //Tính năng thêm và sửa order
+        $ma_ban = $_POST["id"];
+        $manv = $_POST["manv"];
+        $MaOrder = $_POST["ma_order"];
+        $tt = $_POST["total_amount"];
+
+        $list1 = $_POST["product_id"];
+        $list2 = $_POST["qty"];
+        $list3 = $_POST["amount"];
+
+        $count = count($list1); //mới
+
+        $sql = $conn->query("SELECT o.MaDoUong FROM `order` o, `hoa_don_thanh_toan` h WHERE o.MaOrder = h.MaOrder 
+        AND h.TienNhan = 0 AND o.MaOrder = $MaOrder"); // order đã tồn tại nhưng chưa thanh toán
+        $num = $sql->num_rows; //cũ
+        if ($num > 0)
+        {
+            while($row = $sql->fetch_assoc())
             {
-                if ($row['MaDoUong']==$id)
+                $list4[]=($row['MaDoUong']);
+            }
+            
+            foreach ($list4 as $key => $value) //list cũ 
+            {
+                foreach ($list1 as $key1 => $value1) //list mới 
                 {
-                    if ($sl < 1)
+                    if ($value1 == $value)
                     {
-                        $sql2 = $conn->query("DELETE FROM `order` WHERE MaOrder = $MaOrder AND MaBan = $ma_ban AND MaDoUong = $id");
-                    }
-                    else
-                    {
-                        $sql2 = $conn->query("UPDATE `order` SET SoLuong = $sl , SoTien=  $st  WHERE MaOrder = $MaOrder AND MaDoUong= $id");
-                    }
-                    $sql3 = $conn->query("UPDATE `hoa_don_thanh_toan` SET TongTien = $tt WHERE MaOrder = $MaOrder");
-                    if (($sql2 && $sql3))
-                    {
+                        $id = $value;
+                        $sl = $list2[$key1];
+                        $st = $list3[$key1];
+                        $sql2 = $conn->query("UPDATE `order` SET SoLuong = $sl , SoTien=  $st  WHERE MaOrder = $MaOrder AND MaDoUong = $id");
+                        $sql3 = $conn->query("UPDATE `hoa_don_thanh_toan` SET TongTien = $tt WHERE MaOrder = $MaOrder");
+                        if (($sql2 && $sql3))
+                        {
+                            ?>
+                                <script>
+                                    alert("Xử lí thành công");
+                                    location.assign("../billing/index.php");
+                                    </script>
+                            <?php
+                        }
+                        else
+                        {
                         ?>
                             <script>
-                                alert("Xử lí thành công");
+                                alert("Xử lí thất bại");
                                 location.assign("../billing/index.php");
-                                </script>
+                                </script>            
                         <?php
-                    }
-                    else
-                    {
-                    ?>
-                        <script>
-                            alert("Xử lí thất bại");
-                            location.assign("../billing/index.php");
-                            </script>            
-                    <?php
                         }
-                }
-                else
-                {
-                    $sql4 = $conn->query("INSERT INTO `order` (`MaOrder`, `MaNV`, `MaBan`, `MaDoUong`, `SoLuong`, `SoTien`) VALUES ('$MaOrder', ' $manv', ' $ma_ban', ' $id', ' $sl', ' $st')");
-                    $sql3 = $conn->query("UPDATE `hoa_don_thanh_toan` SET TongTien=  $tt  WHERE MaOrder = $MaOrder");
-                    if (($sql2 && $sql3))
-                    {
-                        ?>
-                            <script>
-                                alert("Xử lí thành công");
-                                location.assign("../billing/index.php");
-                                </script>
-                        <?php
                     }
-                    else
+                    else // ko tìm thấy mã sp cũ trong list mới
                     {
-                    ?>
-                        <script>
-                            alert("Xử lí thất bại");
-                            location.assign("../billing/index.php");
-                            </script>            
-                    <?php
+                        if (!in_array($value1, $list4)) //kt mã sp list mới có trong list cũ ko => thêm
+                        {
+                            $id = $value1;
+                            $sl = $list2[$key1];
+                            $st = $list3[$key1];
+                            $sql2 = $conn->query("INSERT INTO `order` (`MaOrder`, `MaNV`, `MaBan`, `MaDoUong`, `SoLuong`, `SoTien`) VALUES ('$MaOrder', ' $manv', ' $ma_ban', ' $id', ' $sl', ' $st')");
+                            $sql3 = $conn->query("UPDATE `hoa_don_thanh_toan` SET TongTien=  $tt  WHERE MaOrder = $MaOrder");
+                            if (($sql2 && $sql3))
+                            {
+                                ?>
+                                    <script>
+                                        alert("Xử lí thành công");
+                                        location.assign("../billing/index.php");
+                                        </script>
+                                <?php
+                            }
+                            else
+                            {
+                            ?>
+                                <script>
+                                    alert("Xử lí thất bại");
+                                    location.assign("../billing/index.php");
+                                    </script>            
+                            <?php
+                            }
                         }
+                        if (!in_array($value, $list1)) //kt mã sp list cũ có trong list mới ko => xóa
+                        {
+                            $id = $value;
+
+                            $sql2 = $conn->query("DELETE FROM `order` WHERE MaOrder = $MaOrder AND MaBan = $ma_ban AND MaDoUong = $id");
+                            $sql3 = $conn->query("UPDATE `hoa_don_thanh_toan` SET TongTien = $tt WHERE MaOrder = $MaOrder");
+                            if (($sql2 && $sql3))
+                            {
+                                ?>
+                                    <script>
+                                        alert("Xử lí thành công");
+                                        location.assign("../billing/index.php");
+                                        </script>
+                                <?php
+                            }
+                            else
+                            {
+                            ?>
+                                <script>
+                                    alert("Xử lí thất bại");
+                                    location.assign("../billing/index.php");
+                                    </script>            
+                            <?php
+                            }
+                        }
+                    }
                 }
+            }
+        }
+        else //tạo mới order + hdtt
+        {
+            $str = "";
+            for ($i = 0; $i < $count; $i++)
+            {
+                $id = $list1[$i];
+                $sl = $list2[$i];
+                $st = $list3[$i];
+                $str .= "INSERT INTO `order` (`MaOrder`, `MaNV`, `MaBan`, `MaDoUong`, `SoLuong`, `SoTien`) VALUES ('$MaOrder', '$manv', '$ma_ban', '$id', '$sl', '$st');";
+            }
+            $sql5 = $conn->query("INSERT INTO `hoa_don_thanh_toan` (`MaOrder`, `TongTien`, `TienNhan`, `ThoiGianThanhToan`) VALUES ('$MaOrder', '$tt', '0', NULL)");
+            $sql4 = $conn->multi_query($str);
+            if (($sql4 && $sql5))
+            {
+                ?>
+                    <script>
+                        alert("Xử lí thành công");
+                        location.assign("../billing/index.php");
+                        </script>
+                <?php
             }
             else
             {
-                $sql2 = $conn->query("INSERT INTO `order` (`MaOrder`, `MaNV`, `MaBan`, `MaDoUong`, `SoLuong`, `SoTien`) VALUES (' $MaOrder', ' $manv', ' $ma_ban', ' $id', ' $sl', ' $st')");
-                $sql3 = $conn->query("INSERT INTO `hoa_don_thanh_toan` (`MaOrder`, `TongTien`, `TienNhan`, `ThoiGianThanhToan`) VALUES (' $MaOrder', '  $tt ', '0', NULL)");
-                if (($sql2 && $sql3))
-                {
-                    ?>
-                        <script>
-                            alert("Xử lí thành công");
-                            location.assign("../billing/index.php");
-                            </script>
-                    <?php
-                }
-                else
-                {
-                ?>
-                        <script>
-                            alert("Xử lí thất bại");
-                            location.assign("../billing/index.php");
-                            </script>        
-                <?php
-                    }
+            ?>
+                    <script>
+                        alert("Xử lí thất bại");
+                        location.assign("../billing/index.php");
+                        </script>        
+            <?php
             }
         }
+    }
+    else
+    {
+        ?>
+            <script>
+                alert("Lỗi hệ thống");
+                location.assign("../billing/index.php");
+            </script>        
+        <?php
+    }
+    
     $conn->close();
 ?>
