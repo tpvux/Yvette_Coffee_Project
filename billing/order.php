@@ -203,8 +203,8 @@
                 <div class="card-header text-white  border-primary">
                     <b style="font-size:15px">DANH SÁCH MÓN ĐÃ CHỌN</b>
                     
-                <span class="float:right"><a class="btn btn-primary btn-sm col-sm-3 float-right" href="../index.php" id="">
-                    <i class="fa fa-home"></i> Trang chủ
+                <span class="float:right"><a class="btn btn-primary btn-sm col-sm-3 float-right" href="../billing/index.php" id="">
+                    <i class="fa fa-home"></i> Chọn bàn
                 </a></span>
                 </div>
                 <div class="card-body">
