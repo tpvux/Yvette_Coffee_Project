@@ -3,7 +3,7 @@
     if (isset($_POST))
     {
         //Tính năng thêm và sửa order
-        $ma_ban = $_POST["id"];
+        $ma_ban = $_POST["ma_ban"];
         $manv = $_POST["manv"];
         $MaOrder = $_POST["ma_order"];
         $tt = $_POST["total_amount"];
@@ -113,16 +113,14 @@
         }
         else //tạo mới order + hdtt
         {
-            $str = "";
             for ($i = 0; $i < $count; $i++)
             {
                 $id = $list1[$i];
                 $sl = $list2[$i];
                 $st = $list3[$i];
-                $str .= "INSERT INTO `order` (`MaOrder`, `MaNV`, `MaBan`, `MaDoUong`, `SoLuong`, `SoTien`) VALUES ('$MaOrder', '$manv', '$ma_ban', '$id', '$sl', '$st');";
+                $sql4 = $conn->query("INSERT INTO `order` (`MaOrder`, `MaNV`, `MaBan`, `MaDoUong`, `SoLuong`, `SoTien`) VALUES ('$MaOrder', '$manv', '$ma_ban', '$id', '$sl', '$st')");
             }
             $sql5 = $conn->query("INSERT INTO `hoa_don_thanh_toan` (`MaOrder`, `TongTien`, `TienNhan`, `ThoiGianThanhToan`) VALUES ('$MaOrder', '$tt', '0', NULL)");
-            $sql4 = $conn->multi_query($str);
             if (($sql4 && $sql5))
             {
                 ?>
