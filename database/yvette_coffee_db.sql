@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 01, 2023 at 03:54 AM
+-- Generation Time: Apr 04, 2023 at 08:25 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -240,9 +240,18 @@ INSERT INTO `do_uong` (`MaDoUong`, `TenDoUong`, `DonGia`, `MaDanhMuc`) VALUES
 
 CREATE TABLE `hoa_don_thanh_toan` (
   `MaOrder` int(10) NOT NULL,
-  `TienNhan` int(9) NOT NULL,
-  `TienThua` int(6) NOT NULL DEFAULT 0
+  `TongTien` int(9) NOT NULL,
+  `TienNhan` int(6) NOT NULL DEFAULT 0,
+  `ThoiGianThanhToan` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
+
+--
+-- Dumping data for table `hoa_don_thanh_toan`
+--
+
+INSERT INTO `hoa_don_thanh_toan` (`MaOrder`, `TongTien`, `TienNhan`, `ThoiGianThanhToan`) VALUES
+(1, 88, 0, NULL),
+(2, 94000, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -353,11 +362,20 @@ CREATE TABLE `order` (
   `MaNV` int(10) NOT NULL,
   `MaBan` int(2) NOT NULL,
   `MaDoUong` int(3) NOT NULL,
-  `ThoiGianOrder` datetime NOT NULL,
   `SoLuong` int(3) NOT NULL,
-  `TongTien` int(9) NOT NULL,
-  `TrangThaiOrder` tinyint(1) NOT NULL COMMENT '0:hủy; 1:đang thực hiện; 2:đã thanh toán'
+  `SoTien` int(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
+
+--
+-- Dumping data for table `order`
+--
+
+INSERT INTO `order` (`MaOrder`, `MaNV`, `MaBan`, `MaDoUong`, `SoLuong`, `SoTien`) VALUES
+(1, 2023000003, 1, 2, 3, 88),
+(1, 2023000003, 1, 4, 6, 11),
+(2, 2023000003, 2, 39, 2, 44000),
+(2, 2023000003, 2, 42, 1, 50000),
+(2, 2023000003, 2, 47, 1, 29000);
 
 -- --------------------------------------------------------
 
@@ -437,10 +455,7 @@ ALTER TABLE `nhap_xuat_nl`
 -- Indexes for table `order`
 --
 ALTER TABLE `order`
-  ADD PRIMARY KEY (`MaOrder`),
-  ADD UNIQUE KEY `MaNV` (`MaNV`),
-  ADD UNIQUE KEY `MaBan` (`MaBan`),
-  ADD UNIQUE KEY `MaDoUong` (`MaDoUong`);
+  ADD PRIMARY KEY (`MaOrder`,`MaNV`,`MaBan`,`MaDoUong`) USING BTREE;
 
 --
 -- Indexes for table `tai_khoan`
@@ -498,12 +513,6 @@ ALTER TABLE `ca_lam_viec`
 --
 ALTER TABLE `do_uong`
   ADD CONSTRAINT `do_uong_ibfk_1` FOREIGN KEY (`MaDanhMuc`) REFERENCES `danh_muc` (`MaDanhMuc`);
-
---
--- Constraints for table `hoa_don_thanh_toan`
---
-ALTER TABLE `hoa_don_thanh_toan`
-  ADD CONSTRAINT `hoa_don_thanh_toan_ibfk_1` FOREIGN KEY (`MaOrder`) REFERENCES `order` (`MaOrder`);
 
 --
 -- Constraints for table `nhap_xuat_nl`
