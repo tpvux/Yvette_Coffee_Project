@@ -174,8 +174,8 @@
   </div>
   <?php include '../db_connect.php';
     $manv = 2023000003;
-    if(isset($_GET['maban'])){
-      $ma_ban = $_GET['maban'];
+    if(isset($_GET['ban'])){
+      $ma_ban = $_GET['ban'];
       $order = $conn->query("SELECT * FROM `order` o, `hoa_don_thanh_toan` h 
       WHERE o.MaOrder = h.MaOrder
       AND h.TienNhan = 0
@@ -203,7 +203,7 @@
                 <div class="card-header text-white  border-primary">
                     <b style="font-size:15px">DANH SÁCH MÓN ĐÃ CHỌN</b>
                     
-                <span class="float:right"><a class="btn btn-primary btn-sm col-sm-3 float-right" href="../billing/index.php" id="">
+                <span class="float:right"><a class="btn btn-primary btn-sm col-sm-3 float-right" href="../order/index.php" id="">
                     <i class="fa fa-home"></i> Chọn bàn
                 </a></span>
                 </div>
@@ -213,17 +213,18 @@
             {
               ?>
                   <button style="background-color:white; margin-top:-25px; padding:0px; position:relative; display:flex; margin-left:80% ;top:30px" class="btn btn-outline-danger delete_order" type="submit" data-id="<?php echo $MaOrder?>">
-                  <form action="./deleteod.php"  id="delete_form" method="POST"><input type="hidden" name="ma_order_del" value="<?php echo $MaOrder?>"></form>Xóa Order</button>
+                  <form action="./delete.php"  id="delete_form" method="POST"><input type="hidden" name="ma_order_del" value="<?php echo $MaOrder?>"></form>Xóa Order</button>
               <?php
             }
             ?>
-            <form action="./processod.php" method="POST" id="manage-order">
-                <input type="hidden" name="id" value="<?php echo $ma_ban ?>">
+            <form action="./process.php" method="POST" id="manage-order">
                 <input type="hidden" name="manv" value="<?php echo $manv?>">
                 <div class="bg-white" id='o-list'>
                             <div class="d-flex w-100 bg-dark mb-1">
                                 <label for="" class="text-white" style="padding-top:5px"><b>Mã Order</b></label>
-                                <input type="number" class="form-control-sm" name="ma_order" id="ma_order" value="<?php echo $MaOrder ?>" style="margin:3px; margin-top: 0px"  readonly="">
+                                <input type="number" class="form-control-sm" name="ma_order" id="ma_order" value="<?php echo $MaOrder ?>" style="margin:3px; margin-top: 0px; width:100px"  readonly="">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="" class="text-white" style="padding-top:5px"><b>Số bàn</b></label>
+                                <input type="number" class="form-control-sm" name="ma_ban" id="ma_ban" value="<?php echo $ma_ban ?>" style="margin:3px; margin-top: 0px; width:100px"  readonly="">
                             </div>
                    <table class="table table-bordered bg-light">
                         <colgroup>
@@ -384,22 +385,28 @@
       </div>
       <div class="modal-body">
         <div class="container-fluid">
+          <form action="./pay.php" id="pay-order" method="post">
+            <input type="hidden" name="ma_order" value="<?php echo $MaOrder;?>">
+            <input type="hidden" name="maban" value="<?php echo $ma_ban;?>">
+            <input type="hidden" name="total_amount" value="0">
+            <input type="hidden" name="total_tendered" value="0">
             <div class="form-group">
                 <label for="">Tổng tiền</label>
                 <input type="text" class="form-control text-right" id="apayable" readonly="" value="">
             </div>
             <div class="form-group">
                 <label for="">Tiền nhận</label>
-                <input type="text" class="form-control text-right" id="tendered" value="" autocomplete="off">
+                <input type="text" class="form-control text-right" id="tendered" value="0" autocomplete="off" pattern="[0-9]+.{4,}" required title="Số tiền tối thiểu là 1000">
             </div>
             <div class="form-group">
                 <label for="">Tiền trả lại</label>
                 <input type="text" class="form-control text-right" id="change" value="0" readonly="">
             </div>
+          </form>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary btn-sm"  form="manage-order">Thanh toán</button>
+        <button type="submit" class="btn btn-primary btn-sm" form="pay-order" id="pay-btn">Thanh toán</button>
         <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Hủy</button>
       </div>
       </div>
@@ -459,7 +466,7 @@
       ?>
       <script>
         alert("Vui lòng chọn bàn");
-        location.assign("../billing/index.php");
+        location.assign("../order/index.php");
       </script>
       <?php
     }
@@ -659,12 +666,11 @@ window._conf = function($msg='',$func='',$params = []){
               $('#manage-order').submit()
             }
         }
-
         setTimeout(function(){
             $('#tendered').val('').trigger('change')
             $('#tendered').focus()
             end_load()
-        },400)
+        },200)
    })
    $("#pay").click(function(){
     start_load()
@@ -676,6 +682,18 @@ window._conf = function($msg='',$func='',$params = []){
     }
     $('#apayable').val(parseInt(amount).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:0,maximumFractionDigits:0}))
     $('#pay_modal').modal('show')
+    var tend = 0;
+    var amount=$('[name="total_amount"]').val()
+    var change = parseInt(tend) - parseInt(amount)
+    $('#change').val(parseInt(change).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:0,maximumFractionDigits:0}))
+    if (change >= 0)
+    {
+      $('#pay-btn').prop('disabled', false)
+    }
+    else
+    {
+      $('#pay-btn').prop('disabled', true)
+    }
     setTimeout(function(){
         $('#tendered').val('').trigger('change')
         $('#tendered').focus()
@@ -683,15 +701,11 @@ window._conf = function($msg='',$func='',$params = []){
     },400)
    })
 
-   $('#tendered').keyup('input',function(e){
-        if(e.which == 13){
-            $('#manage-order').submit();
-            return false;
-        }
+   $('#tendered').keyup('input',function(){
         var tend = $(this).val()
             tend =tend.replace(/,/g,'') 
         $('[name="total_tendered"]').val(tend)
-        if(tend == '')
+        if(tend == '' || tend == ' ')
             $(this).val('')
         else
             $(this).val((parseInt(tend).toLocaleString("en-US")))
@@ -699,6 +713,14 @@ window._conf = function($msg='',$func='',$params = []){
         var amount=$('[name="total_amount"]').val()
         var change = parseInt(tend) - parseInt(amount)
         $('#change').val(parseInt(change).toLocaleString("en-US",{style:'decimal',minimumFractionDigits:0,maximumFractionDigits:0}))
+        if (change >= 0)
+        {
+          $('#pay-btn').prop('disabled', false)
+        }
+        else
+        {
+          $('#pay-btn').prop('disabled', true)
+        }
    })
    
     $('#tendered').on('input',function(){
@@ -706,77 +728,16 @@ window._conf = function($msg='',$func='',$params = []){
         val = val.replace(/[^0-9 \,]/, '');
         $(this).val(val)
     })
-    // $('#manage-order').submit(function(e){
-    //     e.preventDefault();
-    //     start_load();
-    //     $('data-id').each(function(index, value){
-    //       var id = $('[name="product_id[]"]').attr('value')
-    //       var sl = $('[name="qty[]"]').attr('value')
-    //       var st = $('[name="amount[]"]').attr('value')
-    //       var tt = $('[name="total_amount"]').attr('value')
-    //       var resp = 0
-    //       var db = conn.connect()
-    //       var sql = db.query("SELECT * FROM `order` o, `hoa_don_thanh_toan` h WHERE o.MaOrder = h.MaOrder AND h.TienNhan = 0 AND o.MaOrder ="+$MaOrder) // order đã tồn tại nhưng chưa thanh toán
-    //       if ((row = sql.fetch_assoc()) > 0)
-    //       {
-    //         if (row['MaDoUong']==id)
-    //         {
-    //           var sql2 = db.query("UPDATE `hoa_don_thanh_toan` SET TongTien="+ tt +" WHERE MaOrder ="+$MaOrder)
-    //           var sql3 = db.query("UPDATE `order` SET SoLuong="+ sl +", SoTien="+ st +" WHERE MaOrder ="+$MaOrder+" AND MaDoUong="+id)
-    //           if ((sql2 && sql3))
-    //           {
-    //             resp = 1;
-    //           }
-    //         }
-    //         else
-    //         {
-    //           var sql2 = db.query("UPDATE `hoa_don_thanh_toan` SET TongTien="+ tt +" WHERE MaOrder ="+$MaOrder)
-    //           var sql3 = db.query("INSERT INTO `order` (`MaOrder`, `MaNV`, `MaBan`, `MaDoUong`, `SoLuong`, `SoTien`) VALUES ('"+$MaOrder+"', '"+$manv+"', '"+$ma_ban+"', '"+id+"', '"+sl+"', '"+st+"')")
-    //           if ((sql2 && sql3))
-    //           {
-    //             resp = 1;
-    //           }
-    //         }
-    //       }
-    //       else
-    //       {
-    //         var sql2 = db.query("INSERT INTO `order` (`MaOrder`, `MaNV`, `MaBan`, `MaDoUong`, `SoLuong`, `SoTien`) VALUES ('"+$MaOrder+"', '"+$manv+"', '"+$ma_ban+"', '"+id+"', '"+sl+"', '"+st+"')")
-    //         var sql3 = db.query("INSERT INTO `hoa_don_thanh_toan` (`MaOrder`, `TongTien`, `TienNhan`, `ThoiGianThanhToan`) VALUES ('"+$MaOrder+"', '"+ tt +"', '0', NULL)")
-    //         if ((sql2 && sql3))
-    //           {
-    //             resp = 1;
-    //           }
-    //       }
-    //     })
-    //       if(resp==1){
-    //         alert_toast("Data successfully saved.",'success')
-    //         setTimeout(function(){
-    //             location.reload()
-    //         },500)
-    //       }
-    //     })
     
 	$('.delete_order').click(function(){
         start_load()
-        var amount = $('[name="total_amount"]').val()
-        if($('#o-list tbody tr').length <= 0){
-            alert_toast("Vui lòng chọn ít nhất 1 món",'danger')
-            end_load()
-            return false;
-        }
-        else
-        {
-          if(confirm("Bạn có chắn chắn muốn xóa order?")==true)
-            {
-              $('#delete_form').submit()
-            }
-        }
-
+        if(confirm("Bạn có chắn chắn muốn xóa order?")==true)
+          {
+            $('#delete_form').submit()
+          }
         setTimeout(function(){
-            $('#tendered').val('').trigger('change')
-            $('#tendered').focus()
             end_load()
-        },400)
+        },200)
    })
       
 </script>

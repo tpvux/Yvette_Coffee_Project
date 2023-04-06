@@ -221,7 +221,7 @@
                                 ?>
                                 <div class="col-md-3 mb-3" >
                                 <div class="card bg-primary prod-item" style="background-color: black!important"
-                                onclick="location.href='./order.php?maban=<?php echo $row['MaBan'] ?>'" 
+                                onclick="location.href='./order.php?ban=<?php echo $row['MaBan'] ?>'" 
                                 data-json = '<?php echo json_encode($row) ?>' data-section="<?php echo $row['KhuVuc'] ?>">
                                     <div class="card-body">
                                         <span><center><b class="text-white">
@@ -239,7 +239,7 @@
                             ?>
                             <div class="col-md-3 mb-3" >
                                 <div class="card bg-primary prod-item"
-                                onclick="location.href='./order.php?maban=<?php echo $row['MaBan'] ?>'" 
+                                onclick="location.href='./order.php?ban=<?php echo $row['MaBan'] ?>'" 
                                 data-json = '<?php echo json_encode($row) ?>' data-section="<?php echo $row['KhuVuc'] ?>">
                                     <div class="card-body">
                                         <span><b class="text-white">
