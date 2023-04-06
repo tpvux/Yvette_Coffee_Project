@@ -667,8 +667,6 @@ window._conf = function($msg='',$func='',$params = []){
             }
         }
         setTimeout(function(){
-            $('#tendered').val('').trigger('change')
-            $('#tendered').focus()
             end_load()
         },200)
    })
