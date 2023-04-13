@@ -138,36 +138,63 @@
     .cat-item:hover{
         opacity: .8;
     }
-</style>
+    
+    .delete_order {
+      border-radius: .25rem; 
+      margin-top:-25px; 
+      padding:2px; 
+      padding-right: 5px; 
+      padding-left: 5px;
+      position:relative; 
+      display:flex;
+      margin-left:80%;
+      top:30px;
+    }
+    
+    .delete_order:hover {
+      background-color: #dc3545;
+      border-color: #dc3545;
+    }
 
+    .dropdown-item:hover {
+      background-color: rgb(105, 104, 104, .4);
+    }
+
+    .logo {
+      border: none;
+      padding: 0px;
+      margin: 0px;
+    }
+    .logo img{
+      width: 35px;
+      height: 35px;
+    }
+</style>
+<?php 
+if (isset($_SESSION["status"])=='Success')
+{
+?>
 <body>
 <nav class="navbar navbar-light fixed-top bg-primary" style="padding:0">
   <div class="container-fluid mt-2 mb-2">
     <div class="col-lg-12">
       <div class="col-md-1 float-left" style="display: flex;">
-      
-      </div>
-      <div class="col-md-4 float-left text-white">
-        <large><b><?php ?></b></large>
+        <a class="logo">
+            <img class="logo" src="../images/img/logo2.png" alt="">
+        </a>
       </div>
       <div class="float-right">
-        <div class=" dropdown mr-4">
-            <a href="#" class="text-white dropdown-toggle"  id="account_settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['login_name'] ?> </a>
-              <div class="dropdown-menu" aria-labelledby="account_settings" style="left: -2.5em;">
-                <a class="dropdown-item" href="javascript:void(0)" id="manage_my_account"><i class="fa fa-cog"></i> Manage Account</a>
-                <a class="dropdown-item" href="ajax.php?action=logout" id="logout"><i class="fa fa-power-off"></i>Logout</a>
-              </div>
+        <div class=" dropdown mr-4" >
+        <i class="fas fa-user fa-lg" style="color: #ffffff; padding:0px; margin:0px; border:none"></i>&ensp;<a href="#" class="text-white dropdown-toggle"  id="account_settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:larger">Xin chào, <?php echo $_SESSION['name'] ?> </a>
+              <div class="dropdown-menu" aria-labelledby="account_settings" style="left: -20px; top: 25px">
+                <a class="dropdown-item" href="../index.php" id="home"><i class="fa fa-home"></i> Trang chủ</a>
+                <a class="dropdown-item" href="../order/history.php" id="history"><i class="far fa-credit-card"></i> Lịch sử thanh toán</a>
+                <button class="dropdown-item" id="logout" ><i class="fas fa-sign-out-alt" ></i> Đăng xuất</button>
         </div>
       </div>
   </div>
   
 </nav>
-
-<script>
-  $('#manage_my_account').click(function(){
-    uni_modal("Manage Account","manage_user.php?id=<?php echo $_SESSION['login_id'] ?>&mtype=own")
-  })
-</script>
   <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-body text-white">
     </div>
@@ -201,10 +228,9 @@
         <div class="col-lg-4">
            <div class="card bg-dark border-primary">
                 <div class="card-header text-white  border-primary">
-                    <b style="font-size:15px">DANH SÁCH MÓN ĐÃ CHỌN</b>
-                    
-                <span class="float:right"><a class="btn btn-primary btn-sm col-sm-3 float-right" href="../order/index.php" id="">
-                    <i class="fa fa-home"></i> Chọn bàn
+                    <b style="font-size:15px">MÓN ĐÃ CHỌN</b>   
+                <span class="float:right"><a class="btn btn-primary btn-sm col-sm-3 float-right" style="right:10px" href="../order/index.php" id="">
+                  <i class="fas fa-list-ol" style="color: #fcfcfc;"></i> Chọn bàn
                 </a></span>
                 </div>
                 <div class="card-body">
@@ -212,8 +238,8 @@
             if (isset($check) == 1)
             {
               ?>
-                  <button style="background-color:white; margin-top:-25px; padding:0px; position:relative; display:flex; margin-left:80% ;top:30px" class="btn btn-outline-danger delete_order" type="submit" data-id="<?php echo $MaOrder?>">
-                  <form action="./delete.php"  id="delete_form" method="POST"><input type="hidden" name="ma_order_del" value="<?php echo $MaOrder?>"></form>Xóa Order</button>
+                  <button class="btn  btn-primary btn-sm delete_order" type="submit" data-id="<?php echo $MaOrder?>">
+                  <form action="./delete.php" id="delete_form" method="POST"><input type="hidden" name="ma_order_del" value="<?php echo $MaOrder?>"></form>Xóa Order</button>
               <?php
             }
             ?>
@@ -281,7 +307,7 @@
                        </tbody>
                    </table>
                 </div>
-                   <div class="d-block bg-white" id="calc">
+                   <div class="d-block bg-white" id="calc" style="border-radius: .25rem">
                        <table class="" width="100%">
                            <tbody>
                                 <tr>
@@ -737,6 +763,32 @@ window._conf = function($msg='',$func='',$params = []){
             end_load()
         },200)
    })
+
+   $('#logout').click(function(){
+        start_load()
+        if(confirm("Bạn muốn đăng xuất ?")==true)
+          {
+            alert("Đăng xuất thành công");
+            var myWindow = window.open("../destroyss.php", "", "width=0, height=0");
+            myWindow.blur();
+            location.assign("../index.php");
+          }
+        setTimeout(function(){
+            end_load()
+        },200)
+   })
       
 </script>
 </html>
+<?php
+}
+else
+{
+  ?>
+    <script>
+        alert("Vui lòng đăng nhập");
+        location.assign("../index.php");
+    </script>
+  <?php
+}
+?>

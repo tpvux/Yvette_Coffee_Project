@@ -16,11 +16,11 @@
 </head>
 <style>
 	body{
-        background: #80808045;
-        position: fixed;
-        width: calc(100%);
-        height: calc(100%);
-        overflow: auto;
+    background: #80808045;
+    position: fixed;
+    width: calc(100%);
+    height: calc(100%);
+    overflow: auto;
   }
     main#view-panel {
         height: calc(100% - 4em);
@@ -138,37 +138,50 @@
     .cat-item:hover{
         opacity: .8;
     }
-</style>
-</style>
 
+    .dropdown-item:hover {
+      background-color: rgb(105, 104, 104, .4);
+    }
+
+    .logo {
+      border: none;
+      padding: 0px;
+      margin: 0px;
+    }
+    .logo img{
+      width: 35px;
+      height: 35px;
+    }
+</style>
+<?php 
+if (isset($_SESSION["status"])=='Success')
+{
+?>
 <body>
 <nav class="navbar navbar-light fixed-top bg-primary" style="padding:0">
   <div class="container-fluid mt-2 mb-2">
     <div class="col-lg-12">
       <div class="col-md-1 float-left" style="display: flex;">
-      
       </div>
-      <div class="col-md-4 float-left text-white">
-        <large><b><?php //session_name ?></b></large>
+      <div class="col-md-4 float-left text-white border-primary" >
+        <a href="../index.php" class="logo">
+            <img src="../images/img/logo2.png" alt="">
+            <b style="font-family: 'Roboto', sans-serif; font-size: 18px; font-weight: 1px; color:#ffffff"> &ensp;Hệ Thống Order</b>
+        </a>
       </div>
       <div class="float-right">
-        <div class=" dropdown mr-4">
-            <a href="#" class="text-white dropdown-toggle"  id="account_settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['login_name'] ?> </a>
-              <div class="dropdown-menu" aria-labelledby="account_settings" style="left: -2.5em;">
-                <a class="dropdown-item" href="javascript:void(0)" id="manage_my_account"><i class="fa fa-cog"></i> Manage Account</a>
-                <a class="dropdown-item" href="ajax.php?action=logout" id="logout"><i class="fa fa-power-off"></i> Logout</a>
-              </div>
+        <div class=" dropdown mr-4" >
+          <i class="fas fa-user fa-lg" style="color: #ffffff; padding:0px; margin:0px; border:none"></i>&ensp;<a href="#" class="text-white dropdown-toggle"  id="account_settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:larger">Xin chào, <?php echo $_SESSION['name'] ?> </a>
+              <div class="dropdown-menu" aria-labelledby="account_settings" style="left: -20px; top: 25px">
+                <a class="dropdown-item" href="../index.php" id="home"><i class="fa fa-home"></i> Trang chủ</a>
+                <a class="dropdown-item" href="../order/history.php" id="history"><i class="far fa-credit-card"></i> Lịch sử thanh toán</a>
+                <button class="dropdown-item" id="logout" ><i class="fas fa-sign-out-alt" ></i> Đăng xuất</button>
         </div>
       </div>
+    </div>
   </div>
   
 </nav>
-
-<script>
-  $('#manage_my_account').click(function(){
-    uni_modal("Manage Account","manage_user.php?id=<?php // echo $_SESSION['login_id'] ?>&mtype=own")
-  })
-</script>
   <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-body text-white">
     </div>
@@ -180,7 +193,7 @@
         <div class="col-lg-8  p-field" style="flex:none ; max-width:100%">
             <div class="card border-primary">
                 <div class="card-header bg-dark text-white  border-primary">
-                    <b style="font-size: 20px; padding:40%">DANH SÁCH BÀN</b>
+                    <b style="font-size: 20px; padding:43%">DANH SÁCH BÀN</b>
                 </div>
                 <div class="card-body bg-dark d-flex" id='prod-list'>
                     <div class="col-md-3">
@@ -270,9 +283,8 @@
   <div id="preloader"></div>
   <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
 
-  
- 
 </body>
+
 <script>
 	 window.start_load = function(){
     $('body').prepend('<di id="preloader2"></di>')
@@ -427,5 +439,31 @@ window._conf = function($msg='',$func='',$params = []){
     })
    }
 
-</script>
+   $('#logout').click(function(){
+        start_load()
+        if(confirm("Bạn muốn đăng xuất ?")==true)
+          {
+            alert("Đăng xuất thành công");
+            var myWindow = window.open("../destroyss.php", "", "width=0, height=0");
+            myWindow.blur();
+            location.assign("../index.php");
+          }
+        setTimeout(function(){
+            end_load()
+        },200)
+   })
+
+   </script>
 </html>
+<?php 
+}
+else
+{
+  ?>
+    <script>
+        alert("Vui lòng đăng nhập");
+        location.assign("../index.php");
+    </script>
+  <?php
+}
+?>
