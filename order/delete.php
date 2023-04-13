@@ -3,7 +3,7 @@
     include '../db_connect.php';
     if (isset($_SESSION["status"])=='Success')
     {
-        if (isset($_POST))
+        if (isset($_POST['ma_order_del']))
         {
             //Tính năng xóa order
             $MaOrder = $_POST['ma_order_del'];
@@ -24,9 +24,33 @@
                 <script>
                     alert("Xóa order thất bại");
                     location.assign("../order/index.php");
-                    </script>            
+                    </script>
             <?php
             }
+        }
+        elseif (isset($_POST['mabandel']))
+        {
+             //Tính năng xóa bàn
+             $maban = $_POST['mabandel'];
+             $sql1 = $conn->query("DELETE FROM `ban` WHERE MaBan = $maban");
+             if ($sql1)
+             {
+                 ?>
+                     <script>
+                         alert("Xóa bàn thành công");
+                         location.assign("../order/index.php");
+                         </script>
+                 <?php
+             }
+             else
+             {
+             ?>
+                 <script>
+                     alert("Xóa bàn thất bại");
+                     location.assign("../order/index.php");
+                     </script>
+             <?php
+             }
         }
         else
         {

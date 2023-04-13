@@ -1,5 +1,6 @@
 <?php
     include '../db_connect.php';
+    session_start();
     if (isset($_SESSION["status"])=='Success')
     {
         if (isset($_POST))
@@ -23,7 +24,7 @@
             {
                 while($row = $sql->fetch_assoc())
                 {
-                    $list4[]=($row['MaDoUong']);
+                    $list4[]=$row['MaDoUong'];
                 }
                 
                 foreach ($list4 as $key => $value) //list cũ 

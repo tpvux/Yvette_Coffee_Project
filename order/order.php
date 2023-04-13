@@ -201,8 +201,8 @@ if (isset($_SESSION["status"])=='Success')
   </div>
   <?php include '../db_connect.php';
     $manv = 2023000003;
-    if(isset($_GET['ban'])){
-      $ma_ban = $_GET['ban'];
+    if(isset($_GET['id'])){
+      $ma_ban = $_GET['id'];
       $order = $conn->query("SELECT * FROM `order` o, `hoa_don_thanh_toan` h 
       WHERE o.MaOrder = h.MaOrder
       AND h.TienNhan = 0
@@ -229,7 +229,7 @@ if (isset($_SESSION["status"])=='Success')
            <div class="card bg-dark border-primary">
                 <div class="card-header text-white  border-primary">
                     <b style="font-size:15px">MÓN ĐÃ CHỌN</b>   
-                <span class="float:right"><a class="btn btn-primary btn-sm col-sm-3 float-right" style="right:10px" href="../order/index.php" id="">
+                <span class="float:right"><a class="btn btn-primary btn-sm col-sm-3 float-right" style="right:-10px" href="../order/index.php" id="">
                   <i class="fas fa-list-ol" style="color: #fcfcfc;"></i> Chọn bàn
                 </a></span>
                 </div>
@@ -238,7 +238,7 @@ if (isset($_SESSION["status"])=='Success')
             if (isset($check) == 1)
             {
               ?>
-                  <button class="btn  btn-primary btn-sm delete_order" type="submit" data-id="<?php echo $MaOrder?>">
+                  <button class="btn btn-primary btn-sm delete_order" type="submit" data-id="<?php echo $MaOrder?>">
                   <form action="./delete.php" id="delete_form" method="POST"><input type="hidden" name="ma_order_del" value="<?php echo $MaOrder?>"></form>Xóa Order</button>
               <?php
             }
@@ -440,9 +440,6 @@ if (isset($_SESSION["status"])=='Success')
   </div>
   </main>
 
-  <div id="preloader"></div>
-  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
-
 <div class="modal fade" id="confirm_modal" role='dialog'>
     <div class="modal-dialog modal-md" role="document">
       <div class="modal-content">
@@ -485,6 +482,9 @@ if (isset($_SESSION["status"])=='Success')
       </div>
     </div>
   </div>
+
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
     <?php 
     }
     else
