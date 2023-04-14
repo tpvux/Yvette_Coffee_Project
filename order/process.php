@@ -3,7 +3,7 @@
     session_start();
     if (isset($_SESSION["status"])=='Success')
     {
-        if (isset($_POST))
+        if (isset($_POST['ma_order']))
         {
             //Tính năng thêm và sửa order
             $ma_ban = $_POST["ma_ban"];
@@ -142,6 +142,33 @@
                             </script>        
                 <?php
                 }
+            }
+        }
+        elseif (isset($_POST['mabanmodify']))
+        {
+            $ban_chon = $_POST['mabanmodify'];
+            $ban_sua = $_POST['mabanmodify1'];
+            $kv = $_POST['kv_modify'];
+
+            $sql6 = $conn->query("UPDATE `ban` SET `MaBan` = $ban_sua, `KhuVuc` ='$kv' WHERE `MaBan` = $ban_chon");
+
+            if ($sql6)
+            {
+                ?>
+                    <script>
+                        alert("Cập nhật thành công");
+                        location.assign("../order/index.php");
+                        </script>
+                <?php
+            }
+            else
+            {
+            ?>
+                <script>
+                    alert("Cập nhật thất bại");
+                    location.assign("../order/index.php");
+                    </script>            
+            <?php
             }
         }
         else

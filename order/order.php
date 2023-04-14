@@ -749,7 +749,7 @@ window._conf = function($msg='',$func='',$params = []){
    
     $('#tendered').on('input',function(){
         var val = $(this).val()
-        val = val.replace(/[^0-9 \,]/, '');
+        val = val.replace(/[^0-9]/, '');
         $(this).val(val)
     })
     
