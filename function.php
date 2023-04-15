@@ -38,10 +38,10 @@
                             <button class="dropbtn">
                                 <?php echo "<b>".$_SESSION["chucvu"]." ". $_SESSION["name"]. "</b>"; ?></button>
                                 <div class="dropdown-content">
-                                    <a href="./order/index.php">Order</a>
+                                    <a href="./billing/index.php">Order</a>
                                     <a href="#">Quản lý Menu</a>
                                     <a href="warehouse_mana/warehouse.php">Quản lý kho</a>
-                                    <a href="#">Quản lý nhân viên</a>
+                                    <a href="./employee_mana/employ_info.php">Quản lý nhân viên</a>
                                     <a href="#">Thống kê, báo cáo</a>
                                 </div>                    
                         </div>
@@ -52,7 +52,7 @@
                             <button class="dropbtn">
                                 <?php echo "<b>".$_SESSION["chucvu"]." ". $_SESSION["name"]. "</b>";?></button>
                                 <div class="dropdown-content">
-                                    <a href="./order/index.php">Order</a>
+                                    <a href="./billing/index.php">Order</a>
                                     <a href="warehouse_mana/warehouse.php">Quản lý kho</a>
                                     <a href="#">Quản lý ca làm việc</a>
                                 </div>                                          
@@ -64,7 +64,7 @@
                             <button class="dropbtn">
                                 <?php echo "<b>". $_SESSION["chucvu"]." ". $_SESSION["name"]."</b>";?></button>
                                 <div class="dropdown-content">
-                                    <a href="./order/index.php">Order</a>
+                                    <a href="./billing/index.php">Order</a>
                                     <a href="#">Quản lý hóa đơn</a>
                                 </div>  
                         </div>
@@ -79,7 +79,7 @@
                             alert("Đăng xuất thành công");
                             var myWindow = window.open("./destroyss.php", "", "width=0, height=0");
                             myWindow.blur();
-                            location.assign("./index.php");
+                            location.assign("./yvette_website.php");
                         }
                     }
                 </script>                 
