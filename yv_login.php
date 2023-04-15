@@ -19,7 +19,7 @@
         $usernameTxt = $_POST["uname"];
         $passwordTxt = md5(md5($_POST["psw"])).""; 
 
-        require_once "config.php";
+        require_once "./db_connect.php";
         $sql = "SELECT * FROM tai_khoan WHERE TenDangNhap = ? AND MatKhau = ?";       
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, 'ss', $usernameTxt, $passwordTxt );
@@ -48,7 +48,7 @@
                 ?>
                 <script>
                     alert("Sai tài khoản hoặc mật khẩu. Vui lòng nhập lại");
-                    location.assign("./yvette_website.php");
+                    location.assign("./index.php");
                 </script>
                 <?php
             }
