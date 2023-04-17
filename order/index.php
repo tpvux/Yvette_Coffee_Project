@@ -6,7 +6,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
+  <link rel="short icon" type="image/jpg" href="../images/img/logo2.png">
   <title>Hệ thống Order</title>
 
 
@@ -16,6 +16,92 @@
 
 </head>
 <style>
+  @import url('https://fonts.googleapis.com/css?family=Lobster');
+  @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+
+  .container {
+    margin: 0 auto;
+    width: 1225px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  table a:-webkit-any-link {
+    text-decoration: none;
+    cursor: pointer;
+    color: blue;
+  }
+
+  header {
+    background: black;
+    color: white;
+    padding: 8px 20px 6px 40px;
+    height: 50px;
+  }
+
+  header h1 {
+    display: inline;
+    font-family: 'Lobster', cursive;
+    font-weight: 400;
+    font-size: 32px;
+    float: left;
+    margin-top: 0px;
+    margin-right: 10px;
+  }
+
+  nav ul {
+    display: inline;
+    padding: 0px;
+    float: right;
+  }
+
+  nav ul li {
+    display: inline-block;
+    list-style-type: none;
+    color: white;
+    /* float: left;*/
+    margin-left: 12px;
+
+
+  }
+
+  nav ul li a {
+    color: white !important;
+    text-decoration: none;
+  }
+
+
+  nav ul ul {
+    display: none;
+    position: absolute;
+  }
+
+  #navli ul li ul:hover {
+    visibility: visible;
+    display: block;
+  }
+
+  #navli {
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .homered {
+    background-color: red;
+    padding: 30px 10px 22px 10px;
+  }
+
+  .divider {
+    background-color: red;
+    height: 5px;
+  }
+
+  .homeblack:hover {
+    background-color: red;
+    padding: 30px 10px 21px 10px;
+
+  }
   body {
     background: #80808045;
     position: fixed;
@@ -191,36 +277,28 @@ if (isset($_SESSION["status"]) == 'Success') {
 ?>
 
   <body>
-    <nav class="navbar navbar-light fixed-top bg-primary" style="padding:0">
-      <div class="container-fluid mt-2 mb-2">
-        <div class="col-lg-12">
-          <div class="col-md-1 float-left" style="display: flex;">
-          </div>
-          <div class="col-md-4 float-left text-white border-primary">
-            <a href="../index.php" class="logo">
-              <img src="../images/img/logo2.png" alt="">
-              <b style="font-family: 'Roboto', sans-serif; font-size: 18px; font-weight: 1px; color:#ffffff"> &ensp;Hệ Thống Order</b>
-            </a>
-          </div>
-          <div class="float-right">
-            <div class=" dropdown mr-4">
-              <i class="fas fa-user fa-lg" style="color: #ffffff; padding:0px; margin:0px; border:none"></i>&ensp;<a href="#" class="text-white dropdown-toggle" id="account_settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:larger">Xin chào, <?php echo $_SESSION['name'] ?> </a>
-              <div class="dropdown-menu" aria-labelledby="account_settings" style="left: -20px; top: 25px">
-                <a class="dropdown-item" href="../index.php" id="home"><i class="fa fa-home"></i> Trang chủ</a>
-                <a class="dropdown-item" href="../order/history.php" id="history"><i class="far fa-credit-card"></i> Lịch sử thanh toán</a>
-                <button class="dropdown-item" id="logout"><i class="fas fa-sign-out-alt"></i> Đăng xuất</button>
-              </div>
+    <header>
+      <nav>
+        <h1>Yvette</h1>
+        <div class="col-md-4 float-left text-white">
+        </div>
+        <div class="float-right">
+          <div class=" dropdown mr-4">
+            <i class="fas fa-user fa-lg" style="color: #ffffff; padding:0px; margin:0px; border:none"></i>&ensp;<a href="#" class="text-white dropdown-toggle" id="account_settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:larger">Xin chào, <?php echo $_SESSION['name'] ?> </a>
+            <div class="dropdown-menu" aria-labelledby="account_settings" style="left: -20px; top: 25px">
+              <a class="dropdown-item" href="../index.php" id="home"><i class="fa fa-home"></i> Trang chủ</a>
+              <a class="dropdown-item" href="../order/history.php" id="history"><i class="far fa-credit-card"></i> Lịch sử thanh toán</a>
+              <button class="dropdown-item" id="logout"><i class="fas fa-sign-out-alt"></i> Đăng xuất</button>
             </div>
           </div>
         </div>
+        </div>
+      </nav>
+    </header>
+    <div class="divider"></div>
 
-    </nav>
-    <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true">
-      <div class="toast-body text-white">
-      </div>
-    </div>
     <?php include '../db_connect.php' ?>
-    <main id="view-panel">
+    <main id="view-panel" style="margin-top:0px">
       <div class="container-fluid o-field">
         <div class="row mt-3 ml-3 mr-3">
           <div class="col-lg-8  p-field" style="flex:none ; max-width:100%">
@@ -604,14 +682,11 @@ if (isset($_SESSION["status"]) == 'Success') {
       if (check == 1) {
         document.getElementById("maban_warn").innerHTML = "<i style='color:red'>* Mã bàn đã tồn tại</i>";
         $('#add-btn').prop('disabled', true)
-      } 
-      else {
+      } else {
         if (x == '') {
           document.getElementById("maban_warn").innerHTML = "";
           $('#add-btn').prop('disabled', true)
-        }
-        else
-        {
+        } else {
           document.getElementById("maban_warn").innerHTML = "<i style='color:green'>* Mã bàn hợp lệ</i>";
           $('#add-btn').prop('disabled', false)
         }
@@ -663,14 +738,11 @@ if (isset($_SESSION["status"]) == 'Success') {
       if (check == 1) {
         document.getElementById("mabanmodify_warn").innerHTML = "<i style='color:red'>* Mã bàn đã tồn tại</i>";
         $('#modify-btn').prop('disabled', true)
-      } 
-      else {
+      } else {
         if (x == '') {
           document.getElementById("mabanmodify_warn").innerHTML = "";
           $('#modify-btn').prop('disabled', true)
-        }
-        else
-        {
+        } else {
           document.getElementById("mabanmodify_warn").innerHTML = "<i style='color:green'>* Mã bàn hợp lệ</i>";
           $('#modify-btn').prop('disabled', false)
         }
