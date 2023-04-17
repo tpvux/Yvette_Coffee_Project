@@ -397,11 +397,13 @@ if (isset($_SESSION["status"]) == 'Success') {
                                                 <td class="text-center">
                                                     <?php
                                                     if ($row['TienNhan'] > 0) { ?>
-                                                        <button class="btn btn-sm btn-outline-primary view_order" type="submit" data-id="<?php echo $row['MaOrder'] ?>" >
-                                                            <form action="./view.php" id="view_form" method="POST"><input type="hidden" name="ma_order" value="<?php echo $row['MaOrder'] ?>"></form>Xem</button>
+                                                        <button class="btn btn-sm btn-outline-primary view_order" type="submit" data-id="<?php echo $row['MaOrder'] ?>">
+                                                            <form action="./view.php" id="view_form" method="POST"><input type="hidden" name="ma_order" value="<?php echo $row['MaOrder'] ?>"></form>Xem
+                                                        </button>
                                                     <?php } else { ?>
-                                                        <button class="btn btn-sm btn-outline-primary view_order" type="submit" data-id="<?php echo $row['MaOrder'] ?>" >
-                                                            <form action="./view.php" id="view_form" method="POST"><input type="hidden" name="ma_order" value="<?php echo $row['MaOrder'] ?>"></form>Xem</button>
+                                                        <button class="btn btn-sm btn-outline-primary view_order" type="submit" data-id="<?php echo $row['MaOrder'] ?>">
+                                                            <form action="./view.php" id="view_form" method="POST"><input type="hidden" name="ma_order" value="<?php echo $row['MaOrder'] ?>"></form>Xem
+                                                        </button>
                                                         <button class="btn btn-sm btn-outline-primary " type="button" onclick="location.href='./order.php?id=<?php echo $maban ?>'">Sửa</button>
                                                         <button class="btn btn-sm btn-outline-danger delete_order" type="submit" data-id="<?php echo $row['MaOrder'] ?>">
                                                             <form action="../order/delete.php" id="delete_form" method="POST"><input type="hidden" name="ma_order_del" value="<?php echo $row['MaOrder'] ?>"></form>Xóa
@@ -420,102 +422,9 @@ if (isset($_SESSION["status"]) == 'Success') {
                 </div>
             </div>
         </div>
-
-        <?php 
-        if(isset($_POST['ma_order'])) 
-        {
-            $maod = $_POST['ma_order'];
-        ?>
-        <!-- Form View hóa đơn -->
-        <div class="modal fade" id="view_modal" role='dialog'>
-            <div class="modal-dialog modal-dialog-top modal-md" role="document">
-                <div class="container-fluid py-1">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <div class="container-fluid">
-                                <h5>
-                                    <p class="text-center"><b>Chi tiết</b></p>
-                                </h5>
-                                <hr>
-                                <?php
-                                $sql3 = $conn->query("SELECT * FROM `order` o, `do_uong` d, `hoa_don_thanh_toan` h Where d.MaDoUong = o.MaDoUong and o.MaOrder = h.MaOrder and o.MaOrder = $maod");
-                                if ($sql3->num_rows > 0) {
-                                    $row3 = $sql3->fetch_assoc();
-                                ?>
-                                    <div class="flex">
-                                        <div class="w-100">
-                                            <p>Mã Order: <b><?php echo $maod ?></b></p>
-                                            <p>Ngày: <b><?php
-                                                        if ($row3['TienNhan'] > 0) {
-                                                            echo date("M d, Y", strtotime($row3['ThoiGianThanhToan']));
-                                                        } else {
-                                                            echo "";
-                                                        }
-                                                        ?></b></p>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <p><b>Danh sách món</b></p>
-                                    <table width="100%">
-                                        <thead>
-                                            <tr>
-                                                <td><b>Số lượng</b></td>
-                                                <td><b>Tên món</b></td>
-                                                <td class="text-right"><b>Số tiền</b></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            while ($row3 = $sql3->fetch_assoc()) { ?>
-                                                <tr>
-                                                    <td><?php echo $row3['SoLuong'] ?></td>
-                                                    <td>
-                                                        <p><?php echo $row3['TenDoUong'] ?></p><?php if ($row3['SoLuong'] > 0) {
-                                                                                                ?><small>(<?php echo $row3['DonGia'] ?>)</small> <?php } ?>
-                                                    </td>
-                                                    <td class="text-right"><?php echo $row3['SoTien'] ?></td>
-                                                </tr>
-                                        <?php
-                                           }
-                                        }
-                                        ?>
-                                        </tbody>
-                                    </table>
-                                    <hr>
-                                    <table width="100%">
-                                        <tbody>
-                                            <tr>
-                                                <td><b>Tổng tiền</b></td>
-                                                <td class="text-right"><b><?php echo $row3['TongTien'] ?></b></td>
-                                            </tr>
-                                            <?php if ($row3['TienNhan'] > 0) {
-                                            ?>
-                                                <tr>
-                                                    <td><b>Tiền nhận</b></td>
-                                                    <td class="text-right"><b><?php echo $row3['TienNhan']  ?></b></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><b>Tiền thừa</b></td>
-                                                    <td class="text-right"><b><?php echo $row3['TienNhan'] - $row3['TongTien']  ?></b></td>
-                                                </tr>
-                                            <?php } ?>
-                                        </tbody>
-                                    </table>
-                                           
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn float-right btn-success mr-2" type="button" id="print">Print</button>
-                            <button class="btn float-right btn-secondary" type="button" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-<?php } ?>
         <div id="preloader"></div>
         <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
-        
+
         <script>
             $(document).ready(function() {
                 $('#preloader').fadeOut('fast', function() {
