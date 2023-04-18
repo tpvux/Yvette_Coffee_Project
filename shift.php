@@ -294,12 +294,13 @@ if (isset($_SESSION["status"]) == 'Success') {
             $ngay = $row0['Ngay'];
             $ca = $row0['Ca'];
             $nv = $row0['MaNV'];
-            
+
             $list1[] = $ngay;
             $list2[] = $ca;
             $list3[] = $nv;
         }
     }
+
 ?>
 
     <body>
@@ -336,11 +337,11 @@ if (isset($_SESSION["status"]) == 'Success') {
                             <div class="card-header">
                                 <b style="font-size: 15px;">Lịch làm việc</b>
                                 </a></span>
-                                <span class="float:right"><button class="btn btn-primary btn-sm col-sm-1 float-right del" style="margin-right: 10px; background-color: #dc3545; border-color: #dc3545;" id="del">
-                                        <i class="fas fa-trash-alt" style="color: #ffffff;"></i>&nbsp; Xóa
-                                    </button></span>
-                                <span class="float:right"><button class="btn btn-primary btn-sm col-sm-1 float-right" style="margin-right: 20px;" id="modify">
-                                        <i class="fas fa-pencil-alt" style="color: #ffffff;"></i>&nbsp; Sửa
+                                <span class="float:right"><button class="btn btn-primary btn-sm col-sm-1 float-right del" style="margin-right: 10px;" id="reset">
+                                        <form action="./shift_process.php" name="reset_form" id="reset-form" method="post">
+                                            <input type="hidden" name="reset">
+                                        </form>
+                                        <i class="fas fa-sync" style="color: #ffffff;"></i>&nbsp; Làm mới lịch
                                     </button></span>
                                 <span class="float:right"><button class="btn btn-primary btn-sm col-sm-1 float-right" style="margin-right: 20px;" id="add">
                                         <i class="fas fa-plus" style="color: #ffffff;"></i>&nbsp; Thêm
@@ -368,30 +369,51 @@ if (isset($_SESSION["status"]) == 'Success') {
                                             while ($row = mysqli_fetch_assoc($query_ca)) {
                                         ?>
                                                 <tr>
-                                                    <th style="vertical-align:middle;" class="text-center">Ca <?php echo $row['Ca']; ?></th>
+                                                    <th id="ca<?php echo $row['Ca']; ?>" name="<?php echo $row['Ca']; ?>" style="vertical-align:middle;" class="text-center">Ca <?php echo $row['Ca']; ?></th>
                                                     <?php
                                                     for ($i = 2; $i < 9; $i++) {
                                                     ?>
-                                                        <td style="vertical-align:middle !important;">
+                                                        <td id="ca<?php echo $row['Ca']; ?>" name="<?php echo $row['Ca']; ?>" style="vertical-align:middle !important;">
                                                             <?php
                                                             $select_ngay = "SELECT * FROM `ca_lam_viec` c, `nhan_vien` n WHERE c.MaNV = n.MaNV AND Ca = '" . $row['Ca'] . "'";
                                                             $query_ngay = mysqli_query($conn, $select_ngay);
+                                                            $r = 0;
                                                             if ($query_ngay->num_rows > 0) {
                                                                 while ($rows = mysqli_fetch_assoc($query_ngay)) {
-                                                                    if ($rows['Ngay'] == $i)
+                                                                    if ($rows['Ngay'] == $i) {
                                                                         echo '<p>- ' . $rows['TenNV'] . '</p><br>';
-                                                                    else
+                                                                        $r = 1;
+                                                                    } else
                                                                         echo "";
+                                                                }
+                                                                if ($r == 1) {
+                                                            ?>
+                                                                    <span>
+                                                                        <button class="btn btn-sm btn-primary" style="margin-left: 30px:" type="button" onclick="location.href='./shift_modify.php?ngay=<?php echo $i ?>&ca=<?php echo $row['Ca'] ?>'">
+                                                                            <i class="fas fa-pencil-alt" style="color: #ffffff;"></i>&nbsp; Sửa</button>
+                                                                        <button class="btn btn-sm btn-primary" style="margin-right: 10px; background-color: #dc3545; border-color: #dc3545;" type="button" onclick="location.href='./shift_delete.php?ngay=<?php echo $i ?>&ca=<?php echo $row['Ca'] ?>'">
+                                                                            <i class="fas fa-trash-alt" style="color: #ffffff;"></i>&nbsp; Xóa</button>
+                                                                    </span>
+                                                            <?php
                                                                 }
                                                             }
                                                             ?>
+
                                                         </td>
                                                     <?php
                                                     }
                                                     ?>
                                                 </tr>
-                                        <?php
+                                            <?php
                                             }
+                                        } else {
+                                            ?>
+                                            <tr class="text-center">
+                                                <td colspan="8">
+                                                    <h6>Lịch trống</h6>
+                                                </td>
+                                            </tr>
+                                        <?php
                                         }
                                         ?>
                                     </tbody>
@@ -462,339 +484,168 @@ if (isset($_SESSION["status"]) == 'Success') {
             </div>
         </div>
 
-        <!-- FORM SỬA BÀN -->
-        <div class="modal fade" id="modify_modal" role='dialog'>
-            <div class="modal-dialog modal-dialog-centered modal-md" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title"><b>Chỉnh sửa ca</b></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="container-fluid">
-                            <form action="./process.php" name="modify_form" id="modify-form" method="post">
-                                <div class="form-group">
-                                    <label for="">Chọn ngày</label><br>
-                                    <select id="ngay_modify" name="ngay" class="form-control text-right" style="text-align:left !important" required>
-                                        <option selected value=2>Thứ 2</option>
-                                        <option value="3">Thứ 3</option>
-                                        <option value="4">Thứ 4</option>
-                                        <option value="5">Thứ 5</option>
-                                        <option value="6">Thứ 6</option>
-                                        <option value="7">Thứ 7</option>
-                                        <option value="8">Chủ nhật</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Chọn ca</label><br>
-                                    <select id="ca_modify" name="ca" class="form-control text-right" style="text-align:left !important" required>
-                                        <option selected value="1">Ca 1</option>
-                                        <option value="2">Ca 2</option>
-                                        <option value="3">Ca 3</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Chọn nhân viên</label><br>
-                                    <select id="nv_modify" name="nv" class="form-control text-right" style="text-align:left !important" required></select>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary btn-sm" form="add-form" id="modify-btn">Xác nhận</button>
-                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Hủy</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- FORM XÓA BÀN -->
-        <div class="modal fade" id="del_modal" role='dialog'>
-            <div class="modal-dialog modal-dialog-centered modal-md" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title"><b>Xóa bàn</b></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="container-fluid">
-                            <form action="./delete.php" name="del_form" id="del-form" method="post">
-                                <div class="form-group">
-                                    <label for="">Chọn bàn cần xóa</label><br>
-                                    <select name="mabandel" class="form-control text-right" id="mabandel" style="text-align:left !important" required>
-                                        <?php
-                                        foreach ($list as $value) {
-                                            echo "<option value='$value'>$value</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary btn-sm" id="del-btn">Xác nhận</button>
-                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Hủy</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </main>
-
         <!-- Loader -->
         <div id="preloader"></div>
         <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
     </body>
-
-</html>
-
-<script>
-    let dsngay = <?php echo json_encode($list1); ?>
-    let dsca = <?php echo json_encode($list2); ?>
-    let dsnv = <?php echo json_encode($list3); ?>
-</script>
-<script>
-    window.start_load = function() {
-        $('body').prepend('<di id="preloader2"></di>')
-    }
-    window.end_load = function() {
-        $('#preloader2').fadeOut('fast', function() {
-            $(this).remove();
-        })
-    }
-    window.viewer_modal = function($src = '') {
-        start_load()
-        var t = $src.split('.')
-        t = t[1]
-        if (t == 'mp4') {
-            var view = $("<video src='" + $src + "' controls autoplay></video>")
-        } else {
-            var view = $("<img src='" + $src + "' />")
+    <script>
+        window.start_load = function() {
+            $('body').prepend('<di id="preloader2"></di>')
         }
-        $('#viewer_modal .modal-content video,#viewer_modal .modal-content img').remove()
-        $('#viewer_modal .modal-content').append(view)
-        $('#viewer_modal').modal({
-            show: true,
-            backdrop: 'static',
-            keyboard: false,
-            focus: true
-        })
-        end_load()
-
-    }
-    window.uni_modal = function($title = '', $url = '', $size = "", $params = {}) {
-        start_load()
-        $.ajax({
-            url: $url,
-            method: 'POST',
-            data: $params,
-            error: err => {
-                console.log()
-                alert("An error occured")
-            },
-            success: function(resp) {
-                if (resp) {
-                    $('#uni_modal .modal-title').html($title)
-                    $('#uni_modal .modal-body').html(resp)
-                    if ($size != '') {
-                        $('#uni_modal .modal-dialog').addClass($size)
-                    } else {
-                        $('#uni_modal .modal-dialog').removeAttr("class").addClass("modal-dialog modal-dialog-centered modal-md")
-                    }
-                    $('#uni_modal').modal({
-                        show: true,
-                        backdrop: 'static',
-                        keyboard: false,
-                        focus: true
-                    })
-                    end_load()
-                }
+        window.end_load = function() {
+            $('#preloader2').fadeOut('fast', function() {
+                $(this).remove();
+            })
+        }
+        window.viewer_modal = function($src = '') {
+            start_load()
+            var t = $src.split('.')
+            t = t[1]
+            if (t == 'mp4') {
+                var view = $("<video src='" + $src + "' controls autoplay></video>")
+            } else {
+                var view = $("<img src='" + $src + "' />")
             }
-        })
-    }
-    window._conf = function($msg = '', $func = '', $params = []) {
-        $('#confirm_modal #confirm').attr('onclick', $func + "(" + $params.join(',') + ")")
-        $('#confirm_modal .modal-body').html($msg)
-        $('#confirm_modal').modal('show')
-    }
-    window.alert_toast = function($msg = 'TEST', $bg = 'success') {
-        $('#alert_toast').removeClass('bg-success')
-        $('#alert_toast').removeClass('bg-danger')
-        $('#alert_toast').removeClass('bg-info')
-        $('#alert_toast').removeClass('bg-warning')
+            $('#viewer_modal .modal-content video,#viewer_modal .modal-content img').remove()
+            $('#viewer_modal .modal-content').append(view)
+            $('#viewer_modal').modal({
+                show: true,
+                backdrop: 'static',
+                keyboard: false,
+                focus: true
+            })
+            end_load()
 
-        if ($bg == 'success')
-            $('#alert_toast').addClass('bg-success')
-        if ($bg == 'danger')
-            $('#alert_toast').addClass('bg-danger')
-        if ($bg == 'info')
-            $('#alert_toast').addClass('bg-info')
-        if ($bg == 'warning')
-            $('#alert_toast').addClass('bg-warning')
-        $('#alert_toast .toast-body').html($msg)
-        $('#alert_toast').toast({
-            delay: 3000
-        }).toast('show');
-    }
-    $(document).ready(function() {
-        $('#preloader').fadeOut('fast', function() {
-            $(this).remove();
-        })
-    })
-    $('.datetimepicker').datetimepicker({
-        format: 'Y/m/d H:i',
-        startDate: '+3d'
-    })
-    $('.select2').select2({
-        placeholder: "Please select here",
-        width: "100%"
-    })
-
-    // của home.php
-    cat_func();
-
-    function cat_func() {
-        $('.cat-item').click(function() {
-            var id = $(this).attr('data-id')
-            console.log(id)
-            $('.prod-item').each(function() {
-                if ($(this).attr('data-section') == id) {
-                    $(this).parent().toggle(true)
-                } else {
-                    $(this).parent().toggle(false)
+        }
+        window.uni_modal = function($title = '', $url = '', $size = "", $params = {}) {
+            start_load()
+            $.ajax({
+                url: $url,
+                method: 'POST',
+                data: $params,
+                error: err => {
+                    console.log()
+                    alert("An error occured")
+                },
+                success: function(resp) {
+                    if (resp) {
+                        $('#uni_modal .modal-title').html($title)
+                        $('#uni_modal .modal-body').html(resp)
+                        if ($size != '') {
+                            $('#uni_modal .modal-dialog').addClass($size)
+                        } else {
+                            $('#uni_modal .modal-dialog').removeAttr("class").addClass("modal-dialog modal-dialog-centered modal-md")
+                        }
+                        $('#uni_modal').modal({
+                            show: true,
+                            backdrop: 'static',
+                            keyboard: false,
+                            focus: true
+                        })
+                        end_load()
+                    }
                 }
             })
+        }
+        window._conf = function($msg = '', $func = '', $params = []) {
+            $('#confirm_modal #confirm').attr('onclick', $func + "(" + $params.join(',') + ")")
+            $('#confirm_modal .modal-body').html($msg)
+            $('#confirm_modal').modal('show')
+        }
+        window.alert_toast = function($msg = 'TEST', $bg = 'success') {
+            $('#alert_toast').removeClass('bg-success')
+            $('#alert_toast').removeClass('bg-danger')
+            $('#alert_toast').removeClass('bg-info')
+            $('#alert_toast').removeClass('bg-warning')
+
+            if ($bg == 'success')
+                $('#alert_toast').addClass('bg-success')
+            if ($bg == 'danger')
+                $('#alert_toast').addClass('bg-danger')
+            if ($bg == 'info')
+                $('#alert_toast').addClass('bg-info')
+            if ($bg == 'warning')
+                $('#alert_toast').addClass('bg-warning')
+            $('#alert_toast .toast-body').html($msg)
+            $('#alert_toast').toast({
+                delay: 3000
+            }).toast('show');
+        }
+        $(document).ready(function() {
+            $('#preloader').fadeOut('fast', function() {
+                $(this).remove();
+            })
         })
-    }
+        $('.datetimepicker').datetimepicker({
+            format: 'Y/m/d H:i',
+            startDate: '+3d'
+        })
+        $('.select2').select2({
+            placeholder: "Please select here",
+            width: "100%"
+        })
 
-    $('#logout').click(function() {
-        start_load()
-        if (confirm("Bạn muốn đăng xuất ?") == true) {
-            alert("Đăng xuất thành công");
-            var myWindow = window.open("../destroyss.php", "", "width=0, height=0");
-            myWindow.blur();
-            location.assign("../index.php");
+        // của home.php
+        cat_func();
+
+        function cat_func() {
+            $('.cat-item').click(function() {
+                var id = $(this).attr('data-id')
+                console.log(id)
+                $('.prod-item').each(function() {
+                    if ($(this).attr('data-section') == id) {
+                        $(this).parent().toggle(true)
+                    } else {
+                        $(this).parent().toggle(false)
+                    }
+                })
+            })
         }
-        setTimeout(function() {
-            end_load()
-        }, 200)
-    })
 
-
-    $("#add").click(function() {
-        start_load()
-        $('#add_modal').modal('show')
-        setTimeout(function() {
-            $('#ngay_add').focus()
-            end_load()
-        }, 200)
-    })
-
-
-    $("#del").click(function() {
-        start_load()
-        $('#del_modal').modal('show')
-        setTimeout(function() {
-            $('#mabandel').focus()
-            end_load()
-        }, 200)
-    })
-
-    $('#del-btn').click(function() {
-        start_load()
-        if (confirm("Bạn có chắn chắn muốn xóa order?") == true) {
-            $('#del-form').submit()
-        }
-        setTimeout(function() {
-            end_load()
-        }, 200)
-    })
-
-    $('#mabanmodify1').keyup('input', function() {
-        var check = 0;
-        var x = $(this).val()
-        x = x.replace(/,/g, '')
-        if (x == '' || x == ' ' || x == 0) {
-            $(this).val('')
-        } else
-            $(this).val((parseInt(x)))
-
-        x = x.replace(/(^0*)/gi, "");
-        console.log(x)
-        for (i = 0; i < dsmaban.length; i++) {
-            if (x == dsmaban[i]) {
-                check = 1;
+        $('#logout').click(function() {
+            start_load()
+            if (confirm("Bạn muốn đăng xuất ?") == true) {
+                alert("Đăng xuất thành công");
+                var myWindow = window.open("../destroyss.php", "", "width=0, height=0");
+                myWindow.blur();
+                location.assign("../index.php");
             }
-        }
-        if (check == 1) {
-            document.getElementById("mabanmodify_warn").innerHTML = "<i style='color:red'>* Mã bàn đã tồn tại</i>";
-            $('#modify-btn').prop('disabled', true)
-        } else {
-            if (x == '') {
-                document.getElementById("mabanmodify_warn").innerHTML = "";
-                $('#modify-btn').prop('disabled', true)
-            } else {
-                document.getElementById("mabanmodify_warn").innerHTML = "<i style='color:green'>* Mã bàn hợp lệ</i>";
-                $('#modify-btn').prop('disabled', false)
+            setTimeout(function() {
+                end_load()
+            }, 200)
+        })
+
+
+        $("#add").click(function() {
+            start_load()
+            $('#add_modal').modal('show')
+            setTimeout(function() {
+                $('#ngay_add').focus()
+                end_load()
+            }, 200)
+        })
+
+        $('#reset').click(function() {
+            start_load()
+            if (confirm("Bạn có chắc muốn làm mới toàn bộ?") == true) {
+                $('#reset-form').submit()
             }
-        }
-    })
-    $('#mabanmodify1').on('input', function() {
-        var val = $(this).val()
-        val = val.replace(/[^0-9]/, '');
-        $(this).val(val)
-    })
+            setTimeout(function() {
+                end_load()
+            }, 200)
+        })
 
-    $('#mabanmodify').change(function() {
-        start_load()
-        let ban = $('#mabanmodify').val()
-        let kv = $('.' + ban).attr('name')
-        if (kv == 'A') {
-            $('#kv_modify').val('A');
-        }
-        if (kv == 'B') {
-            $('#kv_modify').val('B');
-        }
-        if (kv == 'C') {
-            $('#kv_modify').val('C');
-        }
-        console.log(ban)
-        console.log(kv)
-        setTimeout(function() {
-            $('#mabanmodify1').focus()
-            $('#mabanmodify1').val('')
 
-            end_load()
-        }, 200)
-    })
-
-    $("#modify").click(function() {
-        start_load()
-        $('#modify_modal').modal('show')
-        var ngay = $('#ngay_modify').val()
-        var ca = $('#ca_modify').val()
-        console.log(ngay)
-        console.log(ca)
-        setTimeout(function() {
-            $('#ngay_modify').focus()
-            end_load()
-        }, 200)
-    })
-
-    $('#modify-btn').click(function() {
-        start_load()
-        if (confirm("Bạn có chắc muốn thay đổi?") == true) {
+        $('#modify-btn').click(function() {
+            start_load()
             $('#modify-form').submit()
-        }
-        setTimeout(function() {
-            end_load()
-        }, 200)
-    })
-</script>
+            setTimeout(function() {
+                end_load()
+            }, 200)
+        })
+    </script>
+
+</html>
 <?php
 } else {
 ?>
