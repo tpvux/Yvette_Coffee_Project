@@ -3,10 +3,10 @@
     include '../db_connect.php';
     if (isset($_SESSION["status"])=='Success')
     {
-        if (isset($_POST['ma_order_del']))
+        if (isset($_GET))
         {
             //Tính năng xóa order
-            $MaOrder = $_POST['ma_order_del'];
+            $MaOrder = $_GET['id'];
             $sql1 = $conn->query("DELETE FROM `hoa_don_thanh_toan` WHERE MaOrder = $MaOrder");
             $sql2 = $conn->query("DELETE FROM `order` WHERE MaOrder = $MaOrder");
             if (($sql1 && $sql2))

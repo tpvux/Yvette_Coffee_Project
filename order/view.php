@@ -19,8 +19,8 @@
 <body>
 <?php
 
-if (isset($_POST['ma_order'])) {
-	$maod = $_POST['ma_order'];
+if (isset($_GET['id'])) {
+	$maod = $_GET['id'];
 	$sql2 = $conn->query("SELECT TienNhan, TongTien, ThoiGianThanhToan FROM `order` o, `hoa_don_thanh_toan` h Where o.MaOrder = h.MaOrder and o.MaOrder = $maod");
 	$row1 = $sql2->fetch_assoc();
 	$tn = $row1['TienNhan'];

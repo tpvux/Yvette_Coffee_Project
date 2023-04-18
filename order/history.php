@@ -397,17 +397,11 @@ if (isset($_SESSION["status"]) == 'Success') {
                                                 <td class="text-center">
                                                     <?php
                                                     if ($row['TienNhan'] > 0) { ?>
-                                                        <button class="btn btn-sm btn-outline-primary view_order" type="submit" data-id="<?php echo $row['MaOrder'] ?>">
-                                                            <form action="./view.php" id="view_form" method="POST"><input type="hidden" name="ma_order" value="<?php echo $row['MaOrder'] ?>"></form>Xem
-                                                        </button>
+                                                        <button class="btn btn-sm btn-outline-primary view_order" type="button" onclick="location.href='./view.php?id=<?php echo $row['MaOrder'] ?>'">Xem</button>
                                                     <?php } else { ?>
-                                                        <button class="btn btn-sm btn-outline-primary view_order" type="submit" data-id="<?php echo $row['MaOrder'] ?>">
-                                                            <form action="./view.php" id="view_form" method="POST"><input type="hidden" name="ma_order" value="<?php echo $row['MaOrder'] ?>"></form>Xem
-                                                        </button>
+                                                        <button class="btn btn-sm btn-outline-primary view_order" type="button" onclick="location.href='./view.php?id=<?php echo $row['MaOrder'] ?>'">Xem</button>
                                                         <button class="btn btn-sm btn-outline-primary " type="button" onclick="location.href='./order.php?id=<?php echo $maban ?>'">Sửa</button>
-                                                        <button class="btn btn-sm btn-outline-danger delete_order" type="submit" data-id="<?php echo $row['MaOrder'] ?>">
-                                                            <form action="../order/delete.php" id="delete_form" method="POST"><input type="hidden" name="ma_order_del" value="<?php echo $row['MaOrder'] ?>"></form>Xóa
-                                                        </button>
+                                                        <button class="btn btn-sm btn-outline-danger delete_order" value="<?php echo $row['MaOrder'] ?>" type="button">Xóa</button>
                                                     <?php }
                                                     ?>
                                                 </td>
@@ -522,18 +516,11 @@ if (isset($_SESSION["status"]) == 'Success') {
                 width: "100%"
             })
 
-            $('.view_order').click(function() {
-                start_load()
-                $('#view_form').submit()
-                setTimeout(function() {
-                    end_load()
-                }, 200)
-            })
-
             $('.delete_order').click(function() {
                 start_load()
+                var x = $(this).val()
                 if (confirm("Bạn có chắn chắn muốn xóa order?") == true) {
-                    $('#delete_form').submit()
+                    location.assign("./delete.php?id="+x);
                 }
                 setTimeout(function() {
                     end_load()
