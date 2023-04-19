@@ -5,25 +5,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="short icon" type="image/jpg" href="images/img/logo2.png">
-    <title>Chỉnh sửa</title>
+    <link rel="short icon" type="image/jpg" href="../images/img/logo2.png">
+    <title>Cập nhật NL</title>
     <style>
     body{
         font-family: 'Montserrat', sans-serif;
         display: flex;
         justify-content: center;
         align-items: center;
+        position: relative;
+        top: 80px;
     }
 
     .feed-form{
         width: 713px;
-        height: 630px;
+        height: 500px;
         padding: 0 15px;
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
-        background: gray;
+        box-shadow: 0px 0px 0px 4px rgba(52, 52, 53, 0.185);
         border-radius: 5px;
     }
 
@@ -100,9 +102,9 @@
 <body>
     <?php
         session_start();
-        require_once "../config.php";
+        require_once "../db_connect.php";
         date_default_timezone_set("Asia/Ho_Chi_Minh"); $date = date('Y-m-d G:i:s');
-        if(isset($_GET["id"])){
+        if(isset($_GET["id"]) && ($_GET["id"] > 0)){
             $id = $_GET["id"];
         }
         if(isset($_POST["suaNL"])){
@@ -165,10 +167,10 @@
                     <input type="text" name ="tenngnx" value="<?php echo $_SESSION['name'];?>" readonly  >
                 </div>
                 <div class="input-group">
-                    <label for="nghiepvu">Nghiệp vụ (1: xuất, 0: nhập): </label>
+                    <label for="nghiepvu">Nghiệp vụ: </label>
                     <select name="nghiepvu"  required>
-                        <option>1</option>
-                        <option>0</option>
+                        <option value="1">Xuất</option>
+                        <option value="0">Nhập</option>
                     </select>
                 </div>
                 <div class="input-group">

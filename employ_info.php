@@ -1,13 +1,3 @@
-<?php
-
-/*require_once "../config.php";
-$sql = "SELECT * from `nhan_vien`WHERE employee.id = rank.eid";
-
-//echo "$sql";
-$result = mysqli_query($conn, $sql);
-*/
-?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +5,7 @@ $result = mysqli_query($conn, $sql);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="short icon" type="image/jpg" href="images/img/logo2.png">
+    <link rel="short icon" type="image/jpg" href="../images/img/logo2.png">
 	<title>Thông tin nhân viên</title>
 
     <style>
@@ -126,15 +116,15 @@ $result = mysqli_query($conn, $sql);
 		<nav>
 			<h1>Yvette</h1>
 			<ul id="navli">
-				<li><a class="homeblack" href="addemp.php">Thêm mới</a></li>
+				<li><a class="homeblack" href="insertemp.php">Thêm mới</a></li>
 				<li><a class="homered" href="employ_info.php">Thông tin NV</a></li>
-				<li><a class="homeblack" href="../function.php">Log Out</a></li>
+				<li><a class="homeblack" href="../index.php">Log Out</a></li>
 			</ul>
 		</nav>
 	</header>
 	<?php
         session_start();
-        require_once "../config.php";
+        require_once "../db_connect.php";
         $sql = "SELECT * FROM `nhan_vien`";
         $result = mysqli_query($conn, $sql); 
         if ($result->num_rows > 0) {
