@@ -320,7 +320,7 @@ if (isset($_SESSION["status"]) == 'Success') {
         <body>
             <header>
                 <nav>
-                    <h1>Yvette</h1>
+                    <h1>Yvette Coffee</h1>
                 </nav>
             </header>
             <div class="divider"></div>

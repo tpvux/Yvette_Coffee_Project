@@ -39,7 +39,7 @@
                 ?>
                 <script>
                     alert("Đăng nhập thành công");
-                    location.assign("./function.php");
+                    location.assign("./index.php");
                 </script>
                 <?php
             }

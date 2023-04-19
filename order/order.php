@@ -295,7 +295,7 @@ if (isset($_SESSION["status"]) == 'Success') {
   <body>
     <header>
       <nav>
-        <h1>Yvette</h1>
+        <h1>Yvette Coffee</h1>
         <div class="col-md-4 float-left text-white">
         </div>
         <div class="float-right">
