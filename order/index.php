@@ -401,9 +401,6 @@ if (isset($_SESSION["status"]) == 'Success') {
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title"><b>Thêm bàn</b></h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
             </div>
             <div class="modal-body">
               <div class="container-fluid">
@@ -438,9 +435,6 @@ if (isset($_SESSION["status"]) == 'Success') {
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title"><b>Chỉnh sửa bàn</b></h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
             </div>
             <div class="modal-body">
               <div class="container-fluid">
@@ -488,9 +482,6 @@ if (isset($_SESSION["status"]) == 'Success') {
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title"><b>Xóa bàn</b></h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
             </div>
             <div class="modal-body">
               <div class="container-fluid">
