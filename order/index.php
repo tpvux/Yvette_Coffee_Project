@@ -271,11 +271,14 @@
     width: 35px;
     height: 35px;
   }
+
+  .bg-primary {
+    background-color: #ff4e21 !important;
+  }
 </style>
 <?php
 if (isset($_SESSION["status"]) == 'Success') {
 ?>
-
   <body>
     <header>
       <nav>
@@ -305,7 +308,7 @@ if (isset($_SESSION["status"]) == 'Success') {
             <div class="card border-primary">
               <div class="card-header bg-dark text-white  border-primary">
                 <b style="font-size: 20px; padding:43%">DANH SÁCH BÀN</b>
-                <span class="float:right"><button class="btn btn-primary btn-sm col-sm-1 float-right del" style="top:-30px; right:-10px; margin-right: 10px; background-color: #dc3545; border-color: #dc3545;" id="del">
+                <span class="float:right"><button class="btn btn-primary btn-sm col-sm-1 float-right del" style="top:-30px; right:-10px; margin-right: 10px; background-color: #ff182e; border-color: #ff182e;" id="del">
                     <i class="fas fa-trash-alt" style="color: #ffffff;"></i>&nbsp; Xóa
                   </button></span>
                 <span class="float:right"><button class="btn btn-primary btn-sm col-sm-1 float-right" style="top:-30px; right:-10px; margin-right: 20px;" id="modify">
@@ -353,7 +356,7 @@ if (isset($_SESSION["status"]) == 'Success') {
                         $TongSL = $row1['TongSL'];
                     ?>
                         <div class="col-md-3 mb-3">
-                          <div class="card bg-primary prod-item" style="background-color: black!important" onclick="location.href='./order.php?id=<?php echo $row['MaBan'] ?>'" data-json='<?php echo json_encode($row) ?>' data-section="<?php echo $row['KhuVuc'] ?>">
+                          <div class="card bg-primary prod-item" style="background-color: #121212 !important" onclick="location.href='./order.php?id=<?php echo $row['MaBan'] ?>'" data-json='<?php echo json_encode($row) ?>' data-section="<?php echo $row['KhuVuc'] ?>">
                             <div class="card-body">
                               <span>
                                 <center><b class="text-white">

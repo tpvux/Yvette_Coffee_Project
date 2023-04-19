@@ -3,7 +3,7 @@
     session_start();
     if (isset($_SESSION["status"])=='Success')
     {
-        if (isset($_POST))
+        if (isset($_POST['shift_add']))
         {   
             $ngay = $_POST['ngay'];
             $ca = $_POST['ca'];

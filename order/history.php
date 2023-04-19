@@ -272,6 +272,22 @@ session_start();
         max-width: 100px;
         max-height: 150px;
     }
+
+    input[type=checkbox] {
+        /* Double-sized Checkboxes */
+        -ms-transform: scale(1.3);
+        /* IE */
+        -moz-transform: scale(1.3);
+        /* FF */
+        -webkit-transform: scale(1.3);
+        /* Safari and Chrome */
+        -o-transform: scale(1.3);
+        /* Opera */
+        transform: scale(1.3);
+        padding: 10px;
+        cursor: pointer;
+    }
+
 </style>
 <?php
 if (isset($_SESSION["status"]) == 'Success') {
@@ -296,22 +312,6 @@ if (isset($_SESSION["status"]) == 'Success') {
                 </div>
             </nav>
         </header>
-        <style>
-            input[type=checkbox] {
-                /* Double-sized Checkboxes */
-                -ms-transform: scale(1.3);
-                /* IE */
-                -moz-transform: scale(1.3);
-                /* FF */
-                -webkit-transform: scale(1.3);
-                /* Safari and Chrome */
-                -o-transform: scale(1.3);
-                /* Opera */
-                transform: scale(1.3);
-                padding: 10px;
-                cursor: pointer;
-            }
-        </style>
         <div class="divider"></div>
         <div class="container-fluid">
 
@@ -520,7 +520,7 @@ if (isset($_SESSION["status"]) == 'Success') {
                 start_load()
                 var x = $(this).val()
                 if (confirm("Bạn có chắn chắn muốn xóa order?") == true) {
-                    location.assign("./delete.php?id="+x);
+                    location.assign("./delete.php?id=" + x);
                 }
                 setTimeout(function() {
                     end_load()

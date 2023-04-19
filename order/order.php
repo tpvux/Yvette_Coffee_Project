@@ -285,6 +285,8 @@
     width: 35px;
     height: 35px;
   }
+
+  
 </style>
 <?php
 if (isset($_SESSION["status"]) == 'Success') {

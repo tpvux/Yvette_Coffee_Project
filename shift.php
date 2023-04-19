@@ -9,7 +9,7 @@ include './db_connect.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="short icon" type="image/jpg" href="./images/img/logo2.png">
-    <title>Lịch sử thanh toán</title>
+    <title>Quản lý ca làm việc</title>
 
 
     <?php
@@ -285,6 +285,14 @@ include './db_connect.php';
         max-width: 100px;
         max-height: 150px;
     }
+    
+    .reset:hover {
+        opacity: .8;
+    }
+
+    .del-btn:hover {
+        opacity: .8;
+    }
 </style>
 <?php
 if (isset($_SESSION["status"]) == 'Success') {
@@ -315,6 +323,7 @@ if (isset($_SESSION["status"]) == 'Success') {
                         <div class="dropdown-menu" aria-labelledby="account_settings" style="left: 10px; top: 20px">
                             <a class="dropdown-item" href="./index.php" id="home"><i class="fa fa-home"></i> Trang chủ</a>
                             <a class="dropdown-item" href="./order/index.php" id="history"><i class="fas fa-cart-plus"></i> Order</a>
+                            <a class="dropdown-item" href="./order/history.php" id="history"><i class="far fa-credit-card"></i> Lịch sử thanh toán</a>
                             <button class="dropdown-item" id="logout"><i class="fas fa-sign-out-alt"></i> Đăng xuất</button>
                         </div>
                     </div>
@@ -337,7 +346,7 @@ if (isset($_SESSION["status"]) == 'Success') {
                             <div class="card-header">
                                 <b style="font-size: 15px;">Lịch làm việc</b>
                                 </a></span>
-                                <span class="float:right"><button class="btn btn-primary btn-sm col-sm-1 float-right del" style="margin-right: 10px;" id="reset">
+                                <span class="float:right"><button class="btn btn-primary btn-sm col-sm-1 float-right reset" style="margin-right: 10px; background-color:green; border-color:green;" id="reset">
                                         <form action="./shift_process.php" name="reset_form" id="reset-form" method="post">
                                             <input type="hidden" name="reset">
                                         </form>
@@ -391,7 +400,7 @@ if (isset($_SESSION["status"]) == 'Success') {
                                                                     <span>
                                                                         <button class="btn btn-sm btn-primary" style="margin-left: 30px:" type="button" onclick="location.href='./shift_modify.php?ngay=<?php echo $i ?>&ca=<?php echo $row['Ca'] ?>'">
                                                                             <i class="fas fa-pencil-alt" style="color: #ffffff;"></i>&nbsp; Sửa</button>
-                                                                        <button class="btn btn-sm btn-primary" style="margin-right: 10px; background-color: #dc3545; border-color: #dc3545;" type="button" onclick="location.href='./shift_delete.php?ngay=<?php echo $i ?>&ca=<?php echo $row['Ca'] ?>'">
+                                                                        <button class="btn btn-sm btn-primary del-btn" style="margin-right: 10px; background-color: #dc3545; border-color: #dc3545;" type="button" onclick="location.href='./shift_delete.php?ngay=<?php echo $i ?>&ca=<?php echo $row['Ca'] ?>'">
                                                                             <i class="fas fa-trash-alt" style="color: #ffffff;"></i>&nbsp; Xóa</button>
                                                                     </span>
                                                             <?php
@@ -421,11 +430,10 @@ if (isset($_SESSION["status"]) == 'Success') {
                             </div>
                         </div>
                     </div>
-                    <!-- Table Panel -->
                 </div>
             </div>
         </div>
-        <!-- FORM THÊM BÀN -->
+        <!-- FORM THÊM CA -->
         <div class="modal fade" id="add_modal" role='dialog'>
             <div class="modal-dialog modal-dialog-centered modal-md" role="document">
                 <div class="modal-content">
@@ -437,7 +445,8 @@ if (isset($_SESSION["status"]) == 'Success') {
                     </div>
                     <div class="modal-body">
                         <div class="container-fluid">
-                            <form action="./shift_add.php" name="add_form" id="add-form" method="post">
+                            <form action="./shift_process.php" name="add_form" id="add-form" method="post">
+                                <input type="hidden" name="shift_add">
                                 <div class="form-group">
                                     <label for="">Chọn ngày</label><br>
                                     <select id="ngay_add" name="ngay" class="form-control text-right" style="text-align:left !important" required>

@@ -21,11 +21,13 @@
 
 if (isset($_GET['id'])) {
 	$maod = $_GET['id'];
-	$sql2 = $conn->query("SELECT TienNhan, TongTien, ThoiGianThanhToan FROM `order` o, `hoa_don_thanh_toan` h Where o.MaOrder = h.MaOrder and o.MaOrder = $maod");
+	$sql2 = $conn->query("SELECT TienNhan, TongTien, ThoiGianThanhToan, TenNV, MaBan FROM `nhan_vien` n, `order` o, `hoa_don_thanh_toan` h Where o.MaOrder = h.MaOrder and o.MaNV = n.MaNV and o.MaOrder = $maod");
 	$row1 = $sql2->fetch_assoc();
 	$tn = $row1['TienNhan'];
 	$tt = $row1['TongTien'];
 	$date = $row1['ThoiGianThanhToan'];
+	$nv = $row1['TenNV'];
+	$ban = $row1['MaBan'];
 ?>
 	<!-- Form View hóa đơn -->
 			<div class="container-fluid py-1">
@@ -37,12 +39,13 @@ if (isset($_GET['id'])) {
 							<hr>
 							<?php
 							$sql3 = $conn->query("SELECT * FROM `order` o, `do_uong` d, `hoa_don_thanh_toan` h Where d.MaDoUong = o.MaDoUong and o.MaOrder = h.MaOrder and o.MaOrder = $maod");
-							
 							if ($sql3->num_rows > 0) {
 							?>
 								<div class="flex">
 									<div class="w-100">
 										<p style="font-size:15px">Mã Order: <b><?php echo $maod ?></b></p>
+										<p style="font-size:15px">Tên nhân viên: <b><?php echo $nv ?></b></p>
+										<p style="font-size:15px">Bàn số: <b><?php echo $ban ?></b></p>
 										<p style="font-size:15px">Ngày: <b><?php
 													if ($tn > 0) {
 														echo date("M d, Y", strtotime($date));
@@ -154,6 +157,10 @@ if (isset($_GET['id'])) {
 
 		p {
 			margin: unset;
+		}
+
+		td {
+			font-size: 15px;
 		}
 	</style>
 
