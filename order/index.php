@@ -290,7 +290,7 @@ if (isset($_SESSION["status"]) == 'Success') {
             <i class="fas fa-user fa-lg" style="color: #ffffff; padding:0px; margin:0px; border:none"></i>&ensp;<a href="#" class="text-white dropdown-toggle" id="account_settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:larger">Xin chào, <?php echo $_SESSION['name'] ?> </a>
             <div class="dropdown-menu" aria-labelledby="account_settings" style="left: -20px; top: 25px">
               <a class="dropdown-item" href="../index.php" id="home"><i class="fa fa-home"></i> Trang chủ</a>
-              <a class="dropdown-item" href="../order/history.php" id="history"><i class="far fa-credit-card"></i> Lịch sử thanh toán</a>
+              <a class="dropdown-item" href="./history.php" id="history"><i class="far fa-credit-card"></i> Lịch sử thanh toán</a>
               <button class="dropdown-item" id="logout"><i class="fas fa-sign-out-alt"></i> Đăng xuất</button>
             </div>
           </div>
