@@ -7,7 +7,7 @@ if (isset($_SESSION["status"]) == 'Success') {
         $ngay = $_GET['ngay'];
         $ca = $_GET['ca'];
         $sql1 = $conn->query("SELECT * FROM `ca_lam_viec` c, `nhan_vien` n WHERE c.MaNV = n.MaNV AND c.Ngay = $ngay AND c.Ca = $ca");
-        $sql2 = $conn->query("SELECT DISTINCT * FROM `nhan_vien`  WHERE ChucVu = 'Nhân Viên'");
+        $sql2 = $conn->query("SELECT DISTINCT * FROM `nhan_vien`  WHERE ChucVu = 'Nhân viên'");
         if ($sql2->num_rows > 0) {
             while ($row2 = $sql2->fetch_assoc()) {
                 $k = $row2['MaNV'];

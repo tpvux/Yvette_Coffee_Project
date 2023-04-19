@@ -345,7 +345,11 @@ if (isset($_SESSION["status"]) == 'Success') {
                         <div class="card">
                             <div class="card-header">
                                 <b style="font-size: 15px;">Lịch làm việc</b>
-                                </a></span>
+                                </a>
+                                <?php 
+                                if (($_SESSION["chucvu"]=='Quản lý') || ($_SESSION["chucvu"]=='Chủ quán'))
+                                {
+                                ?>
                                 <span class="float:right"><button class="btn btn-primary btn-sm col-sm-1 float-right reset" style="margin-right: 10px; background-color:green; border-color:green;" id="reset">
                                         <form action="./shift_process.php" name="reset_form" id="reset-form" method="post">
                                             <input type="hidden" name="reset">
@@ -355,6 +359,7 @@ if (isset($_SESSION["status"]) == 'Success') {
                                 <span class="float:right"><button class="btn btn-primary btn-sm col-sm-1 float-right" style="margin-right: 20px;" id="add">
                                         <i class="fas fa-plus" style="color: #ffffff;"></i>&nbsp; Thêm
                                     </button></span>
+                                <?php } ?>
                             </div>
                             <div class="card-body">
                                 <table class="table table-condensed table-bordered table-hover">
@@ -396,6 +401,8 @@ if (isset($_SESSION["status"]) == 'Success') {
                                                                         echo "";
                                                                 }
                                                                 if ($r == 1) {
+                                                                    if (($_SESSION["chucvu"]=='Quản lý') || ($_SESSION["chucvu"]=='Chủ quán'))
+                                                                    {
                                                             ?>
                                                                     <span>
                                                                         <button class="btn btn-sm btn-primary" style="margin-left: 30px:" type="button" onclick="location.href='./shift_modify.php?ngay=<?php echo $i ?>&ca=<?php echo $row['Ca'] ?>'">
@@ -404,6 +411,7 @@ if (isset($_SESSION["status"]) == 'Success') {
                                                                             <i class="fas fa-trash-alt" style="color: #ffffff;"></i>&nbsp; Xóa</button>
                                                                     </span>
                                                             <?php
+                                                                    }
                                                                 }
                                                             }
                                                             ?>
@@ -471,7 +479,7 @@ if (isset($_SESSION["status"]) == 'Success') {
                                     <label for="">Chọn nhân viên</label><br>
                                     <select id="nv_add" name="nv" class="form-control text-right" style="text-align:left !important" required>
                                         <?php
-                                        $sql2 = $conn->query("SELECT DISTINCT * FROM nhan_vien WHERE ChucVu = 'Nhân Viên' order by MaNV asc");
+                                        $sql2 = $conn->query("SELECT DISTINCT * FROM nhan_vien WHERE ChucVu = 'Nhân viên' order by MaNV asc");
                                         if ($sql2->num_rows > 0) {
                                             while ($row2 = $sql2->fetch_assoc()) {
                                         ?>
@@ -615,9 +623,9 @@ if (isset($_SESSION["status"]) == 'Success') {
             start_load()
             if (confirm("Bạn muốn đăng xuất ?") == true) {
                 alert("Đăng xuất thành công");
-                var myWindow = window.open("../destroyss.php", "", "width=0, height=0");
+                var myWindow = window.open("./destroyss.php", "", "width=0, height=0");
                 myWindow.blur();
-                location.assign("../index.php");
+                location.assign("./index.php");
             }
             setTimeout(function() {
                 end_load()

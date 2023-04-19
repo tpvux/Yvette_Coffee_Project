@@ -16,15 +16,15 @@
 </head>
 <body>
     <?php session_start();
-        require_once "../config.php"; ?>
+        require_once "./db_connect.php"; ?>
     <header>
             <nav>
                 <h1>Yvette</h1>
                 <ul id="navli">
-                    <li><a class="homeblack" href="insert_nl.php">Thêm mới</a></li>
-                    <li><a class="homered" href="warehouse.php">Thông tin kho</a></li>
-                    <li><a class="homeblack" href="history.php">Lịch sử nhập xuất</a></li>
-                    <li><a class="homeblack" href="../function.php">Log Out</a></li>
+                    <li><a class="homeblack" href="./insert_nl.php">Thêm mới</a></li>
+                    <li><a class="homered" href="./warehouse.php">Thông tin kho</a></li>
+                    <li><a class="homeblack" href="./history.php">Lịch sử nhập xuất</a></li>
+                    <li><a class="homeblack" href="./function.php">Log Out</a></li>
                 </ul>
             </nav>
 	</header>
@@ -43,7 +43,6 @@
            </div>          
         </div>
         <?php
-        
             if(isset($_POST["search"])){
                 $s = $_POST["txtsearch"];
                 if($s == ""){

@@ -4,6 +4,7 @@
 <?php
 include '../db_connect.php';
 session_start();
+include('./header.php');
 ?>
 
 <head>
@@ -11,11 +12,6 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="short icon" type="image/jpg" href="../images/img/logo2.png">
     <title>Lịch sử thanh toán</title>
-
-
-    <?php
-    include('./header.php');
-    ?>
 
 </head>
 <style>
@@ -518,7 +514,18 @@ if (isset($_SESSION["status"]) == 'Success') {
                 placeholder: "Please select here",
                 width: "100%"
             })
-
+            $('#logout').click(function() {
+                start_load()
+                if (confirm("Bạn muốn đăng xuất ?") == true) {
+                    alert("Đăng xuất thành công");
+                    var myWindow = window.open("../destroyss.php", "", "width=0, height=0");
+                    myWindow.blur();
+                    location.assign("../index.php");
+                }
+                setTimeout(function() {
+                    end_load()
+                }, 200)
+            })
             $('.delete_order').click(function() {
                 start_load()
                 var x = $(this).val()

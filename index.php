@@ -43,6 +43,7 @@
                                 <a href="warehouse_mana/warehouse.php">Quản lý kho</a>
                                 <a href="./employee_mana/employ_info.php">Quản lý nhân viên</a>
                                 <a href="#">Thống kê, báo cáo</a>
+                                <i style="color:white; position:relative; left:0px; cursor:pointer" class="fas fa-sign-out-alt" onclick="signout()"></i>
                             </div>
                         </div>
                     <?php
@@ -55,17 +56,19 @@
                                 <a href="./order/index.php">Order</a>
                                 <a href="warehouse_mana/warehouse.php">Quản lý kho</a>
                                 <a href="#">Quản lý ca làm việc</a>
+                                <i style="color:white; position:relative; left:0px; cursor:pointer" class="fas fa-sign-out-alt" onclick="signout()"></i>
                             </div>
                         </div>
                     <?php
                     }
-                    if ($_SESSION["chucvu"] == "Nhân Viên") { ?>
+                    if ($_SESSION["chucvu"] == "Nhân viên") { ?>
                         <div class="dropdown">
                             <button class="dropbtn">
                                 <?php echo "<b>" . $_SESSION["chucvu"] . " " . $_SESSION["name"] . "</b>"; ?></button>
                             <div class="dropdown-content">
                                 <a href="./order/index.php">Order</a>
                                 <a href="#">Quản lý hóa đơn</a>
+                                <i style="color:white; position:relative; left:0px; cursor:pointer" class="fas fa-sign-out-alt" onclick="signout()"></i>
                             </div>
                         </div>
                     <?php
@@ -76,7 +79,6 @@
                 <?php
                 }
                 ?>
-                <i style="color:white; position:relative; left:0px; cursor:pointer" class="fas fa-sign-out-alt" onclick="signout()"></i>
                 <script>
                     function signout() {
                         if (confirm("Bạn có chắc muốn thoát không?") == true) {
