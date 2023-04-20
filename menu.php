@@ -185,7 +185,7 @@ button:hover {
 </head>
 <body>
     <?php session_start();
-        require_once "../db_connect.php"; ?>
+        require_once "./db_connect.php"; ?>
     <header>
             <nav>
                 <h1>Yvette</h1>
@@ -248,7 +248,7 @@ button:hover {
                                     <td><?php echo $row["DonGia"] ?></td>
                                     <td><?php echo $row["MaDanhMuc"] ?></td>
                                     <td><?php echo $row["TenDanhMuc"] ?></td>
-                                    <td><img src='../images/drink/<?php echo $row["image"];?>' height = "100px" width="200px" ></td>
+                                    <td><img src='./images/drink/<? echo $row["image"];?>' height = "100px" width="200px" ></td>
                                     <td><a href="edit_menu.php?id=<?php echo $row['MaDoUong']?>">Cập nhật</a> |
                                     <a href="delete_menu.php?id=<?php echo $row['MaDoUong']?>">Xóa</a></td>
                                 </tr>
@@ -298,7 +298,7 @@ button:hover {
                             <td><?php echo $row["DonGia"] ?></td>
                             <td><?php echo $row["MaDanhMuc"] ?></td>
                             <td><?php echo $row["TenDanhMuc"] ?></td>
-                            <td><img src='../images/drink/<?php echo $row["image"];?>' height = "170px" width="200px" ></td>
+                            <td><img src='./images/drink/<?php echo $row["image"];?>' height = "170px" width="200px" ></td>
                             <td><a href="edit_menu.php?id=<?php echo $row['MaDoUong']?>">Cập nhật</a> |
                             <a href="delete_menu.php?id=<?php echo $row['MaDoUong']?>">Xóa</a></td>
                         </tr>
