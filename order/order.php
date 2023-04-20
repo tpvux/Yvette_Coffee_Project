@@ -283,7 +283,7 @@ include('./header.php')?>
     height: 35px;
   }
 
-  
+
 </style>
 <?php
 if (isset($_SESSION["status"]) == 'Success') {
@@ -475,12 +475,17 @@ if (isset($_SESSION["status"]) == 'Success') {
                       $prod = $conn->query("SELECT * FROM `do_uong` order by `TenDoUong` asc");
                       while ($row = $prod->fetch_assoc()) {
                       ?>
-                        <div class="col-md-4 mb-2">
-                          <div class="card bg-primary prod-item" data-json='<?php echo json_encode($row) ?>' data-category-id="<?php echo $row['MaDanhMuc'] ?>">
+                        <div class="col-md-4 mb-4">
+                          <div class="card bg-primary prod-item" style="background-color:rgb(0,0,0,0) !important; width:200px; height: 220px; border:none;" data-json='<?php echo json_encode($row) ?>' data-category-id="<?php echo $row['MaDanhMuc'] ?>">
                             <div class="card-body">
-                              <span><b class="text-white">
+                              <span>
+                              <img src='../images/drink/<?php echo $row["image"];?>' height = "90%" width="100%" style="border-radius:4px">
+                                <center>
+                                <b style="font-size: 12px;" class="text-white">
                                   <?php echo $row['TenDoUong'] ?>
-                                </b></span>
+                                </b>
+                                </center>
+                              </span>
                             </div>
                           </div>
                         </div>
