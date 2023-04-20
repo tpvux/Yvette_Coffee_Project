@@ -9,20 +9,19 @@
     <title>Yvette Coffee & Milk Tea</title>
 
     <!-- Custom css -->
-    <link rel="stylesheet" href="./swiper-bundle.min.css">
-    <link rel="stylesheet" href="./yvette_style.css">
+    <link rel="stylesheet" href="swiper-bundle.min.css">
+    <link rel="stylesheet" href="yvette_style.css">
 
     <!-- Font Awesome Cdn -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
 </head>
-
 <body>
     <!-- Header Section -->
     <div class="header" id="home">
         <nav id="navbar">
             <a href="#home" class="logo">
                 <img src="images/img/logo2.png" alt="">
-            </a>
+                </a>
             <div class="links" id="nav">
                 <a href="#home">Trang chủ</a>
                 <a href="#about">Về chúng tôi</a>
@@ -32,91 +31,77 @@
                 <a href="#contact">Liên Hệ</a>
                 <?php
                 session_start();
-                include './db_connect.php';
-                if (isset($_SESSION["status"]) == 'Success') {
-                    if ($_SESSION["chucvu"] == "Chủ quán") { ?>
+                if (isset($_SESSION["status"])=='Success')
+                {
+                    if($_SESSION["chucvu"] == "Chủ quán"){ ?>
                         <div class="dropdown">
                             <button class="dropbtn">
-                                <?php echo "<b>" . $_SESSION["chucvu"] . " " . $_SESSION["name"] . "</b>"; ?></button>
-                            <div class="dropdown-content">
-                                <a href="./order/index.php">Order</a>
-                                <a href="#">Quản lý Menu</a>
-                                <a href="warehouse_mana/warehouse.php">Quản lý kho</a>
-                                <a href="./employee_mana/employ_info.php">Quản lý nhân viên</a>
-                                <a href="#">Thống kê, báo cáo</a>
-                                <i style="color:white; position:relative; left:0px; cursor:pointer" class="fas fa-sign-out-alt" onclick="signout()"></i>
-                            </div>
+                                <?php echo "<b>".$_SESSION["chucvu"]." ". $_SESSION["name"]. "</b>"; ?></button>
+                                <div class="dropdown-content">
+                                    <a href="./order/index.php">Order</a>
+                                    <a href="./menu/menu.php">Quản lý Menu</a>
+                                    <a href="warehouse_mana/warehouse.php">Quản lý kho</a>
+                                    <a href="./employee_mana/employ_info.php">Quản lý nhân viên</a>
+                                    <a href="#">Thống kê, báo cáo</a>
+                                    <a style="cursor:pointer" onclick="signout()">Đăng xuất</a>
+                                </div>                    
                         </div>
-                    <?php
-                    }
-                    if ($_SESSION["chucvu"] == "Quản lý") { ?>
-                        <div class="dropdown">
-                            <button class="dropbtn">
-                                <?php echo "<b>" . $_SESSION["chucvu"] . " " . $_SESSION["name"] . "</b>"; ?></button>
-                            <div class="dropdown-content">
-                                <a href="./order/index.php">Order</a>
-                                <a href="warehouse_mana/warehouse.php">Quản lý kho</a>
-                                <a href="#">Quản lý ca làm việc</a>
-                                <i style="color:white; position:relative; left:0px; cursor:pointer" class="fas fa-sign-out-alt" onclick="signout()"></i>
-                            </div>
-                        </div>
-                    <?php
-                    }
-                    if ($_SESSION["chucvu"] == "Nhân viên") { ?>
-                        <div class="dropdown">
-                            <button class="dropbtn">
-                                <?php echo "<b>" . $_SESSION["chucvu"] . " " . $_SESSION["name"] . "</b>"; ?></button>
-                            <div class="dropdown-content">
-                                <a href="./order/index.php">Order</a>
-                                <a href="#">Quản lý hóa đơn</a>
-                                <i style="color:white; position:relative; left:0px; cursor:pointer" class="fas fa-sign-out-alt" onclick="signout()"></i>
-                            </div>
-                        </div>
-                    <?php
-                    }
-                } else {
-                    ?>
-                    <button id="myBtn" class="btn btn-info btn-round">Đăng nhập</button>
                 <?php
-                }
-                ?>
+                    }
+                    if($_SESSION["chucvu"] == "Quản lý"){ ?>     
+                        <div class="dropdown">                                   
+                            <button class="dropbtn">
+                                <?php echo "<b>".$_SESSION["chucvu"]." ". $_SESSION["name"]. "</b>";?></button>
+                                <div class="dropdown-content">
+                                    <a href="./order/index.php">Order</a>
+                                    <a href="warehouse_mana/warehouse.php">Quản lý kho</a>
+                                    <a href="./work_calender/shift.php">Quản lý ca làm việc</a>
+                                    <a style="cursor:pointer" onclick="signout()">Đăng xuất</a>
+                                </div>                                          
+                        </div>                                      
+                <?php
+                    }
+                    if ($_SESSION["chucvu"] == "Nhân viên"){ ?>
+                        <div class="dropdown">     
+                            <button class="dropbtn">
+                                <?php echo "<b>". $_SESSION["chucvu"]." ". $_SESSION["name"]."</b>";?></button>
+                                <div class="dropdown-content">
+                                    <a href="./order/index.php">Order</a>
+                                    <a href="./work_calender/shift.php">Lịch làm việc</a>
+                                    <a style="cursor:pointer" onclick="signout()">Đăng xuất</a>
+                                    
+                                </div>  
+                        </div>
+                <?php
+                    }
+                ?>  
                 <script>
-                    function signout() {
-                        if (confirm("Bạn có chắc muốn thoát không?") == true) {
+                    function signout(){
+                        if (confirm("Bạn có chắc muốn thoát không?")==true)
+                        {
                             alert("Đăng xuất thành công");
                             var myWindow = window.open("./destroyss.php", "", "width=0, height=0");
                             myWindow.blur();
-                            location.assign("./index.php");
+                            location.assign("./yvette_website.php");
                         }
                     }
-                </script>
+                </script>                 
             </div>
-    </div>
-    <div class="fas fa-bars" id="menu-btn" onclick="openmenu()"></div>
-    <div class="fa-solid fa-xmark" id="close" onclick="closemenu()"></div>
-    </nav>
-    <div class="content">
-        <h3>ĐẾN VỚI CÀ PHÊ NGON VÀ ĐẸP NHẤT Q12</h3>
-        <h1>Yvette Coffee <br>Kính chào quý khách!</h1>
-        <button class="btn">Buy Now</button>
-        <!--Form Login-->
-        <div id="myModal" class="modal">
-
-            <!-- Modal content -->
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <form action="./yv_login.php" method="post">
-                    <div class="container">
-                        <label for="uname"><b>Tên đăng nhập</b></label>
-                        <input type="text" placeholder="Enter Username" name="uname" required>
-                        <label for="psw"><b>Mật khẩu</b></label>
-                        <input type="password" placeholder="Enter Password" name="psw" required>
-                        <button type="submit" class="submit-btn">Đăng nhập</button>
-                    </div>
+            <div class="fas fa-bars" id="menu-btn"  onclick="openmenu()"></div>
+            <div class="fa-solid fa-xmark" id="close" onclick="closemenu()"></div>
+        </nav>
+        <div class="content">
+            <h3>ĐẾN VỚI CÀ PHÊ NGON VÀ ĐẸP NHẤT Q12</h3>
+            <h1>Yvette Coffee <br>Kính chào quý khách!</h1>
+            <div class="button1">
+                <div class="box">Y</div>
+                <div class="box">V</div>
+                <div class="box">E</div>
+                <div class="box">T</div>
+                <div class="box">T</div>
+                <div class="box">E</div>
             </div>
         </div>
-        <!--Form Login-->
-    </div>
     </div>
     <!-- Header Section End -->
 
@@ -129,10 +114,10 @@
             <div class="about-content">
                 <h1>Giới Thiệu về Yvette Coffee</h1>
                 <h3>Yvette Coffee - Nguồn cảm hứng từ cà phê Ý tại Quận 12</h3>
-                <p>Yvette Coffee là một điểm đến lý tưởng cho những ai yêu thích cà phê Ý chất lượng.
-                    Tọa lạc tại Quận 12 - khu vực phía Nam của thành phố Hồ Chí Minh, Yvette Coffee mang
-                    đến cho khách hàng những trải nghiệm thưởng thức cà phê tuyệt vời, đặc biệt là với
-                    những ai đang tìm kiếm một không gian sân vườn thoáng đãng để thưởng thức cà phê...</p>
+                <p>Yvette Coffee là một điểm đến lý tưởng cho những ai yêu thích cà phê Ý chất lượng. 
+                Tọa lạc tại Quận 12 - khu vực phía Nam của thành phố Hồ Chí Minh, Yvette Coffee mang
+                đến cho khách hàng những trải nghiệm thưởng thức cà phê tuyệt vời, đặc biệt là với 
+                những ai đang tìm kiếm một không gian sân vườn thoáng đãng để thưởng thức cà phê...</p>
                 <button class="btn" style="color: black;">Về Chúng Tôi</button>
             </div>
         </div>
@@ -164,9 +149,9 @@
                     <h3>By admin |<span> Phong Vũ</span></h3>
                     <h1>Yvette Coffee Giới Thiệu Về Ý Nghĩa Cà Phê</h1>
                     <p>Cà phê – thức uống phổ biến thứ hai trên thế giới sau nước, chức năng chính của cà phê không phải là giải khát;
-                        nhiều người uống nó với mục đích tạo cảm giác hưng phấn.</br>Theo một nghiên cứu của nhà hoá học Hoa Kỳ –
-                        Joe Vinson thuộc Đại học Scranton thì cà phê là một nguồn quan trọng cung cấp các chất chống ôxi hóa cho cơ thể,
-                        vai trò mà trước đây người ta chỉ thấy ở hoa quả và rau xanh.
+                        nhiều người uống nó với mục đích tạo cảm giác hưng phấn.</br>Theo một nghiên cứu của nhà hoá học Hoa Kỳ – 
+                        Joe Vinson thuộc Đại học Scranton thì cà phê là một nguồn quan trọng cung cấp các chất chống ôxi hóa cho cơ thể, 
+                        vai trò mà trước đây người ta chỉ thấy ở hoa quả và rau xanh. 
                         Những chất này cũng gián tiếp làm giảm nguy cơ bị ung thư ở người.</p>
                 </div>
             </div>
@@ -179,7 +164,7 @@
                     <h3>By admin |<span> Anh Vũ</span></h3>
                     <h1>Giới Thiệu Sơ Lược Về YVette Coffee</h1>
                     <p>Y Vette Coffee - Khám phá hương vị cà phê Ý tinh tế trong không gian sân vườn đẹp
-                        Bạn là một tín đồ của cà phê và đang tìm kiếm một địa điểm để thưởng thức những
+                        Bạn là một tín đồ của cà phê và đang tìm kiếm một địa điểm để thưởng thức những 
                         hương vị cà phê Ý tuyệt vời? Y Vette Coffee là điểm đến lý tưởng cho bạn!</p>
                 </div>
             </div>
@@ -419,10 +404,10 @@
         <h1 class="heading"> Cửa <span>hàng</span></h1>
         <p class="heading-description"> Long lasting tradition & true love for coffee</p>
         <input type="radio" name="Photos" id="check1" checked>
-        <input type="radio" name="Photos" id="check2">
-        <input type="radio" name="Photos" id="check3">
-        <input type="radio" name="Photos" id="check4">
-        <input type="radio" name="Photos" id="check5">
+        <input type="radio" name="Photos" id="check2" >
+        <input type="radio" name="Photos" id="check3" >
+        <input type="radio" name="Photos" id="check4" >
+        <input type="radio" name="Photos" id="check5" >
 
         <div class="container1">
             <div class="top-content">
@@ -545,7 +530,9 @@
             </div>
             <div class="contact-right">
                 <h3>Vị trí cửa hàng</h3>
-                <div class="contact-map"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.3657592238!2d106.628225014664!3d10.859760492264995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529a89ca4461f%3A0x99b4b3046b8a62f2!2sYvette%20Coffee!5e0!3m2!1svi!2s!4v1675174402515!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+                <div class="contact-map"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.3657592238!2d106.628225014664!3d10.859760492264995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529a89ca4461f%3A0x99b4b3046b8a62f2!2sYvette%20Coffee!5e0!3m2!1svi!2s!4v1675174402515!5m2!1svi!2s" 
+                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade"></iframe></div>
             </div>
         </div>
     </section>
@@ -559,10 +546,8 @@
                 <p>87 Dương Thị Mười, Phường Tân Chánh Hiệp , Quận 12</p>
             </div>
             <div class="footer-box">
-                <h3>Email:</h3>
-                <p>yvettecoffeeq12@gmail.com</p>
-                <h3>SĐT:</h3>
-                <p>0909090909</p>
+                <h3>Email:</h3> <p>yvettecoffeeq12@gmail.com</p>
+                <h3>SĐT:</h3> <p>0909090909</p>
             </div>
             <div class="footer-box">
                 <h3>Follow Us</h3>
@@ -573,55 +558,66 @@
                     <a href="#"><i class="fa-brands fa-twitter"></i></a>
                 </div>
             </div>
-        </div>
+        </div> 
     </section>
     <!-- Footer Section End -->
 
 
 
-
+    
     <script>
-        // Get the modal
-        var modal = document.getElementById("myModal");
+      // Get the modal
+      var modal = document.getElementById("myModal");
 
-        // Get the button that opens the modal
-        var btn = document.getElementById("myBtn");
+      // Get the button that opens the modal
+      var btn = document.getElementById("myBtn");
 
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close")[0];
 
-        // When the user clicks the button, open the modal 
-        btn.onclick = function() {
-            modal.style.display = "block";
+      // When the user clicks the button, open the modal 
+      btn.onclick = function() {
+        modal.style.display = "block";
+      }
+
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function() {
+        modal.style.display = "none";
+      }
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
         }
+      }
 
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-
-        var fullImgBox = document.getElementById("fullImgBox")
+      var fullImgBox = document.getElementById("fullImgBox")
         var fullImg = document.getElementById("fullImg")
 
-        function openFullImg(pic) {
+        function openFullImg(pic){
             fullImgBox.style.display = "flex";
             fullImg.src = pic;
         }
 
-        function closeFullImg(pic) {
+        function closeFullImg(pic){
             fullImgBox.style.display = "none";
         }
     </script>
 
-    <script src="./swiper-bundle.min.js"></script>
-    <script src="./script.js"></script>
+    <script src="js/swiper-bundle.min.js"></script>
+    <script src="js/script.js"></script>
+    <?php
+    }
+    else 
+    {
+        ?>
+        <script>
+            alert("Vui lòng đăng nhập");
+            location.assign("yvette_website.php");
+        </script>
+        <?php
+    }
+    ?>
 </body>
-
 </html>
