@@ -14,18 +14,18 @@
                 ?>
                     <script>
                         alert("Xóa order thành công");
-                        location.assign("../order/index.php");
-                        </script>
+                        location.assign("./index.php");
+                    </script>
                 <?php
             }
             else
             {
-            ?>
-                <script>
-                    alert("Xóa order thất bại");
-                    location.assign("../order/index.php");
+                ?>
+                    <script>
+                        alert("Xóa order thất bại");
+                        location.assign("./index.php");
                     </script>
-            <?php
+                <?php
             }
         }
         elseif (isset($_POST['mabandel']))
@@ -51,6 +51,30 @@
                      </script>
              <?php
              }
+        }
+        elseif (isset($_GET['id']))
+        {
+            $MaOrder = $_GET['id'];
+            $sql1 = $conn->query("DELETE FROM `hoa_don_thanh_toan` WHERE MaOrder = $MaOrder");
+            $sql2 = $conn->query("DELETE FROM `order` WHERE MaOrder = $MaOrder");
+            if (($sql1 && $sql2))
+            {
+                ?>
+                    <script>
+                        alert("Xóa order thành công");
+                        location.assign("./history.php");
+                    </script>
+                <?php
+            }
+            else
+            {
+                ?>
+                    <script>
+                        alert("Xóa order thất bại");
+                        location.assign("./history.php");
+                    </script>
+                <?php
+            }
         }
         else
         {

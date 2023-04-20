@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<?php session_start(); ?>
+<?php session_start(); 
+include('./header.php')?>
 
 <head>
   <meta charset="utf-8">
@@ -9,10 +10,6 @@
   <link rel="short icon" type="image/jpg" href="../images/img/logo2.png">
   <title>Hệ thống Order</title>
 
-
-  <?php
-  include('./header.php');
-  ?>
 
 </head>
 <style>
@@ -314,7 +311,7 @@ if (isset($_SESSION["status"]) == 'Success') {
     <div class="divider"></div>
 
     <?php include '../db_connect.php';
-    $manv = 2023000003;
+    $manv = $_SESSION['username'];
     if (isset($_GET['id'])) {
       $ma_ban = $_GET['id'];
       $order = $conn->query("SELECT * FROM `order` o, `hoa_don_thanh_toan` h 
