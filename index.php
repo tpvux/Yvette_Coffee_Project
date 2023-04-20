@@ -74,6 +74,13 @@
                         </div>
                 <?php
                     }
+                }
+                else 
+                {
+                    ?>
+                    <button id="myBtn" class="btn btn-info btn-round">Đăng nhập</button>    
+                    <?php
+                }
                 ?>  
                 <script>
                     function signout(){
@@ -82,7 +89,8 @@
                             alert("Đăng xuất thành công");
                             var myWindow = window.open("./destroyss.php", "", "width=0, height=0");
                             myWindow.blur();
-                            location.assign("./yvette_website.php");
+                            location.assign("./index.php");
+                            location.reload();
                         }
                     }
                 </script>                 
@@ -101,8 +109,25 @@
                 <div class="box">T</div>
                 <div class="box">E</div>
             </div>
+             <!--Form Login-->
+             <div id="myModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>              
+                    <form action="./yv_login.php" method="post">
+                    <div class="container">
+                        <label for="uname"><b>Tên đăng nhập</b></label>
+                        <input type="text" placeholder="Enter Username" name="uname" required>
+                        <label for="psw"><b>Mật khẩu</b></label>
+                        <input type="password" placeholder="Enter Password" name="psw" required>      
+                        <button type="submit"  class="submit-btn">Đăng nhập</button>
+                    </div>      
+                </div>
+            </div>  
+            <!--Form Login-->
         </div>
     </div>
+    
     <!-- Header Section End -->
 
     <!-- About Section -->
@@ -588,7 +613,6 @@
       // When the user clicks anywhere outside of the modal, close it
       window.onclick = function(event) {
         if (event.target == modal) {
-          modal.style.display = "none";
         }
       }
 
@@ -607,17 +631,6 @@
 
     <script src="js/swiper-bundle.min.js"></script>
     <script src="js/script.js"></script>
-    <?php
-    }
-    else 
-    {
-        ?>
-        <script>
-            alert("Vui lòng đăng nhập");
-            location.assign("yvette_website.php");
-        </script>
-        <?php
-    }
-    ?>
+    
 </body>
 </html>

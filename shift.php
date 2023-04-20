@@ -623,6 +623,7 @@ if (isset($_SESSION["status"]) == 'Success') {
                 var myWindow = window.open("./destroyss.php", "", "width=0, height=0");
                 myWindow.blur();
                 location.assign("./index.php");
+                location.reload();
             }
             setTimeout(function() {
                 end_load()
