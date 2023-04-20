@@ -437,7 +437,7 @@ if (isset($_SESSION["status"]) == 'Success') {
                 </div>
               </div>
             </div>
-            <div class="col-lg-8  p-field">
+            <div class="col-lg-8 p-field">
               <div class="card border-primary">
                 <div class="card-header bg-dark text-white  border-primary">
                   <b style="font-size: 20px; padding:40%">SẢN PHẨM</b>
@@ -445,7 +445,7 @@ if (isset($_SESSION["status"]) == 'Success') {
                 <div class="card-body bg-dark d-flex" id='prod-list'>
                   <div class="col-md-3">
                     <div class="w-100 pr-0 bg-white" id="cat-list">
-                      <b>Danh mục</b>
+                      <center><b>Danh mục</b></center>
                       <hr>
                       <div class="card bg-primary mx-3 mb-2 cat-item" style="height:auto !important;" data-id='all'>
                         <div class="card-body">
@@ -481,8 +481,8 @@ if (isset($_SESSION["status"]) == 'Success') {
                               <span>
                               <img src='../images/drink/<?php echo $row["image"];?>' height = "90%" width="100%" style="border-radius:4px">
                                 <center>
-                                <b style="font-size: 12px;" class="text-white">
-                                  <?php echo $row['TenDoUong'] ?>
+                                <b class="text-white">
+                                  <?php echo $row['TenDoUong']." (".$row['DonGia'].")" ?>
                                 </b>
                                 </center>
                               </span>
@@ -517,14 +517,13 @@ if (isset($_SESSION["status"]) == 'Success') {
             </div>
           </div>
         </div>
+
+        <!-- FORM THANH TOÁN -->
         <div class="modal fade" id="pay_modal" role='dialog'>
           <div class="modal-dialog modal-dialog-centered modal-md" role="document">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title"><b>Thanh toán</b></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
               </div>
               <div class="modal-body">
                 <div class="container-fluid">
@@ -557,57 +556,17 @@ if (isset($_SESSION["status"]) == 'Success') {
         </div>
       </main>
 
-      <div class="modal fade" id="confirm_modal" role='dialog'>
-        <div class="modal-dialog modal-md" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Confirmation</h5>
-            </div>
-            <div class="modal-body">
-              <div id="delete_content"></div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary" id='confirm' onclick="">Xác nhận</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal fade" id="uni_modal" role='dialog'>
-        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title"></h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary" id='submit' onclick="$('#uni_modal form').submit()">Save</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal fade" id="viewer_modal" role='dialog'>
-        <div class="modal-dialog modal-md" role="document">
-          <div class="modal-content">
-            <button type="button" class="btn-close" data-dismiss="modal"><span class="fa fa-times"></span></button>
-            <img src="" alt="">
-          </div>
-        </div>
-      </div>
-
+      <!-- LOADER -->
       <div id="preloader"></div>
       <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+
     <?php
     } else {
     ?>
       <script>
         alert("Vui lòng chọn bàn");
-        location.assign("../order/index.php");
+        location.assign("./index.php");
       </script>
     <?php
     }
