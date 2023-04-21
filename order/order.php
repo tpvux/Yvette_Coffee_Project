@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<?php session_start(); 
-include('./header.php')?>
+<?php session_start();
+include('./header.php') ?>
 
 <head>
   <meta charset="utf-8">
@@ -282,8 +282,6 @@ include('./header.php')?>
     width: 35px;
     height: 35px;
   }
-
-
 </style>
 <?php
 if (isset($_SESSION["status"]) == 'Success') {
@@ -479,11 +477,11 @@ if (isset($_SESSION["status"]) == 'Success') {
                           <div class="card bg-primary prod-item" style="background-color:rgb(0,0,0,0) !important; width:200px; height: 220px; border:none;" data-json='<?php echo json_encode($row) ?>' data-category-id="<?php echo $row['MaDanhMuc'] ?>">
                             <div class="card-body">
                               <span>
-                              <img src='../images/drink/<?php echo $row["image"];?>' height = "90%" width="100%" style="border-radius:4px">
+                                <img src='../images/drink/<?php echo $row["image"]; ?>' height="90%" width="100%" style="border-radius:4px">
                                 <center>
-                                <b class="text-white">
-                                  <?php echo $row['TenDoUong']." (".$row['DonGia'].")" ?>
-                                </b>
+                                  <b class="text-white">
+                                    <?php echo $row['TenDoUong'] . " (" . $row['DonGia'] . ")" ?>
+                                  </b>
                                 </center>
                               </span>
                             </div>
@@ -555,6 +553,11 @@ if (isset($_SESSION["status"]) == 'Success') {
           </div>
         </div>
       </main>
+
+      <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-body text-white">
+        </div>
+      </div>
 
       <!-- LOADER -->
       <div id="preloader"></div>

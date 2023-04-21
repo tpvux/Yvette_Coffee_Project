@@ -47,8 +47,8 @@
             {
                 ?>
                 <script>
-                    alert("Sai tài khoản hoặc mật khẩu. Vui lòng nhập lại");
-                    location.assign("./yvette_website.php");
+                    alert("Sai tên đăng nhập hoặc mật khẩu. Vui lòng nhập lại");
+                    location.assign("./index.php");
                 </script>
                 <?php
             }
