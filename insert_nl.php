@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="short icon" type="image/jpg" href="../images/img/logo2.png">
+    <link rel="short icon" type="image/jpg" href="./images/img/logo2.png">
     <title>Thêm NL</title>
     
     <!-- Custom css -->
@@ -106,7 +106,7 @@
 <body>
     <?php
         session_start();
-        require_once "../db_connect.php";
+        require_once "./db_connect.php";
         date_default_timezone_set("Asia/Ho_Chi_Minh"); $date = date('Y-m-d G:i:s');
         if(isset($_POST["themNL"])){
             $maNL = $_POST["maNL"];

@@ -43,9 +43,7 @@ if (isset($_SESSION["status"]) == 'Success') {
             cursor: pointer;
         }
 
-        body {
-            margin: 0px;
-        }
+       
 
         .container {
             margin: 0 auto;
@@ -307,6 +305,12 @@ if (isset($_SESSION["status"]) == 'Success') {
             padding: 10px;
             cursor: pointer;
         }
+
+        .card{
+            height: 95%;
+            overflow: auto;
+        }
+
     </style>
     <!DOCTYPE html>
 <html lang="en">
@@ -360,7 +364,7 @@ if (isset($_SESSION["status"]) == 'Success') {
                             </form>
                         </div>
                     </div>
-                    <div style="left:30px; position:relative" class="float-left">
+                    <div style="position:relative; top:-20px" class="float-left">
                         <button type="submit" class="btn btn-primary" id="modify-btn">Cập nhật</button>
                         <button class="btn btn-secondary" type="button" onclick="location.href='./shift.php'">Quay lại</button>
                     </div>

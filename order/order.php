@@ -322,7 +322,7 @@ if (isset($_SESSION["status"]) == 'Success') {
 
       if (($row1 = $order->fetch_assoc()) > 0) {
         $MaOrder = $row1['MaOrder'];
-        $items = $conn->query("SELECT * FROM `order` o, `do_uong` d Where d.MaDoUong = o.MaDoUong and o.MaBan = $ma_ban");
+        $items = $conn->query("SELECT * FROM `order` o, `do_uong` d Where d.MaDoUong = o.MaDoUong and o.MaBan = $ma_ban and o.MaOrder = $MaOrder");
         $check = 1;
       } else {
         $sql = $conn->query("SELECT MAX(MaOrder) as 'MaOrder' FROM `order`");

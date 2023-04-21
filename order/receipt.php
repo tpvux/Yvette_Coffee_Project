@@ -54,6 +54,7 @@ if (isset($_SESSION["status"])=='Success')
 	<div class="container-fluid py-1">
 		<div class="modal-body">
 			<div class="container-fluid">
+				<center><img src="../images/img/logo2.png" alt="" height="200px" width="200px" ></center>
 				<?php
 				$sql2 = $conn->query("SELECT TienNhan, TongTien, ThoiGianThanhToan, TenNV, MaBan FROM `nhan_vien` n, `order` o, `hoa_don_thanh_toan` h Where o.MaOrder = h.MaOrder and o.MaNV = n.MaNV and o.MaOrder = $maod");
 				$sql3 = $conn->query("SELECT * FROM `order` o, `do_uong` d, `hoa_don_thanh_toan` h Where d.MaDoUong = o.MaDoUong and o.MaOrder = h.MaOrder and o.MaOrder = $maod");

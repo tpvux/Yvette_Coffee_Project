@@ -1,7 +1,7 @@
 
     <?php
         session_start();
-        require_once "../db_connect.php";
+        require_once "./db_connect.php";
         date_default_timezone_set("Asia/Ho_Chi_Minh"); $date = date('Y-m-d G:i:s');
         if(isset($_GET["id"])){
             $id = $_GET["id"];

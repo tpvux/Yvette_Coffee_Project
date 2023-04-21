@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="short icon" type="image/jpg" href="../images/img/logo2.png">
+    <link rel="short icon" type="image/jpg" href="./images/img/logo2.png">
     <title>Cập nhật đồ uống</title>
     <style>
         body{
@@ -124,7 +124,7 @@
 <body>
 <?php
         session_start();
-        require_once "../db_connect.php";
+        require_once "./db_connect.php";
         if(isset($_GET["id"]) && ($_GET["id"] > 0)){
             $id = $_GET["id"];
         }

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="short icon" type="image/jpg" href="../images/img/logo2.png">
+    <link rel="short icon" type="image/jpg" href="./images/img/logo2.png">
 	<title>Thông tin nhân viên</title>
 
     <style>
@@ -124,7 +124,7 @@
 	</header>
 	<?php
         session_start();
-        require_once "../db_connect.php";
+        require_once "./db_connect.php";
         $sql = "SELECT * FROM `nhan_vien`";
         $result = mysqli_query($conn, $sql); 
         if ($result->num_rows > 0) {

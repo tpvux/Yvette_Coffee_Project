@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="short icon" type="image/jpg" href="../images/img/logo2.png">
+    <link rel="short icon" type="image/jpg" href="./images/img/logo2.png">
     <title>Kho</title>
 
     <!-- Custom css -->
@@ -184,7 +184,7 @@ button:hover {
 </head>
 <body>
     <?php session_start();
-        require_once "../db_connect.php"; ?>
+        require_once "./db_connect.php"; ?>
     <header>
             <nav>
                 <h1>Yvette</h1>
