@@ -666,7 +666,7 @@ if (isset($_SESSION["status"]) == 'Success') {
 ?>
     <script>
         alert("Vui lòng đăng nhập");
-        location.assign("../index.php");
+        location.assign("./index.php");
     </script>
 <?php
 }

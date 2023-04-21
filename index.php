@@ -39,10 +39,10 @@
                                 <?php echo "<b>".$_SESSION["chucvu"]." ". $_SESSION["name"]. "</b>"; ?></button>
                                 <div class="dropdown-content">
                                     <a href="./order/index.php">Order</a>
+                                    <a href="./order/history.php">Lịch sử thanh toán</a>
                                     <a href="./menu/menu.php">Quản lý Menu</a>
                                     <a href="warehouse_mana/warehouse.php">Quản lý kho</a>
                                     <a href="./employee_mana/employ_info.php">Quản lý nhân viên</a>
-                                    <a href="#">Thống kê, báo cáo</a>
                                     <a style="cursor:pointer" onclick="signout()">Đăng xuất</a>
                                 </div>                    
                         </div>
@@ -54,6 +54,7 @@
                                 <?php echo "<b>".$_SESSION["chucvu"]." ". $_SESSION["name"]. "</b>";?></button>
                                 <div class="dropdown-content">
                                     <a href="./order/index.php">Order</a>
+                                    <a href="./order/history.php">Lịch sử thanh toán</a>
                                     <a href="warehouse_mana/warehouse.php">Quản lý kho</a>
                                     <a href="./work_calender/shift.php">Quản lý ca làm việc</a>
                                     <a style="cursor:pointer" onclick="signout()">Đăng xuất</a>
@@ -67,6 +68,7 @@
                                 <?php echo "<b>". $_SESSION["chucvu"]." ". $_SESSION["name"]."</b>";?></button>
                                 <div class="dropdown-content">
                                     <a href="./order/index.php">Order</a>
+                                    <a href="./order/history.php">Lịch sử thanh toán</a>
                                     <a href="./work_calender/shift.php">Lịch làm việc</a>
                                     <a style="cursor:pointer" onclick="signout()">Đăng xuất</a>
                                     
