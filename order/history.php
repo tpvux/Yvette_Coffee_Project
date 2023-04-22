@@ -399,15 +399,12 @@ if (isset($_SESSION["status"]) == 'Success') {
                                                 </td>
                                             </tr>
                                         <?php }
-                                        $sql2 = $conn->query("SELECT SUM(TongTien) as dt, COUNT(MaOrder) as c1 FROM `hoa_don_thanh_toan` WHERE TienNhan != 0");
+                                        $sql2 = $conn->query("SELECT SUM(TongTien) as dt, COUNT(MaOrder) as c1 FROM `hoa_don_thanh_toan` WHERE date(ThoiGianThanhToan) = CURRENT_DATE() AND TienNhan != 0");
                                         $row2 = $sql2->fetch_assoc();
-                                        $sql3 = $conn->query("SELECT COUNT(MaOrder) as c2 FROM `hoa_don_thanh_toan`");
-                                        $row3 = $sql3->fetch_assoc();
                                          ?>
                                         <p class="text-left" style="font-size:15px">
-                                            Tổng số order: <b><?php echo $row3['c2'] ?></b> &emsp;&emsp;&emsp;&emsp;
-                                            Tổng số order đã thanh toán: <b><?php echo $row2['c1'] ?></b>&emsp;&emsp;&emsp;&emsp;
-                                            Tổng doanh thu: <b><?php echo number_format($row2['dt'], 0) ?></b>
+                                            Tổng doanh thu (trong ngày): <b><?php echo number_format($row2['dt'], 0) ?></b>&emsp;&emsp;&emsp;&emsp;
+                                            Tổng số order đã thanh toán (trong ngày): <b><?php echo $row2['c1'] ?></b>
                                         </p>
                                     </tbody>
                                 </table>
