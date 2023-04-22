@@ -105,9 +105,9 @@ if (isset($_SESSION["status"])=='Success')
 									<td style="font-size:12px"><?php echo $row3['SoLuong'] ?></td>
 									<td style="font-size:12px">
 										<p><?php echo $row3['TenDoUong'] ?></p><?php if ($row3['SoLuong'] > 0) {
-																				?><small>(<?php echo $row3['DonGia'] ?>)</small> <?php } ?>
+																				?><small>(<?php echo number_format($row3['DonGia'], 0) ?>)</small> <?php } ?>
 									</td>
-									<td style="font-size:12px" class="text-right"><?php echo $row3['SoTien'] ?></td>
+									<td style="font-size:12px" class="text-right"><?php echo number_format($row3['SoTien'], 0) ?></td>
 								</tr>
 							<?php
 							}
@@ -119,17 +119,17 @@ if (isset($_SESSION["status"])=='Success')
 						<tbody>
 							<tr>
 								<td><b>Tổng tiền</b></td>
-								<td class="text-right"><b><?php echo $tt ?></b></td>
+								<td class="text-right"><b><?php echo number_format($tt, 0) ?></b></td>
 							</tr>
 							<?php if ($tn > 0) {
 							?>
 								<tr>
 									<td><b>Tiền nhận</b></td>
-									<td class="text-right"><b><?php echo $tn  ?></b></td>
+									<td class="text-right"><b><?php echo number_format($tn, 0) ?></b></td>
 								</tr>
 								<tr>
 									<td><b>Tiền thừa</b></td>
-									<td class="text-right"><b><?php echo $tn - $tt  ?></b></td>
+									<td class="text-right"><b><?php echo number_format($tn - $tt, 0) ?></b></td>
 								</tr>
 						<?php }
 						} ?>

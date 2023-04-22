@@ -344,15 +344,8 @@ if (isset($_SESSION["status"]) == 'Success') {
                                         <?php
                                         $sql = $conn->query("SELECT * FROM hoa_don_thanh_toan order by ThoiGianThanhToan desc");
                                         while ($row = $sql->fetch_assoc()) {
-                                            $maod[] = $row['MaOrder'];
                                             $sql1 = $conn->query("SELECT * FROM `order` o, `hoa_don_thanh_toan` h, `do_uong` d WHERE o.MaOrder = h.MaOrder AND o.MaDoUong = d.MaDoUong AND o.MaOrder = " . $row['MaOrder']);
                                             while ($row1 = $sql1->fetch_assoc()) {
-                                                $tn[] = $row1['TienNhan'];
-                                                $tt[] = $row1['TongTien'];
-                                                $date[] = $row1['ThoiGianThanhToan'];
-                                                $list1[] = $row1['SoLuong'];
-                                                $list2[] = $row1['TenDoUong'];
-                                                $list3[] = $row1['SoTien'];
                                                 $maban = $row1['MaBan'];
                                             }
                                         ?>
@@ -405,7 +398,17 @@ if (isset($_SESSION["status"]) == 'Success') {
                                                     ?>
                                                 </td>
                                             </tr>
-                                        <?php } ?>
+                                        <?php }
+                                        $sql2 = $conn->query("SELECT SUM(TongTien) as dt, COUNT(MaOrder) as c1 FROM `hoa_don_thanh_toan` WHERE TienNhan != 0");
+                                        $row2 = $sql2->fetch_assoc();
+                                        $sql3 = $conn->query("SELECT COUNT(MaOrder) as c2 FROM `hoa_don_thanh_toan`");
+                                        $row3 = $sql3->fetch_assoc();
+                                         ?>
+                                        <p class="text-left" style="font-size:15px">
+                                            Tổng số order: <b><?php echo $row3['c2'] ?></b> &emsp;&emsp;&emsp;&emsp;
+                                            Tổng số order đã thanh toán: <b><?php echo $row2['c1'] ?></b>&emsp;&emsp;&emsp;&emsp;
+                                            Tổng doanh thu: <b><?php echo number_format($row2['dt'], 0) ?></b>
+                                        </p>
                                     </tbody>
                                 </table>
                             </div>
