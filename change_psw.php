@@ -4,15 +4,118 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="short icon" type="image/jpg" href="../images/img/logo2.png">
     <title>Đổi mật Khẩu</title>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.16.0/js/md5.min.js"></script>
+    <style>
+        body{
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            top: 80px;
+        }
+
+        .text-primary{
+            color: rgb(77, 75, 75);
+            display: block;
+            font-weight: bold;
+            margin: 0.5em;
+            padding: 0.5em;
+
+        }
+
+        .feed-form{
+            width: 350px;
+            height: 300px;
+            padding: 0 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            box-shadow: 0px 0px 0px 4px rgba(52, 52, 53, 0.185);
+            border-radius: 5px;
+        }
+
+        .form--input {
+            width: 50%;
+            margin-bottom: 1.25em;
+            height: 20px;
+            border-radius: 5px;
+            border: 1px solid gray;
+            padding: 0.5em;
+            outline: none;
+        }
+
+        .form--input:focus {
+            border: 1px solid #639;
+            outline: none;
+        }
+
+        input[type=text], select {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type=submit] {
+            width: 100px;
+            height: 33px;
+            font-size: 12px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 0.5em 2em;;
+            margin: 8px 0;
+            border: transparent;
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+        button {
+            width: 100px;
+            height: 33px;
+            font-size: 12px;
+            color: white;
+            padding: 0.5em 2em;
+            border: transparent;
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+            background: dodgerblue;    
+            border-radius: 4px;
+        }
+
+        .feed-form .btn{
+            margin-top: 5px;
+        }
+
+        button:hover {
+            background: rgb(2,0,36);
+            background: linear-gradient(90deg, rgba(30,144,255,1) 0%, rgba(0,212,255,1) 100%);
+        }
+
+        button:active {
+            transform: translate(0em, 0.2em);
+        }
+
+        a{
+            text-decoration: none;
+            color: white;
+        }
+    </style>
 </head>
 <body>
 
 <?php
 session_start();
 require_once "./db_connect.php"; 
-include('./header.php');
 
 
 if(isset($_POST["thaydoi"])){
@@ -48,28 +151,22 @@ if(isset($_POST["thaydoi"])){
 ?>
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
-            <h3 class="text-primary">Đổi mật khẩu</h3>
-            <form method="POST" action="" >
-                <div class="form-group">
-                    <label for="user_signin">Mật khẩu cũ</label>
-                    <input type="password" class="form-control" onkeyup="check()" id="old_pass" name="oldp" required>
-                </div>
+        <div class="col-md-12">        
+            <form method="POST" action="" class="feed-form">
+                <h3 class="text-primary">Đổi mật khẩu</h3>
+                        
+                        <input type="password" placeholder="Mật khẩu cũ" class="form--input" onkeyup="check()" id="old_pass" name="oldp" required>
 
-                <div class="form-group">
-                    <label for="user_signin">Mật khẩu mới</label>
-                    <input type="password" class="form-control" onkeyup="check()" id="new_pass" name="newp" required>
-                </div>
+                        
+                        <input type="password" placeholder="Mật khẩu mới" class="form--input" onkeyup="check()" id="new_pass" name="newp" required>
 
-                <div class="form-group">
-                    <label for="user_signin">Nhập lại mật khẩu mới</label>
-                    <input type="password" class="form-control" onkeyup="check()" id="re_new_pass" name="renewp" required>
-                </div>
+                        
+                        <input type="password" placeholder="Nhập lại mật khẩu mới" class="form--input" onkeyup="check()" id="re_new_pass" name="renewp" required>
 
-                <a href="index.php" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Trở về</a>
-
-                <input type="submit" class="btn btn-primary" id="submit_change_pass" value="thay đổi" name="thaydoi"></input>
-
+                    <div class = "btn">
+                        <button><a href="index.php">Trở về</a></button>
+                        <input type="submit" class="btn btn-primary" id="submit_change_pass" value="Thay đổi" name="thaydoi"></input>
+                    </div>
                 <br><br>
                 <label  id="warning"></label>
             </form>
@@ -87,13 +184,13 @@ if(isset($_POST["thaydoi"])){
 
         if(a != '' && b != '' && c != ''){
             if(z < 6 || z > 15){
-                document.getElementById('warning').innerHTML = 'mật khẩu k hợp lệ' ;
+                document.getElementById('warning').innerHTML = 'Mật khẩu không hợp lệ' ;
             }else {
                 if(c != ""){
                     if(b != c){
                         document.getElementById('warning').innerHTML = 'Mật khẩu chưa khớp' ;
                     }else{
-                        document.getElementById('warning').innerHTML = 'hợp lệ' ;
+                        document.getElementById('warning').innerHTML = 'Hợp lệ' ;
                     }
                     
                 }else{
@@ -104,10 +201,7 @@ if(isset($_POST["thaydoi"])){
         }
     }       
     
-    
-    
-    
- </script>
+</script>
 
 </body>
 </html>
