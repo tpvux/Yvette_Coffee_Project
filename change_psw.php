@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="short icon" type="image/jpg" href="../images/img/logo2.png">
+    <link rel="short icon" type="image/jpg" href="./images/img/logo2.png">
     <title>Đổi mật Khẩu</title>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.16.0/js/md5.min.js"></script>
     <style>
@@ -15,6 +15,15 @@
             align-items: center;
             position: relative;
             top: 80px;
+        }
+        
+        .container{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column-reverse;
+            box-shadow: 0px 0px 0px 4px rgba(52, 52, 53, 0.185);
+            border-radius: 5px;
         }
 
         .text-primary{
@@ -34,8 +43,6 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            box-shadow: 0px 0px 0px 4px rgba(52, 52, 53, 0.185);
-            border-radius: 5px;
         }
 
         .form--input {
@@ -112,7 +119,7 @@
     </style>
 </head>
 <body>
-
+<div class="container">
 <?php
 session_start();
 require_once "./db_connect.php"; 
@@ -130,7 +137,7 @@ if(isset($_POST["thaydoi"])){
         $row = mysqli_fetch_array($result);
 
         if($oldpass != $row['MatKhau']){
-            echo "Mật khẩu cũ không đúng thử lại ";
+            echo "<div>Mật khẩu cũ không đúng thử lại</div>";
         }else{
             if($newpass == $oldpass){
                 echo "Mật khẩu mới trùng mật khẩu cũ thử lại ";
@@ -142,6 +149,8 @@ if(isset($_POST["thaydoi"])){
                     SET `MatKhau`='$newpass' 
                     WHERE `TenDangNhap` = $tendangnhap";
                     $result1 = mysqli_query($conn, $sql1);
+
+                    header("location: index.php");
                 }
             }
         }
@@ -149,7 +158,6 @@ if(isset($_POST["thaydoi"])){
 }    
 
 ?>
-<div class="container">
     <div class="row">
         <div class="col-md-12">        
             <form method="POST" action="" class="feed-form">
