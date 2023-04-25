@@ -2,6 +2,7 @@
 <html lang="en">
 
 <?php
+ob_start();
 session_start();
 include('./header.php');
 include_once '../db_connect.php';

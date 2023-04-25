@@ -1,7 +1,8 @@
 <?php
+ob_start();
+session_start();
 include '../db_connect.php';
 include_once "./header.php";
-session_start();
 ?>
 <head>
 	<meta charset="utf-8">

@@ -1,6 +1,7 @@
 <?php
-    include_once '../db_connect.php';
+    ob_start();
     session_start();
+    include_once '../db_connect.php';
     if (isset($_SESSION["status"])=='Success')
     {
         if (isset($_POST))

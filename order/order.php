@@ -1,8 +1,11 @@
+<?php
+ob_start();
+
+session_start();
+include('./header.php') ?>
 <!DOCTYPE html>
 <html lang="en">
 
-<?php session_start();
-include('./header.php') ?>
 
 <head>
   <meta charset="utf-8">
@@ -310,6 +313,7 @@ if (isset($_SESSION["status"]) == 'Success') {
 
     <?php include '../db_connect.php';
     $manv = $_SESSION['username'];
+    
     if (isset($_GET['id'])) {
       $ma_ban = $_GET['id'];
       $order = $conn->query("SELECT * FROM `order` o, `hoa_don_thanh_toan` h 
@@ -320,7 +324,10 @@ if (isset($_SESSION["status"]) == 'Success') {
 
       if (($row1 = $order->fetch_assoc()) > 0) {
         $MaOrder = $row1['MaOrder'];
-        $items = $conn->query("SELECT * FROM `order` o, `do_uong` d Where d.MaDoUong = o.MaDoUong and o.MaBan = $ma_ban and o.MaOrder = $MaOrder");
+
+        $items = $conn->query("SELECT * FROM `order` o, `do_uong` d 
+        Where d.MaDoUong = o.MaDoUong and o.MaBan = $ma_ban and o.MaOrder = $MaOrder");
+
         $check = 1;
       } else {
         $sql = $conn->query("SELECT MAX(MaOrder) as 'MaOrder' FROM `order`");
@@ -675,8 +682,9 @@ if (isset($_SESSION["status"]) == 'Success') {
 
 
 
-    // của home.php
     var total;
+
+
     cat_func();
     $('#prod-list .prod-item').click(function() {
       var data = $(this).attr('data-json')
@@ -722,7 +730,6 @@ if (isset($_SESSION["status"]) == 'Success') {
         $(this).closest('tr').remove()
         calc().clearQueue();
       })
-
     }
 
     function calc() {

@@ -1,3 +1,4 @@
+<?php ob_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,9 +41,10 @@
                                 <div class="dropdown-content">
                                     <a href="./order/index.php">Order</a>
                                     <a href="./order/history.php">Lịch sử thanh toán</a>
-                                    <a href="./menu/menu.php">Quản lý Menu</a>
-                                    <a href="warehouse_mana/warehouse.php">Quản lý kho</a>
-                                    <a href="./employee_mana/employ_info.php">Quản lý nhân viên</a>
+                                    <a href="./menu.php">Quản lý Menu</a>
+                                    <a href="./warehouse.php">Quản lý kho</a>
+                                    <a href="./employ_info.php">Quản lý nhân viên</a>
+                                    <a href="./change_psw.php">Đổi mật khẩu</a>
                                     <a style="cursor:pointer" onclick="signout()">Đăng xuất</a>
                                 </div>                    
                         </div>
@@ -55,8 +57,8 @@
                                 <div class="dropdown-content">
                                     <a href="./order/index.php">Order</a>
                                     <a href="./order/history.php">Lịch sử thanh toán</a>
-                                    <a href="warehouse_mana/warehouse.php">Quản lý kho</a>
-                                    <a href="./work_calender/shift.php">Quản lý ca làm việc</a>
+                                    <a href="./warehouse.php">Quản lý kho</a>
+                                    <a href="./shift.php">Quản lý ca làm việc</a>
                                     <a style="cursor:pointer" onclick="signout()">Đăng xuất</a>
                                 </div>                                          
                         </div>                                      
@@ -69,7 +71,7 @@
                                 <div class="dropdown-content">
                                     <a href="./order/index.php">Order</a>
                                     <a href="./order/history.php">Lịch sử thanh toán</a>
-                                    <a href="./work_calender/shift.php">Lịch làm việc</a>
+                                    <a href="./shift.php">Lịch làm việc</a>
                                     <a style="cursor:pointer" onclick="signout()">Đăng xuất</a>
                                     
                                 </div>  

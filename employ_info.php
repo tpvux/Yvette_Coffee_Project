@@ -1,3 +1,4 @@
+<?php ob_start(); ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -116,9 +117,9 @@
 		<nav>
 			<h1>Yvette</h1>
 			<ul id="navli">
-				<li><a class="homeblack" href="insertemp.php">Thêm mới</a></li>
-				<li><a class="homered" href="employ_info.php">Thông tin NV</a></li>
-				<li><a class="homeblack" href="../index.php">Log Out</a></li>
+				<li><a class="homeblack" href="./insertemp.php">Thêm mới</a></li>
+				<li><a class="homered" href="./employ_info.php">Thông tin NV</a></li>
+				<li><a class="homeblack" href="./index.php">Quay lại</a></li>
 			</ul>
 		</nav>
 	</header>
@@ -151,8 +152,8 @@
                             <td><?php echo $row["NgaySinh"] ?></td>
                             <td><?php echo $row["SDT"] ?></td>
                             <td><?php echo $row["ChucVu"] ?></td>
-                            <td><a href="edit.php?id=<?php echo $row['MaNV']?>">Cập nhật</a> |
-                            <a href="delete.php?id=<?php echo $row['MaNV']?>">Xóa</a></td>
+                            <td><a href="./edit.php?id=<?php echo $row['MaNV']?>">Cập nhật</a> |
+                            <a href="./delete.php?id=<?php echo $row['MaNV']?>">Xóa</a></td>
                     </tr>
 			<?php	} ?>
 		</table>

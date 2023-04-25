@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <?php
+ob_start();
 include '../db_connect.php';
 session_start();
 include('./header.php');
 ?>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">

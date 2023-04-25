@@ -1,3 +1,4 @@
+<?php ob_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -189,10 +190,10 @@ button:hover {
             <nav>
                 <h1>Yvette</h1>
                 <ul id="navli">
-                    <li><a class="homeblack" href="insert_nl.php">Thêm mới</a></li>
-                    <li><a class="homered" href="warehouse.php">Thông tin kho</a></li>
-                    <li><a class="homeblack" href="history.php">Lịch sử nhập xuất</a></li>
-                    <li><a class="homeblack" href="../index.php">Log Out</a></li>
+                    <li><a class="homeblack" href="./insert_nl.php">Thêm mới</a></li>
+                    <li><a class="homered" href="./warehouse.php">Thông tin kho</a></li>
+                    <li><a class="homeblack" href="./history.php">Lịch sử nhập xuất</a></li>
+                    <li><a class="homeblack" href="./index.php">Quay lại</a></li>
                 </ul>
             </nav>
 	</header>

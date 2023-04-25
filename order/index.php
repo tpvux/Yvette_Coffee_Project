@@ -1,7 +1,9 @@
+<?php 
+ob_start();
+session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
-<?php session_start(); ?>
 
 <head>
   <meta charset="utf-8">
@@ -469,7 +471,7 @@ if (isset($_SESSION["status"]) == 'Success') {
               </div>
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary btn-sm" form="add-form" id="modify-btn">Xác nhận</button>
+              <button type="submit" class="btn btn-primary btn-sm" form="add-form" id="modify-btn">Cập nhật</button>
               <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Hủy</button>
             </div>
           </div>

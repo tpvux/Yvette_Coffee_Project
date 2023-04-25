@@ -1,4 +1,6 @@
 <?php
+ob_start();
+
 include_once './db_connect.php';
 include_once './header.php';
 session_start();

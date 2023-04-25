@@ -1,3 +1,4 @@
+<?php ob_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -190,9 +191,9 @@ button:hover {
             <nav>
                 <h1>Yvette</h1>
                 <ul id="navli">
-                    <li><a class="homeblack" href="insert_menu.php">Thêm mới</a></li>
-                    <li><a class="homered" href="menu.php">Đồ uống</a></li>
-                    <li><a class="homeblack" href="../index.php">Log Out</a></li>
+                    <li><a class="homeblack" href="./insert_menu.php">Thêm mới</a></li>
+                    <li><a class="homered" href="./menu.php">Đồ uống</a></li>
+                    <li><a class="homeblack" href="./index.php">Quay lại</a></li>
                 </ul>
             </nav>
 	</header>
@@ -249,8 +250,8 @@ button:hover {
                                     <td><?php echo $row["MaDanhMuc"] ?></td>
                                     <td><?php echo $row["TenDanhMuc"] ?></td>
                                     <td><img src='./images/drink/<? echo $row["image"];?>' height = "100px" width="200px" ></td>
-                                    <td><a href="edit_menu.php?id=<?php echo $row['MaDoUong']?>">Cập nhật</a> |
-                                    <a href="delete_menu.php?id=<?php echo $row['MaDoUong']?>">Xóa</a></td>
+                                    <td><a href="./edit_menu.php?id=<?php echo $row['MaDoUong']?>">Cập nhật</a> |
+                                    <a href="./delete_menu.php?id=<?php echo $row['MaDoUong']?>">Xóa</a></td>
                                 </tr>
                         <?php    } ?>
                             </table>
@@ -299,8 +300,8 @@ button:hover {
                             <td><?php echo $row["MaDanhMuc"] ?></td>
                             <td><?php echo $row["TenDanhMuc"] ?></td>
                             <td><img src='./images/drink/<?php echo $row["image"];?>' height = "170px" width="200px" ></td>
-                            <td><a href="edit_menu.php?id=<?php echo $row['MaDoUong']?>">Cập nhật</a> |
-                            <a href="delete_menu.php?id=<?php echo $row['MaDoUong']?>">Xóa</a></td>
+                            <td><a href="./edit_menu.php?id=<?php echo $row['MaDoUong']?>">Cập nhật</a> |
+                            <a href="./delete_menu.php?id=<?php echo $row['MaDoUong']?>">Xóa</a></td>
                         </tr>
                 <?php   } ?>                 
                     </table>
