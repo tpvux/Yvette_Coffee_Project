@@ -1,8 +1,4 @@
-/* google font */
-
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap');
-
-
 
 :root{
     --font-heading: crimson;
@@ -137,7 +133,7 @@ form {
 }
   
 .modal-content input[type=text], input[type=password] {
-    color: red;
+    color: #F8F8FF;
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -145,6 +141,7 @@ form {
     border: 1px solid #ccc;
     box-sizing: border-box;
     background: transparent;
+    background-color: #303030	;
 }
 
 .modal-content button{
@@ -164,16 +161,11 @@ form {
 }
 
 .modal-content button:hover {
-    background-color: red;
+    background-color: #F8F8FF;
     text-decoration: none;
     cursor: pointer;
+    color: black;
 }
-
-
-/*.cancelbtn {
-    width: auto;
-    padding: 10px 15px;
-}*/
   
 .modal-content .container {
     padding: 10px;
@@ -181,7 +173,7 @@ form {
 .modal-content .container b{
     float: left;
     padding-top: 20px;
-    color: red;
+    color: #F8F8FF;
 }
   
 span.psw {
@@ -684,44 +676,6 @@ nav #close {
     z-index: 1000;
 }
 
-/*.pic::before{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: 22px;
-    font-weight: bold;
-    width: 100%;
-    margin-top: -100px;
-    opacity: 0;
-    transition: .3s;
-    transition-delay: .2s;
-    z-index: 1;
-}
-
-.store .container1 .photo-gallary .pic::after{
-    content: "";
-    position: absolute;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    border-radius: 10px;
-    height: 0;
-    background-color: rgba(0, 0, 0, 0.4);
-    transition: .3s;
-}
-
-.pic:hover::after{
-    height: 100%;
-
-}
-
-.pic:hover::before{
-    margin-top: 0;
-    opacity: 1;
-}*/
-
 #check1:checked ~ .container1 .photo-gallary .pic{
     opacity: 1;
     transform: scale(1);
@@ -980,7 +934,6 @@ label{
     background: var(--bg);
 }
 
-
 @media only screen and (max-width: 991px) {
     html {
         font-size: 55%;
@@ -996,9 +949,7 @@ label{
     }
 }
 
-
 @media only screen and (max-width: 768px) {
-
 
     nav #menu-btn {
         display: inline-block;
@@ -1033,16 +984,3 @@ label{
         text-align: center;
     }
 }
-
-
-
-
-/*------------------*/
-/*.dropbtn {
-    background-color: red;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-  }*/

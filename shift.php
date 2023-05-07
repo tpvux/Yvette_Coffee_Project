@@ -297,6 +297,7 @@ include './db_connect.php';
 </style>
 <?php
 if (isset($_SESSION["status"]) == 'Success') {
+    if ($_SESSION["chucvu"] == 'Quản lý') {
     $sql0 = $conn->query("SELECT * FROM `ca_lam_viec`");
     if ($sql0->num_rows > 0) {
         while ($row0 = $sql0->fetch_assoc()) {
@@ -663,6 +664,16 @@ if (isset($_SESSION["status"]) == 'Success') {
 
 </html>
 <?php
+    }
+    else
+    {
+        ?>
+        <script>
+            alert("Vui lòng đăng nhập với quyền Quản lý");
+            location.assign("./index.php");
+        </script>
+        <?php
+    }
 } else {
 ?>
     <script>

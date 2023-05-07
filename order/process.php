@@ -37,7 +37,8 @@
                             $id = $value;
                             $sl = $list2[$key1];
                             $st = $list3[$key1];
-                            $sql2 = $conn->query("UPDATE `order` SET SoLuong = $sl , SoTien=  $st  WHERE MaOrder = $MaOrder AND MaDoUong = $id");
+                            $sql2 = $conn->query("UPDATE `order` SET SoLuong = $sl , SoTien=  $st 
+                            WHERE MaOrder = $MaOrder AND MaDoUong = $id");
                             $sql3 = $conn->query("UPDATE `hoa_don_thanh_toan` SET TongTien = $tt WHERE MaOrder = $MaOrder");
                             if (($sql2 && $sql3))
                             {
@@ -65,7 +66,8 @@
                                 $id = $value1;
                                 $sl = $list2[$key1];
                                 $st = $list3[$key1];
-                                $sql2 = $conn->query("INSERT INTO `order` (`MaOrder`, `MaNV`, `MaBan`, `MaDoUong`, `SoLuong`, `SoTien`) VALUES ('$MaOrder', ' $manv', ' $ma_ban', ' $id', ' $sl', ' $st')");
+                                $sql2 = $conn->query("INSERT INTO `order` (`MaOrder`, `MaNV`, `MaBan`, `MaDoUong`, `SoLuong`, `SoTien`) 
+                                VALUES ('$MaOrder', ' $manv', ' $ma_ban', ' $id', ' $sl', ' $st')");
                                 $sql3 = $conn->query("UPDATE `hoa_don_thanh_toan` SET TongTien=  $tt  WHERE MaOrder = $MaOrder");
                                 if (($sql2 && $sql3))
                                 {
@@ -122,9 +124,11 @@
                     $id = $list1[$i];
                     $sl = $list2[$i];
                     $st = $list3[$i];
-                    $sql4 = $conn->query("INSERT INTO `order` (`MaOrder`, `MaNV`, `MaBan`, `MaDoUong`, `SoLuong`, `SoTien`) VALUES ('$MaOrder', '$manv', '$ma_ban', '$id', '$sl', '$st')");
+                    $sql4 = $conn->query("INSERT INTO `order` (`MaOrder`, `MaNV`, `MaBan`, `MaDoUong`, `SoLuong`, `SoTien`) 
+                    VALUES ('$MaOrder', '$manv', '$ma_ban', '$id', '$sl', '$st')");
                 }
-                $sql5 = $conn->query("INSERT INTO `hoa_don_thanh_toan` (`MaOrder`, `TongTien`, `TienNhan`, `ThoiGianThanhToan`) VALUES ('$MaOrder', '$tt', '0', NULL)");
+                $sql5 = $conn->query("INSERT INTO `hoa_don_thanh_toan` (`MaOrder`, `TongTien`, `TienNhan`, `ThoiGianThanhToan`) 
+                VALUES ('$MaOrder', '$tt', '0', NULL)");
                 if (($sql4 && $sql5))
                 {
                     ?>

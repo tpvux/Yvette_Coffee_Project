@@ -8,8 +8,8 @@
         { 
             $maban = $_POST["mabanadd"];
             $kv = $_POST["kv"];
-
             $sql1 = $conn->query("SELECT * FROM `ban` WHERE MaBan = $maban");
+            
             if (($row1 = $sql1->num_rows) > 0)
             {
                 ?>

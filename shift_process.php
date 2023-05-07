@@ -5,6 +5,7 @@ include_once './db_connect.php';
 include_once './header.php';
 session_start();
 if (isset($_SESSION["status"]) == 'Success') {
+    if ($_SESSION["chucvu"] == 'Quản lý') {
     if (isset($_POST['modify'])) {
         $ngay = $_POST['ngay'];
         $ca = $_POST['ca'];
@@ -187,6 +188,16 @@ if (isset($_SESSION["status"]) == 'Success') {
             </script>
         <?php
     }
+}
+else
+{
+    ?>
+    <script>
+        alert("Vui lòng đăng nhập với quyền Quản lý");
+        location.assign("./index.php");
+    </script>
+    <?php
+}
 }
 else {
     ?>

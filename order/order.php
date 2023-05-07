@@ -1,11 +1,9 @@
-<?php
-ob_start();
-
-session_start();
-include('./header.php') ?>
+<?php ob_start();?>
 <!DOCTYPE html>
 <html lang="en">
 
+<?php session_start(); 
+include('./header.php')?>
 
 <head>
   <meta charset="utf-8">
@@ -285,6 +283,8 @@ include('./header.php') ?>
     width: 35px;
     height: 35px;
   }
+
+
 </style>
 <?php
 if (isset($_SESSION["status"]) == 'Success') {
@@ -313,7 +313,6 @@ if (isset($_SESSION["status"]) == 'Success') {
 
     <?php include '../db_connect.php';
     $manv = $_SESSION['username'];
-    
     if (isset($_GET['id'])) {
       $ma_ban = $_GET['id'];
       $order = $conn->query("SELECT * FROM `order` o, `hoa_don_thanh_toan` h 
@@ -324,10 +323,8 @@ if (isset($_SESSION["status"]) == 'Success') {
 
       if (($row1 = $order->fetch_assoc()) > 0) {
         $MaOrder = $row1['MaOrder'];
-
         $items = $conn->query("SELECT * FROM `order` o, `do_uong` d 
         Where d.MaDoUong = o.MaDoUong and o.MaBan = $ma_ban and o.MaOrder = $MaOrder");
-
         $check = 1;
       } else {
         $sql = $conn->query("SELECT MAX(MaOrder) as 'MaOrder' FROM `order`");
@@ -484,11 +481,11 @@ if (isset($_SESSION["status"]) == 'Success') {
                           <div class="card bg-primary prod-item" style="background-color:rgb(0,0,0,0) !important; width:200px; height: 220px; border:none;" data-json='<?php echo json_encode($row) ?>' data-category-id="<?php echo $row['MaDanhMuc'] ?>">
                             <div class="card-body">
                               <span>
-                                <img src='../images/drink/<?php echo $row["image"]; ?>' height="90%" width="100%" style="border-radius:4px">
+                              <img src='../images/drink/<?php echo $row["image"];?>' height = "90%" width="100%" style="border-radius:4px">
                                 <center>
-                                  <b class="text-white">
-                                    <?php echo $row['TenDoUong'] . " (" . $row['DonGia'] . ")" ?>
-                                  </b>
+                                <b class="text-white">
+                                  <?php echo $row['TenDoUong']." (".$row['DonGia'].")" ?>
+                                </b>
                                 </center>
                               </span>
                             </div>
@@ -682,9 +679,8 @@ if (isset($_SESSION["status"]) == 'Success') {
 
 
 
+    // của home.php
     var total;
-
-
     cat_func();
     $('#prod-list .prod-item').click(function() {
       var data = $(this).attr('data-json')
@@ -794,6 +790,7 @@ if (isset($_SESSION["status"]) == 'Success') {
         end_load()
       }, 200)
     })
+    
     $("#pay").click(function() {
       start_load()
       var amount = $('[name="total_amount"]').val()
